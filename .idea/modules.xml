@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/sign-in/spring-mvc-normal/spring-mvc-normal.iml" filepath="$PROJECT_DIR$/sign-in/spring-mvc-normal/spring-mvc-normal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spring-social-examples.iml" filepath="$PROJECT_DIR$/.idea/spring-social-examples.iml" />
+    </modules>
+  </component>
+</project>

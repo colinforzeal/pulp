@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="spring-mvc-normal:war">
+    <output-path>$PROJECT_DIR$/sign-in/spring-mvc-normal/target</output-path>
+    <root id="archive" name="spring-social-normal-mvc.war">
+      <element id="artifact" artifact-name="spring-mvc-normal:war exploded" />
+    </root>
+  </artifact>
+</component>
