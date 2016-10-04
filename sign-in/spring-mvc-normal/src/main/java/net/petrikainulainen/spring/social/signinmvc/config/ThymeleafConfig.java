@@ -48,7 +48,6 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/WEB-INF/templates/");
-//        resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
     }

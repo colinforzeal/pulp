@@ -95,12 +95,4 @@ public class SocialContext implements SocialConfigurer {
     public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
         return new ConnectController(connectionFactoryLocator, connectionRepository);
     }
-
-//    @Bean
-//    public ConnectionFactoryLocator connectionFactoryLocator() {
-//        SocialAuthenticationServiceRegistry registry = new SocialAuthenticationServiceRegistry();
-//        registry.addAuthenticationService(facebook);
-//
-//        return registry;
-//    }
 }
