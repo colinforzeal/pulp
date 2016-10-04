@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LoginController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
-
-    protected static final String VIEW_NAME_LOGIN_PAGE = "user/login";
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginPage() {
         LOGGER.debug("Rendering login page.");
-        return VIEW_NAME_LOGIN_PAGE;
+        return "login.html";
     }
 }

@@ -1,0 +1,27 @@
+package libs.springframework.social.vkontakte.api.impl.json;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import libs.springframework.social.vkontakte.api.impl.json.deserializers.UnixTimeDeserializer;
+
+import java.util.Date;
+
+/**
+ * Mixin for {@link libs.springframework.social.vkontakte.api.Comment}
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CommentMixin {
+    @JsonProperty("from_id")
+    long fromId;
+
+    @JsonProperty("date")
+    @JsonDeserialize(using = UnixTimeDeserializer.class)
+    Date date;
+
+    @JsonProperty("reply_to_user")
+    long replyToUser;
+
+    @JsonProperty("reply_to_comment")
+    long replyToComment;
+}

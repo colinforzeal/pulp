@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="head.html :: common_header(~{::title},~{::link})" >
+    <title th:text="spring.social.mvc.normal.title"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/social-buttons-3.css}"/>
+</head>
+<body>
+<div th:replace="layout.html :: navbar">
+</div>
+<div class="page-header" >
+    <h1 th:text="#{label.user.login.page.title}"></h1>
+</div>
+<div sec:authorize="isAnonymous()">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h2 th:text="#{label.login.form.title}"></h2>
+            <div th:if="${param.error} == 'bad_credentials'">
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true" th:text="#{text.login.page.login.failed.error}">&times;</button>
+                </div>
+            </div>
+            <form th:href="@{/login/authenticate}" method="POST" role="form">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="row">
+                    <div id="form-group-email" class="form-group col-lg-4">
+                        <label class="control-label" for="user-email" th:text="#{label.user.email}">
+                            :</label>
+                        <input id="user-email" name="username" type="text" th:class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div id="form-group-password" class="form-group col-lg-4">
+                        <label class="control-label" for="user-password" th:text="#{label.user.password}">
+                            :</label>
+                        <input id="user-password" name="password" type="password" th:class="form-control"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <button type="submit" class="btn btn-default" th:text="#{label.user.login.submit.button}">
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    <a th:href="@{/user/register}">
+                        <p th:text="#{label.navigation.registration.link}"></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h2 th:text="#{label.social.sign.in.title}"></h2>
+            <div class="row social-button-row">
+                <div class="col-lg-4">
+                    <a th:href="@{/auth/facebook}"><button class="btn btn-facebook" th:text="#{label.facebook.sign.in.button}"><i class="icon-facebook"></i>
+                    </button></a>
+                </div>
+            </div>
+            <div class="row social-button-row">
+                <div class="col-lg-4">
+                    <a th:href="@{/auth/twitter}"><button class="btn btn-twitter" th:text="#{label.twitter.sign.in.button}"><i class="icon-twitter"></i>
+                    </button></a>
+                </div>
+            </div>
+            <div class="row social-button-row">
+                <div class="col-lg-4">
+                    <a th:href="@{/auth/vkontakte}"><button class="btn btn-vk" th:text="#{label.vk.sign.in.button}"><i class="icon-vk"></i>
+                    </button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div sec:authorize="isAuthenticated()">
+    <p th:text="#{text.login.page.authenticated.user.help}"></p>
+</div>
+</body>
+</html>

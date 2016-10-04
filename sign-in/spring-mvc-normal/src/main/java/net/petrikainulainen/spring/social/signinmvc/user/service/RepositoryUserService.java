@@ -50,6 +50,7 @@ public class RepositoryUserService implements UserService {
 
         if (userAccountData.isSocialSignIn()) {
             user.signInProvider(userAccountData.getSignInProvider());
+            LOGGER.debug(userAccountData.getSignInProvider().name());
         }
 
         User registered = user.build();

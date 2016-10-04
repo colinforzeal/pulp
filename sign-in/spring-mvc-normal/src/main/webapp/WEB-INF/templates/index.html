@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="head.html :: common_header()">
+</head>
+<body>
+<div th:replace="layout.html :: navbar">
+</div>
+<div class="page-header">
+    <h1 th:text="#{label.homepage.title}">
+        <span sec:authentication="principal.firstName"></span>
+        <span sec:authentication="principal.lastName"></span>
+    </h1>
+</div>
+<div>
+    <p th:text="text.homepage.greeting"></p>
+</div>
+</body>
+</html>

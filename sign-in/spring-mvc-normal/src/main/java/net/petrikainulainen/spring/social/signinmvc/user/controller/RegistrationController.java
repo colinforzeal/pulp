@@ -36,7 +36,6 @@ public class RegistrationController {
 
     protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
     protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
-    protected static final String VIEW_NAME_REGISTRATION_PAGE = "user/registrationForm";
 
     private UserService service;
 
@@ -59,7 +58,7 @@ public class RegistrationController {
 
         model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
 
-        return VIEW_NAME_REGISTRATION_PAGE;
+        return "registrationForm.html";
     }
 
     /**
@@ -95,7 +94,7 @@ public class RegistrationController {
         LOGGER.debug("Registering user account with information: {}", userAccountData);
         if (result.hasErrors()) {
             LOGGER.debug("Validation errors found. Rendering form view.");
-            return VIEW_NAME_REGISTRATION_PAGE;
+            return "registrationForm.html";
         }
 
         LOGGER.debug("No validation errors found. Continuing registration process.");
@@ -105,7 +104,7 @@ public class RegistrationController {
         //If email address was already found from the database, render the form view.
         if (registered == null) {
             LOGGER.debug("An email address was found from the database. Rendering form view.");
-            return VIEW_NAME_REGISTRATION_PAGE;
+            return "registrationForm.html";
         }
 
         LOGGER.debug("Registered user account with information: {}", registered);

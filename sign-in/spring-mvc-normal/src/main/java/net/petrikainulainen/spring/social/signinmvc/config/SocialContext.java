@@ -1,5 +1,7 @@
 package net.petrikainulainen.spring.social.signinmvc.config;
 
+import libs.springframework.social.vkontakte.connect.VKontakteConnectionFactory;
+import net.petrikainulainen.spring.social.signinmvc.user.signin.SimpleSignInAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -12,12 +14,19 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
+import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ConnectController;
+import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.facebook.security.FacebookAuthenticationService;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
+import org.springframework.social.security.SocialAuthenticationServiceRegistry;
+import org.springframework.social.security.provider.SocialAuthenticationService;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 import javax.sql.DataSource;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 /**
  * @author Petri Kainulainen
@@ -28,9 +37,12 @@ public class SocialContext implements SocialConfigurer {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private Environment environment;
+
 
     /**
-     * Configures the connection factories for Facebook and Twitter.
+     * Configures the connection factories for Facebook, Twitter, Vk.
      * @param cfConfig
      * @param env
      */
@@ -40,9 +52,20 @@ public class SocialContext implements SocialConfigurer {
                 env.getProperty("twitter.consumer.key"),
                 env.getProperty("twitter.consumer.secret")
         ));
-        cfConfig.addConnectionFactory(new FacebookConnectionFactory(
-                env.getProperty("facebook.app.id"),
-                env.getProperty("facebook.app.secret")
+//        cfConfig.addConnectionFactory(new FacebookConnectionFactory(
+//                env.getProperty("facebook.app.id"),
+//                env.getProperty("facebook.app.secret")
+//        ));
+        FacebookAuthenticationService facebook = new FacebookAuthenticationService(
+                environment.getProperty("facebook.app.id"),
+                environment.getProperty("facebook.app.secret")
+        );
+        facebook.setDefaultScope("email");
+        cfConfig.addConnectionFactory(facebook.getConnectionFactory());
+
+        cfConfig.addConnectionFactory(new VKontakteConnectionFactory(
+                env.getProperty("vk.consumer.key"),
+                env.getProperty("vk.consumer.secret")
         ));
     }
 
@@ -60,11 +83,6 @@ public class SocialContext implements SocialConfigurer {
         return new JdbcUsersConnectionRepository(
                 dataSource,
                 connectionFactoryLocator,
-                /**
-                 * The TextEncryptor object encrypts the authorization details of the connection. In
-                 * our example, the authorization details are stored as plain text.
-                 * DO NOT USE THIS IN PRODUCTION.
-                 */
                 Encryptors.noOpText()
         );
     }
@@ -77,4 +95,12 @@ public class SocialContext implements SocialConfigurer {
     public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
         return new ConnectController(connectionFactoryLocator, connectionRepository);
     }
+
+//    @Bean
+//    public ConnectionFactoryLocator connectionFactoryLocator() {
+//        SocialAuthenticationServiceRegistry registry = new SocialAuthenticationServiceRegistry();
+//        registry.addAuthenticationService(facebook);
+//
+//        return registry;
+//    }
 }
