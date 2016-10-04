@@ -9,9 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
-/**
- * @author Petri Kainulainen
- */
+
 @PasswordsNotEmpty(
         triggerFieldName = "signInProvider",
         passwordFieldName = "password",

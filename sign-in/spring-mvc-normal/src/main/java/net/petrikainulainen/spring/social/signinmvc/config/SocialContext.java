@@ -1,7 +1,7 @@
 package net.petrikainulainen.spring.social.signinmvc.config;
 
 import libs.springframework.social.vkontakte.connect.VKontakteConnectionFactory;
-import net.petrikainulainen.spring.social.signinmvc.user.signin.SimpleSignInAdapter;
+//import net.petrikainulainen.spring.social.signinmvc.user.signin.SimpleSignInAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;

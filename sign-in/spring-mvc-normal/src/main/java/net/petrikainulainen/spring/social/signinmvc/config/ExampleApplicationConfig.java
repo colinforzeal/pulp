@@ -41,8 +41,8 @@ public class ExampleApplicationConfig implements WebApplicationInitializer {
         FilterRegistration.Dynamic security = servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy());
         security.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
 
-        FilterRegistration.Dynamic sitemesh = servletContext.addFilter("sitemesh", new ConfigurableSiteMeshFilter());
-        sitemesh.addMappingForUrlPatterns(dispatcherTypes, true, "*.jsp");
+//        FilterRegistration.Dynamic sitemesh = servletContext.addFilter("sitemesh", new ConfigurableSiteMeshFilter());
+//        sitemesh.addMappingForUrlPatterns(dispatcherTypes, true, "*.jsp");
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
 

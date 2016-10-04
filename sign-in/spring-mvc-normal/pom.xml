@@ -12,7 +12,7 @@
         <liquibase.version>3.1.1</liquibase.version>
         <mysql.connector.version>5.1.26</mysql.connector.version>
         <slf4j.version>1.7.5</slf4j.version>
-        <spring.version>4.0.0.RELEASE</spring.version>
+        <spring.version>4.3.2.RELEASE</spring.version>
         <spring.data.jpa.version>1.4.3.RELEASE</spring.data.jpa.version>
         <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <spring.social.version>1.1.0.RELEASE</spring.social.version>
@@ -557,6 +557,23 @@
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
             <version>3.0.0.RELEASE</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-web</artifactId>-->
+            <!--<version>4.2.0.RELEASE</version>-->
+        <!--</dependency>-->
+
+
+        <!--<dependency>-->
+            <!--<groupId>com.thetransactioncompany</groupId>-->
+            <!--<artifactId>cors-filter</artifactId>-->
+            <!--<version>2.1.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.thetransactioncompany</groupId>-->
+            <!--<artifactId>java-property-utils</artifactId>-->
+            <!--<version>1.9.1</version>-->
+        <!--</dependency>-->
     </dependencies>
 </project>
 

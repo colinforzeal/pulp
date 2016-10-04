@@ -13,6 +13,7 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,9 +26,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 
-/**
- * @author Petri Kainulainen
- */
+
 @Controller
 @SessionAttributes("user")
 public class RegistrationController {
@@ -36,6 +35,7 @@ public class RegistrationController {
 
     protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
     protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
+    protected static final String VIEW_NAME_REGISTRATION_PAGE = "registrationForm.html";
 
     private UserService service;
 
@@ -58,7 +58,7 @@ public class RegistrationController {
 
         model.addAttribute(MODEL_NAME_REGISTRATION_DTO, registration);
 
-        return "registrationForm.html";
+        return VIEW_NAME_REGISTRATION_PAGE;
     }
 
     /**
@@ -70,9 +70,9 @@ public class RegistrationController {
      */
     private RegistrationForm createRegistrationDTO(Connection<?> connection) {
         RegistrationForm dto = new RegistrationForm();
-
         if (connection != null) {
             UserProfile socialMediaProfile = connection.fetchUserProfile();
+
             dto.setEmail(socialMediaProfile.getEmail());
             dto.setFirstName(socialMediaProfile.getFirstName());
             dto.setLastName(socialMediaProfile.getLastName());
@@ -94,7 +94,7 @@ public class RegistrationController {
         LOGGER.debug("Registering user account with information: {}", userAccountData);
         if (result.hasErrors()) {
             LOGGER.debug("Validation errors found. Rendering form view.");
-            return "registrationForm.html";
+            return VIEW_NAME_REGISTRATION_PAGE;
         }
 
         LOGGER.debug("No validation errors found. Continuing registration process.");
@@ -104,7 +104,7 @@ public class RegistrationController {
         //If email address was already found from the database, render the form view.
         if (registered == null) {
             LOGGER.debug("An email address was found from the database. Rendering form view.");
-            return "registrationForm.html";
+            return VIEW_NAME_REGISTRATION_PAGE;
         }
 
         LOGGER.debug("Registered user account with information: {}", registered);

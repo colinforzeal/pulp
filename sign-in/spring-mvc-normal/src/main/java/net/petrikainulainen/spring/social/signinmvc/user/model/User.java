@@ -3,6 +3,7 @@ package net.petrikainulainen.spring.social.signinmvc.user.model;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @author Petri Kainulainen
@@ -13,6 +14,7 @@ public class User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USER_ID", unique = true, nullable = false)
     private Long id;
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
@@ -30,6 +32,11 @@ public class User  {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 20, nullable = false)
     private Role role;
+
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private Set<Site> sites;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sign_in_provider", length = 20)
@@ -71,18 +78,45 @@ public class User  {
     public SocialMediaService getSignInProvider() {
         return signInProvider;
     }
+    public String showSites(){
+        String result="";
+        if(sites!=null){
+            for (Site site:sites) {
+                result+=site.toString();
+            }}
+        return result;
+    }
+
 
     public String toString() {
+        if(sites!=null){
         return new ToStringBuilder(this)
                 .append("id", id)
-
+                .append("site",sites)
                 .append("email", email)
                 .append("firstName", firstName)
                 .append("lastName", lastName)
-
                 .append("signInProvider", this.getSignInProvider())
 
-                .toString();
+                .toString();}
+        else {return new ToStringBuilder(this)
+                .append("id", id)
+                .append("site",sites)
+                .append("email", email)
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .append("signInProvider", this.getSignInProvider())
+
+                .toString();}
+    }
+
+
+    public Set<Site> getSites() {
+        return sites;
+    }
+
+    public void setSites(Set<Site> sites) {
+        this.sites = sites;
     }
 
     public static class Builder {
