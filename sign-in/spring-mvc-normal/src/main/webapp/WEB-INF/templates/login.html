@@ -21,8 +21,8 @@
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true" th:text="#{text.login.page.login.failed.error}">&times;</button>
                 </div>
             </div>
-            <form th:href="@{/login/authenticate}" method="POST" role="form">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <form th:href="@{/login/authenticate}" method="post" role="form">
+
                 <div class="row">
                     <div id="form-group-email" class="form-group col-lg-4">
                         <label class="control-label" for="user-email" th:text="#{label.user.email}">

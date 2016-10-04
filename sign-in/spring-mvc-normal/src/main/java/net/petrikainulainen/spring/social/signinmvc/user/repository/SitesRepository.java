@@ -1,11 +1,11 @@
 package net.petrikainulainen.spring.social.signinmvc.user.repository;
 
-import net.petrikainulainen.spring.social.signinmvc.user.model.User;
+import net.petrikainulainen.spring.social.signinmvc.user.model.Site;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
 
-    public User findByEmail(String email);
+@Repository
+public interface SitesRepository extends JpaRepository<Site,Long>{
+
 }

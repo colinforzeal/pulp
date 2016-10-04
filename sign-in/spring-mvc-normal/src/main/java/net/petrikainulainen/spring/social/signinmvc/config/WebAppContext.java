@@ -69,6 +69,7 @@ public class WebAppContext extends WebMvcConfigurerAdapter{
         return exceptionResolver;
     }
 
+
 //    @Bean
 //    public ViewResolver viewResolver() {
 //        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

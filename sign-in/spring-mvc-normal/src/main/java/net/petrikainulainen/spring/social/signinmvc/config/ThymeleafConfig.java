@@ -43,12 +43,14 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
         engine.addDialect(new SpringSecurityDialect());
         return engine;
     }
-
-    private ITemplateResolver templateResolver() {
+    @Bean
+    public ITemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/WEB-INF/templates/");
+//        resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
     }
+
 }

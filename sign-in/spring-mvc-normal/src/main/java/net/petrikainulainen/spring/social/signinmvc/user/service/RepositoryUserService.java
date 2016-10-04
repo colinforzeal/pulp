@@ -10,9 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @author Petri Kainulainen
- */
+
 @Service
 public class RepositoryUserService implements UserService {
 
@@ -50,7 +48,6 @@ public class RepositoryUserService implements UserService {
 
         if (userAccountData.isSocialSignIn()) {
             user.signInProvider(userAccountData.getSignInProvider());
-            LOGGER.debug(userAccountData.getSignInProvider().name());
         }
 
         User registered = user.build();
