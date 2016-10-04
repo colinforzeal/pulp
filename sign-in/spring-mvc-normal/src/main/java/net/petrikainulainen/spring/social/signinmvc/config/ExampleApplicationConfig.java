@@ -21,13 +21,9 @@ public class ExampleApplicationConfig implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        //If you want to use the XML configuration, comment the following two lines out.
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(ExampleApplicationContext.class);
-
-        //If you want to use the XML configuration, uncomment the following lines.
-        //XmlWebApplicationContext rootContext = new XmlWebApplicationContext();
-        //rootContext.setConfigLocation("classpath:exampleApplicationContext.xml");
+        rootContext.register(ThymeleafConfig.class);
 
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(rootContext));
         dispatcher.setLoadOnStartup(1);
@@ -49,6 +45,8 @@ public class ExampleApplicationConfig implements WebApplicationInitializer {
         sitemesh.addMappingForUrlPatterns(dispatcherTypes, true, "*.jsp");
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
+
+        rootContext.setServletContext(servletContext);
     }
 }
 

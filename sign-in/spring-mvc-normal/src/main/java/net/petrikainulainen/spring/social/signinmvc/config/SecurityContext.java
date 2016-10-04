@@ -2,6 +2,7 @@ package net.petrikainulainen.spring.social.signinmvc.config;
 
 import net.petrikainulainen.spring.social.signinmvc.security.service.RepositoryUserDetailsService;
 import net.petrikainulainen.spring.social.signinmvc.security.service.SimpleSocialUserDetailsService;
+import net.petrikainulainen.spring.social.signinmvc.user.model.Role;
 import net.petrikainulainen.spring.social.signinmvc.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
