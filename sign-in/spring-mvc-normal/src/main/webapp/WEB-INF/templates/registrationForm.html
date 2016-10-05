@@ -15,44 +15,43 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <form th:action="@{/user/register}" th:object="${user}" method="post" role="form">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <div th:if="${user.signInProvider} != null">
                         <input type="hidden" th:field="*{signInProvider}" />
                     </div>
                     <div class="row">
-                        <div id="form-group-firstName" class="form-group col-lg-4">
+                        <div id="form-group-firstName" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
                             <label class="control-label" for="user-firstName" th:text="#{label.user.firstName}">:</label>
-                            <input type="text" id="user-firstName" th:field="*{firstName}" th:class="form-control" th:errorclass="help-block"/>
-                            <!--<input id="error-firstName" th:field="*{firstName}" th:error="help-block"/>-->
+                            <input type="text" id="user-firstName" th:field="*{firstName}" th:class="form-control" />
+                            <span class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                         </div>
                     </div>
                     <div class="row">
-                        <div id="form-group-lastName" class="form-group col-lg-4">
+                        <div id="form-group-lastName" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
                             <label class="control-label" for="user-lastName" th:text="#{label.user.lastName}">:</label>
-                            <input type="text" id="user-lastName" th:field="*{lastName}" th:class="form-control" th:errorclass="help-block"/>
-                            <!--<input id="error-lastName" th:field="*{lastName}" th:error="help-block"/>-->
+                            <input type="text" id="user-lastName" th:field="*{lastName}" th:class="form-control" />
+                            <span class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                         </div>
                     </div>
                     <div class="row">
-                        <div id="form-group-email" class="form-group col-lg-4">
+                        <div id="form-group-email" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
                             <label class="control-label" for="user-email" th:text="#{label.user.email}">:</label>
-                            <input type="text" id="user-email" th:field="*{email}" th:class="form-control" th:errorclass="help-block"/>
-                            <!--<input id="error-email" th:field="*{email}" th:error="help-block"/>-->
+                            <input type="text" id="user-email" th:field="*{email}" th:class="form-control" />
+                            <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                         </div>
                     </div>
                     <div th:if ="${user.signInProvider} == null">
                         <div class="row">
-                            <div id="form-group-password" class="form-group col-lg-4">
+                            <div id="form-group-password" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
                                 <label class="control-label" for="user-password" th:text="#{label.user.password}">:</label>
-                                <input type="password" id="user-password" th:field="*{password}" th:class="form-control" th:errorclass="help-block"/>
-                                <!--<form:errors id="error-password" path="password" cssClass="help-block"/>-->
+                                <input type="text" id="user-password" th:field="*{password}" th:class="form-control" />
+                                <span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div id="form-group-passwordVerification" class="form-group col-lg-4">
+                            <div id="form-group-passwordVerification" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('passwordVerification')}? 'has-error'">
                                 <label class="control-label" for="user-passwordVerification" th:text="#{label.user.passwordVerification}">:</label>
-                                <input type="password" id="user-passwordVerification" th:field="*{passwordVerification}" th:class="form-control" th:errorclass="help-block"/>
-                                <!--<form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>-->
+                                <input type="text" id="user-passwordVerification" th:field="*{passwordVerification}" th:class="form-control" />
+                                <span class="help-block" th:if="${#fields.hasErrors('passwordVerification')}" th:errors="*{passwordVerification}"></span>
                             </div>
                         </div>
                     </div>

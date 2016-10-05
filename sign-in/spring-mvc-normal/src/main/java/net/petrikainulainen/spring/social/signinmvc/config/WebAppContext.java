@@ -35,9 +35,6 @@ import java.util.Properties;
 @EnableWebMvc
 public class WebAppContext extends WebMvcConfigurerAdapter{
 
-    private static final String VIEW_RESOLVER_PREFIX = "/WEB-INF/jsp/";
-    private static final String VIEW_RESOLVER_SUFFIX = ".jsp";
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
@@ -68,16 +65,4 @@ public class WebAppContext extends WebMvcConfigurerAdapter{
 
         return exceptionResolver;
     }
-
-
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//
-//        viewResolver.setViewClass(JstlView.class);
-//        viewResolver.setPrefix(VIEW_RESOLVER_PREFIX);
-//        viewResolver.setSuffix(VIEW_RESOLVER_SUFFIX);
-//
-//        return viewResolver;
-//    }
 }

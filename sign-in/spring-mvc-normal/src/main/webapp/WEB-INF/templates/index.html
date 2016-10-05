@@ -1,58 +1,52 @@
 <!DOCTYPE html>
-<html ng-app="fileApp" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="head.html :: common_header()">
+<html>
+<head>
+    <!-- angular is the only dependency! -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="/static/js/app/angular-drag-and-drop-lists.js"></script>
 
+    <!-- Stuff that is only required in this demo (no need to copy) -->
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
 
+    <link rel="stylesheet" type="text/css" href="/static/css/drag-lists.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="/static/js/app/app.js"></script>
 </head>
-<body ng-controller="fileCtrl">
-<div th:replace="layout.html :: navbar">
-</div>
-<!--<div class="page-header">-->
-    <!--<h1 th:text="#{label.homepage.title}">-->
-        <!--<span sec:authentication="principal.firstName"></span>-->
-        <!--<span sec:authentication="principal.lastName"></span>-->
-    <!--</h1>-->
-
-<!--</div>-->
-<!--<div>-->
-    <!--<p th:text="text.homepage.greeting"></p>-->
-
-<div class="col-xs-6 col-xs-offset-3">
-    <div class="well">
-        <form action="" class="dropzone" dropzone="" id="dropzone">
-
-            <div class="dz-default dz-message">
+<body ng-app="demo">
+<div ng-controller="SimpleDemoController">
+    <div class="simpleDemo row">
+        <div class="col-md-8">
+            <div class="row">
+                <div ng-repeat="(listName, list) in models.lists" class="col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">List {{listName}}</h3>
+                        </div>
+                        <!--<div class="panel-body" ng-include="'simple.html'"></div>-->
+                        <div class="panel-body">
+                            <ul dnd-list="list">
+                                <!-- The dnd-draggable directive makes an element draggable and will
+                                     transfer the object that was assigned to it. If an element was
+                                     dragged away, you have to remove it from the original list
+                                     yourself using the dnd-moved attribute -->
+                                <li ng-repeat="item in list"
+                                    dnd-draggable="item"
+                                    dnd-moved="list.splice($index, 1)"
+                                    dnd-effect-allowed="move"
+                                    dnd-selected="models.selected = item"
+                                    ng-class="{'selected': models.selected === item}"
+                                >
+                                    {{item.label}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div>
+
     </div>
-    <div class="pull-right">
-        <button class="btn btn-success" ng-click="uploadFile()">Upload File</button>
-        <button class="btn btn-danger" ng-click="reset()">Reset Dropzone</button>
-    </div>
-    <div>
-        <form>
-            <label>File to download</label>
-
-
-            <a class="btn btn-primary" ng-href="{{ partialDownloadLink + filename }}">Download File</a>
-        </form>
-    </div>
-</div>
-
-    <!-- Load Angular scripts-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular.min.js"></script>
-    <script th:src="@{/static/js/app/app.js}"></script>
-    <script th:src="@{/static/js/app/fileAppControllers.js}"></script>
-    <script  th:src="@{/static/js/app/fileAppDirectives.js}"></script>
-
-    <!-- Load Dropzone JS -->
-    <script  th:src="@{/static/js/vendor/dropzone.js}"></script>
-
-    <script type="text/javascript">
-        Dropzone.autoDiscover = false;
-    </script>
 </div>
 </body>
 </html>
