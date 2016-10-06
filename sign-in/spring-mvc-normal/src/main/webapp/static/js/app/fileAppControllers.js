@@ -1,7 +1,7 @@
 /* js/fileAppControllers.js */
 
 function fileCtrl ($scope) {
-    $scope.partialDownloadLink = 'http://localhost:8084/download?filename=';
+    $scope.partialDownloadLink = 'http://localhost:8080/download?filename=';
     $scope.filename = '';
 
     $scope.uploadFile = function() {

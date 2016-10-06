@@ -1,19 +1,50 @@
-angular.module('demo', ["ngRoute", "dndLists"]).controller("SimpleDemoController", function($scope) {
+angular.module('demo', ["ngRoute", "dndLists"])
+    .controller("SimpleDemoController", ['$scope','$sce', function ($scope,$sce) {
 
-    $scope.models = {
-        selected: null,
-        lists: {"A": [], "B": []}
-    };
+        $scope.text ="";
 
-    // Generate initial model
-    for (var i = 1; i <= 3; ++i) {
-        $scope.models.lists.A.push({label: "Item A" + i});
-        $scope.models.lists.B.push({label: "Item B" + i});
+        $scope.models = {
+            selected: null,
+            templates: [
+                {type: "item", id: 7,"showme":false}
+            ],
+            dropzones: {
+                "A": [
+                    {
+                        "type": "",
+                        "id": "",
+                        "hidden":"true",
+                        "value":"",
+                        "showme":false
+                    },
+                    {
+                        "type": "item",
+                        "id": "4",
+                        "value":"",
+                        "showme":false
+                    }
+                ]
+            }
+        };
+
+        $scope.$watch('models.dropzones', function(model) {
+            $scope.modelAsJson = angular.toJson(model, true);
+        }, true);
+
+        $scope.func =function () {
+            if($scope.models.selected.showme===true){
+                $scope.models.selected.showme=false;
+            }
+            else if($scope.models.selected.showme===false){
+                $scope.models.selected.showme=true;
+            }
+
+        };
     }
 
-    // Model to JSON for demo purpose
-    $scope.$watch('models', function(model) {
-        $scope.modelAsJson = angular.toJson(model, true);
-    }, true);
 
-});
+
+
+
+]);
+

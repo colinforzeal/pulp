@@ -5,11 +5,10 @@ function dropzone() {
     return function(scope, element, attrs) {
 
         var config = {
-            url: 'http://localhost:8084/upload',
-            // /*headers:'x-csrf-token',*/
-            maxFilesize: 1000,
+            url: 'http://localhost:8080/upload',
+            maxFilesize: 100,
             paramName: "uploadfile",
-            maxThumbnailFilesize: 100,
+            maxThumbnailFilesize: 10,
             parallelUploads: 1,
             autoProcessQueue: false
         };
