@@ -1,12 +1,18 @@
-.content {
-    padding-left: 1em;
-    padding-right: 1em;
+/* Put your css in here */
+
+.topRow{
+    margin-bottom : 30px;
 }
 
-.sign-in-text {
-    padding-right: 2em;
+
+.on-drag-enter{
+    background-color : #aaaaaa;
 }
 
-.social-button-row {
-    padding-top: 1.0em;
+.on-drag-hover:before {
+    content: 'Drop him gently';
+    display: block;
+    color: white;
+    font-size: x-large;
+    font-weight: 800;
 }

@@ -2,51 +2,157 @@
 <html>
 <head>
     <!-- angular is the only dependency! -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="/static/js/vendor/angular-sanitize.js"></script>
     <script src="/static/js/app/angular-drag-and-drop-lists.js"></script>
 
     <!-- Stuff that is only required in this demo (no need to copy) -->
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/drag-lists.css">
 
-    <link rel="stylesheet" type="text/css" href="/static/css/drag-lists.css" />
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
     <script src="/static/js/app/app.js"></script>
+    <style>
+        li {
+            list-style-type: none; /* Убираем маркеры */
+        }
+        #true {
+            visibility:hidden;
+            /*display: none;*/
+        }
+    </style>
 </head>
-<body ng-app="demo">
-<div ng-controller="SimpleDemoController">
-    <div class="simpleDemo row">
-        <div class="col-md-8">
-            <div class="row">
-                <div ng-repeat="(listName, list) in models.lists" class="col-md-6">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">List {{listName}}</h3>
-                        </div>
-                        <!--<div class="panel-body" ng-include="'simple.html'"></div>-->
-                        <div class="panel-body">
-                            <ul dnd-list="list">
-                                <!-- The dnd-draggable directive makes an element draggable and will
-                                     transfer the object that was assigned to it. If an element was
-                                     dragged away, you have to remove it from the original list
-                                     yourself using the dnd-moved attribute -->
-                                <li ng-repeat="item in list"
-                                    dnd-draggable="item"
-                                    dnd-moved="list.splice($index, 1)"
-                                    dnd-effect-allowed="move"
-                                    dnd-selected="models.selected = item"
-                                    ng-class="{'selected': models.selected === item}"
-                                >
-                                    {{item.label}}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+<body ng-app="demo" ng-controller="SimpleDemoController">
+<!--<div th:replace="layout.html :: navbar">-->
+
+    <!--<div class="simpleDemo row">-->
+        <!--<div class="col-md-8">-->
+            <!--<div class="row">-->
+                <!--<div ng-repeat="(listName, list) in models.lists" class="col-md-6">-->
+                    <!--<div class="panel panel-info">-->
+                        <!--<div class="panel-heading">-->
+                            <!--<h3 class="panel-title">List {{listName}}</h3>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class="panel-body" ng-include="'simple.html'"></div>&ndash;&gt;-->
+                        <!--<div class="panel-body">-->
+                            <!--<ul dnd-list="list">-->
+                                <!--&lt;!&ndash; The dnd-draggable directive makes an element draggable and will-->
+                                     <!--transfer the object that was assigned to it. If an element was-->
+                                     <!--dragged away, you have to remove it from the original list-->
+                                     <!--yourself using the dnd-moved attribute &ndash;&gt;-->
+                                <!--<li ng-repeat="item in list"-->
+                                    <!--dnd-draggable="item"-->
+                                    <!--dnd-moved="list.splice($index, 1)"-->
+                                    <!--dnd-effect-allowed="copy"-->
+                                    <!--dnd-selected="models.selected = item"-->
+                                    <!--ng-class="{'selected': models.selected === item}"-->
+                                <!--&gt;-->
+                                    <!--{{item.type}}-->
+                                    <!--<div ng-bind-html="item.text"></div>-->
+
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+        <!--&lt;!&ndash; Sidebar &ndash;&gt;-->
+        <!--<div class="col-md-2">-->
+
+            <!--<div class="toolbox box box-grey box-padding">-->
+                <!--<h3>New Elements</h3>-->
+                <!--<ul>-->
+                    <!--&lt;!&ndash; The toolbox only allows to copy objects, not move it. After a new-->
+                         <!--element was created, dnd-copied is invoked and we generate the next id &ndash;&gt;-->
+                    <!--<li ng-repeat="item in models.templates"-->
+                        <!--dnd-draggable="item"-->
+                        <!--dnd-effect-allowed="copy"-->
+                    <!--&gt;-->
+                        <!--<button type="button" class="btn btn-default btn-lg" disabled="disabled">{{item.type}}</button>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+
+
+
+            <!--<div class="trashcan box box-grey box-padding">-->
+                <!--&lt;!&ndash; If you use [] as referenced list, the dropped elements will be lost &ndash;&gt;-->
+                <!--<h3>Trashcan</h3>-->
+                <!--<ul dnd-list="[]">-->
+                    <!--<li><img src="/static/js/vendor/trashcan.jpg"></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    <script type="text/ng-template" id="list.html">
+        <ul dnd-list="list">
+            <li ng-repeat="item in list"
+                dnd-draggable="item"
+                dnd-effect-allowed="move"
+                dnd-moved="list.splice($index, 1)"
+                dnd-selected="models.selected = item"
+                ng-class="{selected: models.selected === item}"
+                >
+                <div class="item" id="{{item.hidden}}">Item{{item.id}}<div ng-bind-html="item.textarea"></div></div>
+            </li>
+        </ul>
+    </script>
+
+
+
+    <!-- Main area with dropzones and source code -->
+    <div class="col-md-8">
+        <div class="row">
+            <div ng-repeat="(zone, list) in models.dropzones" class="col-md-8">
+                <div class="dropzone box box-yellow">
+                    <!-- The dropzone also uses the list template -->
+                    <h3>Dropzone {{zone}}</h3>
+                    <div ng-include="'list.html'"></div>
                 </div>
             </div>
         </div>
+        <h2>Generated Model</h2>
+        <pre>{{modelAsJson}}</pre>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-sm-2">
+
+        <div class="toolbox box box-grey box-padding">
+            <h3>New Elements</h3>
+            <ul>
+                <!-- The toolbox only allows to copy objects, not move it. After a new
+                     element was created, dnd-copied is invoked and we generate the next id -->
+                <li ng-repeat="item in models.templates"
+                    dnd-draggable="item"
+                    dnd-effect-allowed="copy"
+                    dnd-copied="item.id = item.id + 1"
+                >
+                    <button type="button" class="btn btn-default btn-lg" disabled="disabled">{{item.type}}</button>
+                </li>
+            </ul>
+        </div>
+
+        <div ng-if="models.selected" class="box box-grey box-padding">
+            <h3>Selected</h3>
+            <strong>Type: </strong> {{models.selected.type}}<br>
+            <input type="text" ng-model="models.selected.id" class="form-control" style="margin-top: 5px" />
+        </div>
+
+        <div class="trashcan box box-grey box-padding">
+            <!-- If you use [] as referenced list, the dropped elements will be lost -->
+            <h3>Trashcan</h3>
+            <ul dnd-list="[]">
+                <li><img src="/static/js/vendor/trashcan.jpg"></li>
+            </ul>
+        </div>
 
     </div>
-</div>
+
 </body>
 </html>
