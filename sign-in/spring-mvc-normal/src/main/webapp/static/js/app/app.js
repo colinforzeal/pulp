@@ -1,46 +1,12 @@
 angular.module('demo', ["ngRoute", "dndLists"])
     .controller("SimpleDemoController", ['$scope','$sce', function ($scope,$sce) {
 
-    //
-    // $scope.models = {
-    //     selected: null,
-    //     templates: [
-    //         {type: "Text"},
-    //         {type:"Image"},
-    //         {type:"Youtube"}
-    //
-    //     ],
-    //     lists: {"A": [], "B": [
-    //         {
-    //             type:"Text",
-    //             text:$sce.trustAsHtml("<textarea></textarea>"),
-    //             value:""
-    //
-    //         },
-    //         {
-    //             type:"Image",
-    //             text:"",
-    //             value:""
-    //         },
-    //         {
-    //             type:"Youtube",
-    //             text:"",
-    //             value:""
-    //         }
-    //     ]}
-    // };
-    //
-    // // Model to JSON for demo purpose
-    // $scope.$watch('models', function(model) {
-    //     $scope.modelAsJson = angular.toJson(model, true);
-    // }, true);
-    //
-    //
+        $scope.text ="";
 
         $scope.models = {
             selected: null,
             templates: [
-                {type: "item", id: 7, "textarea":x($sce.trustAsHtml("<textarea ng-model='item.value'></textarea>"))}
+                {type: "item", id: 7,"showme":false}
             ],
             dropzones: {
                 "A": [
@@ -48,22 +14,14 @@ angular.module('demo', ["ngRoute", "dndLists"])
                         "type": "",
                         "id": "",
                         "hidden":"true",
-                        "value":""
+                        "value":"",
+                        "showme":false
                     },
                     {
                         "type": "item",
-                        "id": "4"
-
-                    },
-                    {
-                        "type": "item",
-                        "id": "5"
-
-                    },
-                    {
-                        "type": "item",
-                        "id": "6"
-
+                        "id": "4",
+                        "value":"",
+                        "showme":false
                     }
                 ]
             }
@@ -73,7 +31,20 @@ angular.module('demo', ["ngRoute", "dndLists"])
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
 
+        $scope.func =function () {
+            if($scope.models.selected.showme===true){
+                $scope.models.selected.showme=false;
+            }
+            else if($scope.models.selected.showme===false){
+                $scope.models.selected.showme=true;
+            }
+
+        };
+    }
 
 
-}]);
+
+
+
+]);
 

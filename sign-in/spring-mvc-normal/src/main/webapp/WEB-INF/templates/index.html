@@ -98,7 +98,13 @@
                 dnd-selected="models.selected = item"
                 ng-class="{selected: models.selected === item}"
                 >
-                <div class="item" id="{{item.hidden}}">Item{{item.id}}<div ng-bind-html="item.textarea"></div></div>
+                <a><div class="item" id="{{item.hidden}}" ng-click="func()" >Item{{item.id}}</div></a>
+
+                <div class="wrapper">
+                    <textarea ng-show="item.showme" ng-model="item.value">It will appear here!</textarea>
+
+                </div>
+                <h1 ng-show="item.showme">{{item.value}}</h1>
             </li>
         </ul>
     </script>
@@ -151,6 +157,7 @@
                 <li><img src="/static/js/vendor/trashcan.jpg"></li>
             </ul>
         </div>
+
 
     </div>
 
