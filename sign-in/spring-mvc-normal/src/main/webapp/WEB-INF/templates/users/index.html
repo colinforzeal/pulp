@@ -1,37 +1,13 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <!-- angular is the only dependency! -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="/static/js/vendor/angular-sanitize.js"></script>
-    <script src="/static/js/app/angular-drag-and-drop-lists.js"></script>
-
-    <!-- Include YT library and this directive -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="/static/js/app/angular-youtube-embed.js"></script>
-
-    <script src="/static/js/app/ng-file-upload-shim.min.js"></script>
-    <script src="/static/js/app/ng-file-upload.min.js"></script>
-
-    <!-- Stuff that is only required in this demo (no need to copy) -->
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-theme.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/drag-lists.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/drag-list-containers.css">
-
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
-    <script src="/static/js/app/app.js"></script>
-    <style>
-        li {
-            list-style-type: none; /* Убираем маркеры */
-        }
-        #true {
-            visibility:hidden;
-            /*display: none;*/
-        }
-    </style>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="user-layout.html :: head">
 </head>
 <body ng-app="demo" ng-controller="SimpleDemoController">
+<div sec:authorize="isAuthenticated()">
+    <div th:include="user-layout.html :: navAuthorized"></div>
+
     <script type="text/ng-template" id="list.html">
         <ul dnd-list="list">
             <li ng-repeat="item in list"
@@ -41,7 +17,7 @@
                 dnd-selected="models.selected = item"
                 ng-class="{selected: models.selected === item}"
                 class="background-{{item.type}}"
-                >
+            >
 
                 <dnd-nodrag>
                     <div dnd-handle class="handle">:::</div>
@@ -58,17 +34,17 @@
                     <img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">
 
                     <!--<div ng-if="item.type == 'text'">-->
-                        <!--<textarea ng-show="item.showme" ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>-->
-                        <!--<h1 ng-show="item.showme">{{item.value}}</h1>-->
+                    <!--<textarea ng-show="item.showme" ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>-->
+                    <!--<h1 ng-show="item.showme">{{item.value}}</h1>-->
                     <!--</div>-->
                     <!--<div ng-if="item.type == 'video'">-->
-                        <!--<input type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">-->
-                        <!--<youtube-video video-url="item.value"></youtube-video>-->
+                    <!--<input type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">-->
+                    <!--<youtube-video video-url="item.value"></youtube-video>-->
                     <!--</div>-->
                     <!--<div ng-if="item.type == 'image'">-->
-                        <!--<input type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"-->
-                               <!--ngf-accept="'image/*'" ngf-max-size="20MB" class="background-{{item.type}}" />-->
-                        <!--<img ngf-thumbnail="file || '/thumb.jpg'">-->
+                    <!--<input type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"-->
+                    <!--ngf-accept="'image/*'" ngf-max-size="20MB" class="background-{{item.type}}" />-->
+                    <!--<img ngf-thumbnail="file || '/thumb.jpg'">-->
                     <!--</div>-->
                 </dnd-nodrag>
             </li>
@@ -124,6 +100,7 @@
         </div>
 
     </div>
+</div>
 
 </body>
 </html>

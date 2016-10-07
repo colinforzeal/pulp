@@ -26,7 +26,7 @@ public class HomeController {
     private PasswordEncoder passwordEncoder;
 
 
-    private static final String VIEW_NAME_HOMEPAGE = "index.html";
+    private static final String VIEW_NAME_HOMEPAGE = "/users/index.html";
 
     @Transactional
     @RequestMapping(value="/",method = RequestMethod.GET)
@@ -35,36 +35,6 @@ public class HomeController {
         User user = userRepository.findByEmail(principal.getName());
         model.addAttribute("sites",user.getSites().toString());
         System.out.println(principal.getName());
-
-
-
-
-
-
-
-
-
-//
-//        User user
-//        System.out.println(user.getFirstName());
-//        User user= userRepository.findByEmail("pashakozik3123736@gmail.com");
-//        Set set = new HashSet<Page>();
-//        Site site = new Site("my shite");
-//        set.add(new Page("lolsdsxcvf","lsdfosdfsdfsdf","sdfsdfsdfsdfsdf",site));
-//        set.add(new Page("sdsdfxcvf","sdsdsdfsdfff","sdsddsfsdfsdff",site));
-//        site.setPages(set);
-//        sitesRepository.save(site);
-//        Site newsite = new Site("another shit");
-//        Set set1 = new HashSet<Site>();
-//        set1.add(site);
-//        set1.add(newsite);
-//
-//
-//        user.setSites(set1);
-//        userRepository.save(user);
-//        System.out.println(user.getId());
-//
-//        System.out.println(user.showSites());
 
         LOGGER.debug("Rendering homepage.");
         return VIEW_NAME_HOMEPAGE;

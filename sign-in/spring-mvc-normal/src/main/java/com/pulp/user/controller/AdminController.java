@@ -21,7 +21,7 @@ public class AdminController {
     public String renderAdminPage(Model model){
         List<User> userList = userRepository.findAll();
         model.addAttribute(userList);
-        return "admin.html";
+        return "/users/admin.html";
     }
     @RequestMapping(value = "delete/{id}")
     public String remove(@PathVariable("id")Long id){

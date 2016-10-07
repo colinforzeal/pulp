@@ -34,7 +34,7 @@ public class RegistrationController {
 
     protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
     protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
-    protected static final String VIEW_NAME_REGISTRATION_PAGE = "registrationForm.html";
+    protected static final String VIEW_NAME_REGISTRATION_PAGE = "/users/registrationForm.html";
 
     private UserService service;
 

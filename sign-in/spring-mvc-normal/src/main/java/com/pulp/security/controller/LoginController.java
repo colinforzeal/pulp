@@ -12,7 +12,7 @@ public class LoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
-    protected static final String VIEW_NAME_LOGIN_PAGE = "login.html";
+    protected static final String VIEW_NAME_LOGIN_PAGE = "/users/login.html";
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginPage() {
