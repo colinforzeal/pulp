@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-/**
- * Created by user on 01.10.2016.
- */
+
 @Controller
 public class AdminController {
     @Autowired

@@ -33,6 +33,11 @@
     border: 1px solid #ddd;
     display: block;
     padding: 0px;
+    list-style-type: none;
+}
+#true {
+    visibility:hidden;
+    /*display: none;*/
 }
 
 /**

@@ -28,9 +28,7 @@ import javax.sql.DataSource;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
-/**
- * @author Petri Kainulainen
- */
+
 @Configuration
 @EnableSocial
 public class SocialContext implements SocialConfigurer {

@@ -11,9 +11,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author Petri Kainulainen
- */
 public class ExampleUserDetails extends SocialUser {
 
     private Long id;

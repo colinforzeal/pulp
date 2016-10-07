@@ -14,9 +14,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * @author Petri Kainulainen
- */
+
 @Configuration
 @EnableJpaRepositories(basePackages = {
         "com.pulp.user.repository"
