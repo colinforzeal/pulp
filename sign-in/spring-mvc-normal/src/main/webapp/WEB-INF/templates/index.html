@@ -40,27 +40,36 @@
                 dnd-moved="list.splice($index, 1)"
                 dnd-selected="models.selected = item"
                 ng-class="{selected: models.selected === item}"
+                class="background-{{item.type}}"
                 >
-                <a><div class="item" id="{{item.hidden}}" ng-click="func()" >{{item.type}}</div></a>
 
                 <dnd-nodrag>
                     <div dnd-handle class="handle">:::</div>
-                    <div ng-if="item.type == 'text'">
-                        <textarea ng-show="item.showme" ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>
-                        <h1 ng-show="item.showme">{{item.value}}</h1>
+
+                    <div class="name">
+                        <textarea ng-if="item.type == 'text'" ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>
+                        <input ng-if="item.type == 'video'" type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">
+                        <input ng-if="item.type == 'image'" type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                               ngf-accept="'image/*'" ngf-max-size="20MB" class="background-{{item.type}}" />
                     </div>
-                    <div ng-if="item.type == 'video'">
-                        <input type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">
-                        <youtube-video video-url="item.value"></youtube-video>
-                    </div>
-                    <div ng-if="item.type == 'image'">
-                        Single Image with validations
-                        <input type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-                               ngf-accept="'image/*'" ngf-max-size="20MB" />
-                        Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
-                        <button ng-click="upload(file)">Upload</button>
-                        <span ng-show="picFile.result">Upload Successful</span>
-                    </div>
+
+                    <h1 ng-if="item.type == 'text'" >{{item.value}}</h1>
+                    <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
+                    <img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">
+
+                    <!--<div ng-if="item.type == 'text'">-->
+                        <!--<textarea ng-show="item.showme" ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>-->
+                        <!--<h1 ng-show="item.showme">{{item.value}}</h1>-->
+                    <!--</div>-->
+                    <!--<div ng-if="item.type == 'video'">-->
+                        <!--<input type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">-->
+                        <!--<youtube-video video-url="item.value"></youtube-video>-->
+                    <!--</div>-->
+                    <!--<div ng-if="item.type == 'image'">-->
+                        <!--<input type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"-->
+                               <!--ngf-accept="'image/*'" ngf-max-size="20MB" class="background-{{item.type}}" />-->
+                        <!--<img ngf-thumbnail="file || '/thumb.jpg'">-->
+                    <!--</div>-->
                 </dnd-nodrag>
             </li>
         </ul>
