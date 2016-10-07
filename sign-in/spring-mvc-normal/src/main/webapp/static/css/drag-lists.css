@@ -143,3 +143,33 @@
 .nestedDemo .trashcan .dndPlaceholder {
     display: none;
 }
+
+/**
+ * Handle positioning
+ */
+.nestedDemo .handle {
+    cursor: move;
+    position: absolute;
+    top: 14px;
+}
+
+/**
+ * Gender-specifc background
+ */
+.nestedDemo ul[dnd-list] li.background-text {
+    background-color: #CAE0FC;
+}
+
+.nestedDemo ul[dnd-list] li.background-video {
+    background-color: #FFE2F5;
+}
+
+.nestedDemo ul[dnd-list] textarea.background-text {
+    background-color: #D8E9FF;
+    color: #2F4D99;
+}
+
+.nestedDemo ul[dnd-list] input.background-video {
+    background-color: #FFF0FA;
+    color: #D84FA7;
+}

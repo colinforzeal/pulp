@@ -6,10 +6,18 @@
     <script src="/static/js/vendor/angular-sanitize.js"></script>
     <script src="/static/js/app/angular-drag-and-drop-lists.js"></script>
 
+    <!-- Include YT library and this directive -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="/static/js/app/angular-youtube-embed.js"></script>
+
+    <script src="/static/js/app/ng-file-upload-shim.min.js"></script>
+    <script src="/static/js/app/ng-file-upload.min.js"></script>
+
     <!-- Stuff that is only required in this demo (no need to copy) -->
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-theme.css">
     <link rel="stylesheet" type="text/css" href="/static/css/drag-lists.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/drag-list-containers.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
     <script src="/static/js/app/app.js"></script>
@@ -24,71 +32,6 @@
     </style>
 </head>
 <body ng-app="demo" ng-controller="SimpleDemoController">
-<!--<div th:replace="layout.html :: navbar">-->
-
-    <!--<div class="simpleDemo row">-->
-        <!--<div class="col-md-8">-->
-            <!--<div class="row">-->
-                <!--<div ng-repeat="(listName, list) in models.lists" class="col-md-6">-->
-                    <!--<div class="panel panel-info">-->
-                        <!--<div class="panel-heading">-->
-                            <!--<h3 class="panel-title">List {{listName}}</h3>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class="panel-body" ng-include="'simple.html'"></div>&ndash;&gt;-->
-                        <!--<div class="panel-body">-->
-                            <!--<ul dnd-list="list">-->
-                                <!--&lt;!&ndash; The dnd-draggable directive makes an element draggable and will-->
-                                     <!--transfer the object that was assigned to it. If an element was-->
-                                     <!--dragged away, you have to remove it from the original list-->
-                                     <!--yourself using the dnd-moved attribute &ndash;&gt;-->
-                                <!--<li ng-repeat="item in list"-->
-                                    <!--dnd-draggable="item"-->
-                                    <!--dnd-moved="list.splice($index, 1)"-->
-                                    <!--dnd-effect-allowed="copy"-->
-                                    <!--dnd-selected="models.selected = item"-->
-                                    <!--ng-class="{'selected': models.selected === item}"-->
-                                <!--&gt;-->
-                                    <!--{{item.type}}-->
-                                    <!--<div ng-bind-html="item.text"></div>-->
-
-                                <!--</li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-        <!--&lt;!&ndash; Sidebar &ndash;&gt;-->
-        <!--<div class="col-md-2">-->
-
-            <!--<div class="toolbox box box-grey box-padding">-->
-                <!--<h3>New Elements</h3>-->
-                <!--<ul>-->
-                    <!--&lt;!&ndash; The toolbox only allows to copy objects, not move it. After a new-->
-                         <!--element was created, dnd-copied is invoked and we generate the next id &ndash;&gt;-->
-                    <!--<li ng-repeat="item in models.templates"-->
-                        <!--dnd-draggable="item"-->
-                        <!--dnd-effect-allowed="copy"-->
-                    <!--&gt;-->
-                        <!--<button type="button" class="btn btn-default btn-lg" disabled="disabled">{{item.type}}</button>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
-
-
-
-            <!--<div class="trashcan box box-grey box-padding">-->
-                <!--&lt;!&ndash; If you use [] as referenced list, the dropped elements will be lost &ndash;&gt;-->
-                <!--<h3>Trashcan</h3>-->
-                <!--<ul dnd-list="[]">-->
-                    <!--<li><img src="/static/js/vendor/trashcan.jpg"></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>-->
-
     <script type="text/ng-template" id="list.html">
         <ul dnd-list="list">
             <li ng-repeat="item in list"
@@ -98,13 +41,27 @@
                 dnd-selected="models.selected = item"
                 ng-class="{selected: models.selected === item}"
                 >
-                <a><div class="item" id="{{item.hidden}}" ng-click="func()" >Item{{item.id}}</div></a>
+                <a><div class="item" id="{{item.hidden}}" ng-click="func()" >{{item.type}}</div></a>
 
-                <div class="wrapper">
-                    <textarea ng-show="item.showme" ng-model="item.value">It will appear here!</textarea>
-
-                </div>
-                <h1 ng-show="item.showme">{{item.value}}</h1>
+                <dnd-nodrag>
+                    <div dnd-handle class="handle">:::</div>
+                    <div ng-if="item.type == 'text'">
+                        <textarea ng-show="item.showme" ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>
+                        <h1 ng-show="item.showme">{{item.value}}</h1>
+                    </div>
+                    <div ng-if="item.type == 'video'">
+                        <input type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">
+                        <youtube-video video-url="item.value"></youtube-video>
+                    </div>
+                    <div ng-if="item.type == 'image'">
+                        Single Image with validations
+                        <input type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+                               ngf-accept="'image/*'" ngf-max-size="20MB" />
+                        Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
+                        <button ng-click="upload(file)">Upload</button>
+                        <span ng-show="picFile.result">Upload Successful</span>
+                    </div>
+                </dnd-nodrag>
             </li>
         </ul>
     </script>
@@ -137,7 +94,6 @@
                 <li ng-repeat="item in models.templates"
                     dnd-draggable="item"
                     dnd-effect-allowed="copy"
-                    dnd-copied="item.id = item.id + 1"
                 >
                     <button type="button" class="btn btn-default btn-lg" disabled="disabled">{{item.type}}</button>
                 </li>
@@ -147,7 +103,7 @@
         <div ng-if="models.selected" class="box box-grey box-padding">
             <h3>Selected</h3>
             <strong>Type: </strong> {{models.selected.type}}<br>
-            <input type="text" ng-model="models.selected.id" class="form-control" style="margin-top: 5px" />
+            <input type="text" ng-model="models.selected.value" class="form-control" style="margin-top: 5px" />
         </div>
 
         <div class="trashcan box box-grey box-padding">
@@ -157,7 +113,6 @@
                 <li><img src="/static/js/vendor/trashcan.jpg"></li>
             </ul>
         </div>
-
 
     </div>
 
