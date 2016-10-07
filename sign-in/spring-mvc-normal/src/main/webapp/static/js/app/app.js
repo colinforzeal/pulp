@@ -6,9 +6,9 @@ angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
         $scope.models = {
             selected: null,
             templates: [
-                {type: "text", showme :false},
-                {type: "video", showme :false},
-                {type: "image", showme:false}
+                {type: "text"},
+                {type: "video"},
+                {type: "image"}
             ],
             dropzones: {
                 "A": [
@@ -16,12 +16,10 @@ angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
                         type: "",
                         hidden:true,
                         value:"",
-                        showme:false
                     },
                     {
                         type: "text",
                         value:"",
-                        showme:false
                     }
                 ]
             }
