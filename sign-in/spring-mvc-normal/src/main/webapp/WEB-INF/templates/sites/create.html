@@ -12,7 +12,7 @@
 <div class="col-md-6 col-sm-6 col-lg-6 col-md-offset-3 col-lg-offset-3 col-sm-offset-3">
     <div class="panel panel-default">
         <div class="panel-body">
-            <form th:action="@{/users/create}" th:object="${site}" method="post" role="form">
+            <form th:action="@{/sites/create}" th:object="${site}" method="post" role="form">
                 <div class="row">
                     <div id="form-group-firstName" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
                         <label class="control-label" for="user-firstName" >Enter Site name:</label>
