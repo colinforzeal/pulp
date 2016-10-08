@@ -38,7 +38,7 @@ public class SiteController {
     public SiteController(){};
 
 
-    @RequestMapping(value = "/create",method = RequestMethod.GET)
+    @RequestMapping(value = "/sites/create",method = RequestMethod.GET)
     public String siteForm(Model model, Principal principal){
         if(principal==null)
         {return "redirect:/login";}
@@ -47,11 +47,11 @@ public class SiteController {
         return "sites/create.html";
     }
     @Transactional
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    @RequestMapping(value = "/sites/create",method = RequestMethod.POST)
     public String addSite(@Valid @ModelAttribute("site")SiteForm siteForm, BindingResult result, WebRequest request, Principal principal){
 
         if(result.hasErrors()){
-            return "redirect:/create";
+            return "redirect:/sites/create";
         }
         String name = siteForm.getName();
 

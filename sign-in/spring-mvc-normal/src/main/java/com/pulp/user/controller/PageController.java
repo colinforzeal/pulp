@@ -23,7 +23,7 @@ import java.util.Set;
  * Created by colinforzeal on 8.10.16.
  */
 @Controller
-public class PagesController {
+public class PageController {
     @Autowired
     private PagesRepository pagesRepository;
     @Autowired
