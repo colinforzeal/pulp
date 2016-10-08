@@ -1,6 +1,7 @@
 package com.pulp.user.controller;
 
 import com.pulp.user.dto.SiteForm;
+import com.pulp.user.model.Page;
 import com.pulp.user.model.Site;
 import com.pulp.user.model.User;
 import com.pulp.user.repository.PagesRepository;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -69,15 +71,24 @@ public class SiteController {
     public String showSite(@PathVariable(value="site_name") String siteName,Model model, Principal principal){
 
         Site site = sitesRepository.findOneByName(siteName);
-//        System.out.println( pagesRepository.findBySiteOrderByPageidDesc(site.getId()).get(0).getName());
+        if(site!=null)
+        {
+            User user = site.getUser();
+            model.addAttribute(user);
+            model.addAttribute(site);
+        }
         if(site==null){
             return "redirect:/";
-
         }
         else if(site.getPages()==null){
             return "pages/create.html";
-        };
-        return "pages/create.html";
+        }
+
+       if (pagesRepository.findBySite(site)!=null)
+       {ArrayList<Page> pages =pagesRepository.findBySite(site); System.out.println(pages);}
+        else System.out.println("NULL");
+
+        return "pages/index.html";
 //        else
 //            return "sites/"+siteName+pagesRepository.findBySiteOrderByPageidDesc(site.getId()).get(0).getName()+".html";
     }

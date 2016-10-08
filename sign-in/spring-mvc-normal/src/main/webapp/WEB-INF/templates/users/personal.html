@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> Hi, <span th:text="${user.firstName}"> </span></h1>
+
+<p>Your sites:
+    <tr th:each="site : ${sites}">
+        <td>
+            <a th:href="@{~/users/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
+
+        </td>
+    </tr>
+</p>
+<a th:href="@{add_site}">Add new site</a>
+</body>
+</html>
