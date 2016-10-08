@@ -30,7 +30,7 @@ public class UserController {
     public String showPersonalPage(@PathVariable(value="id") Long id,Principal principal, Model model) {
         User user = userRepository.findById(id);
         System.out.println(user.getFirstName());
-        if(principal == null || !principal.getName().equals(user.getEmail())) {
+        if(principal == null) {
             return "redirect:/";
         }
         model.addAttribute("user",user);
@@ -40,13 +40,10 @@ public class UserController {
             model.addAttribute("sites",sites);
             System.out.println(showSite(user.getSites()));
         }
-
-
-
         return "users/personal.html";
     }
 
-    private String showSite(Set<Site> sites){
+    private String showSite(List<Site> sites){
         String result="";
         for (Site site :sites) {
             result+="Site name : "+ site.getName()+ "\n";

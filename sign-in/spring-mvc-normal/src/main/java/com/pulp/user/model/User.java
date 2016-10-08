@@ -3,6 +3,8 @@ package com.pulp.user.model;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -34,7 +36,7 @@ public class User  {
 
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<Site> sites;
+    private List<Site> sites;
 
 
     @Enumerated(EnumType.STRING)
@@ -110,11 +112,11 @@ public class User  {
     }
 
 
-    public Set<Site> getSites() {
+    public List<Site> getSites() {
         return sites;
     }
 
-    public void setSites(Set<Site> sites) {
+    public void setSites(ArrayList<Site> sites) {
         this.sites = sites;
     }
 
