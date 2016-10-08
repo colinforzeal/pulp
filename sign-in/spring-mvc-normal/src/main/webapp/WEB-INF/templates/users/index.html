@@ -23,8 +23,8 @@
                     <div dnd-handle class="handle">:::</div>
                     <div>
                     <div class="name">
-                        <textarea ng-if="item.type == 'text'"  ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>
-                        <!--<wysiwyg ng-if="item.type == 'text'"  textarea-id="question" textarea-class="background-{{item.type}} form-control input-sm"  textarea-height="80px" textarea-name="textareaQuestion" textarea-required ng-model="item.value" enable-bootstrap-title="true"></wysiwyg>-->
+                        <!--<textarea ng-if="item.type == 'text'"  ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>-->
+                        <wysiwyg ng-if="item.type == 'text'"  textarea-id="question" textarea-class="background-{{item.type}} form-control input-sm"  textarea-height="80px" textarea-name="textareaQuestion" textarea-required ng-model="item.value" enable-bootstrap-title="true"></wysiwyg>
                         <input ng-if="item.type == 'video'" type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">
                         <input ng-if="item.type == 'image'" type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
                                ngf-accept="'image/*'" ngf-max-size="20MB" class="background-{{item.type}}" />
