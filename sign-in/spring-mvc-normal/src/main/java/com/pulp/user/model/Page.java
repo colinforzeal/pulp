@@ -16,10 +16,6 @@ public class Page {
 
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
-    private String url;
-    @Column(nullable = false,unique = true)
-    private String url_to_html;
     @Column
     private boolean isMainPage;
 
@@ -30,27 +26,13 @@ public class Page {
     @JoinColumn(name = "site_id", nullable = false)
     private Site site;
 
-    public Page(String name, String url, String url_to_html) {
+    public Page(String name, Site site) {
         this.name = name;
-        this.url = url;
-        this.url_to_html = url_to_html;
+
     }
 
     public Page(){}
 
-    public Page(String name, String url_to_html, Site site) {
-        this.name = name;
-        this.url_to_html = url_to_html;
-        this.site = site;
-    }
-
-    public Page(String name, String url, String url_to_html, Site site) {
-
-        this.name = name;
-        this.url = url;
-        this.url_to_html = url_to_html;
-        this.site = site;
-    }
 
 
 
@@ -62,21 +44,6 @@ public class Page {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUrl_to_html() {
-        return url_to_html;
-    }
-
-    public void setUrl_to_html(String url_to_html) {
-        this.url_to_html = url_to_html;
-    }
 
     public Site getSite() {
         return site;

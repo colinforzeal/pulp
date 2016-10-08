@@ -34,8 +34,6 @@ public class PagesController {
     public String savePage(@RequestBody String data) {
         Page page = new Page();
         page.setName("LOH");
-        page.setUrl("url");
-        page.setUrl_to_html("url");
         page.setSite(sitesRepository.findByName("suede"));
         page.setData(data);
         pagesRepository.save(page);

@@ -9,19 +9,22 @@
 <body>
 <div sec:authorize="isAuthenticated()">
     <div th:include="user-layout.html :: navAuthorized"></div>
-    <div class="col-md-2 col-md-offset-5">
+    <div   style="margin-bottom: 50px;" class="col-md-6 col-md-offset-3">
 
         <h1> Hi, <span th:text="${user.firstName}"> </span></h1>
 
-            <p>Your sites:
-                <tr th:each="site : ${sites}">
-                    <td>
-                        <a th:href="@{~/users/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
+            <p>Your sites: </p>
+        <div class="container">
+                <div class="list-group" th:each="site : ${sites}">
+                        <a class="list-group-item" th:href="@{~/users/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
 
-                    </td>
-                </tr>
-            </p>
-            <a th:href="@{create}">Create new site</a>
+
+                </div>
+        </div>
+            <div>
+                <a th:href="@{~/users/create}">Create new site</a>
+            </div>
+
     </div>
 </div>
 </body>

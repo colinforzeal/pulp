@@ -39,10 +39,6 @@
         </ul>
     </script>
 
-    <a th:href="@{users/{id}(id=${#authentication.principal.id})}">
-        <a>Your profile, <span sec:authentication="principal.username"></span></a>
-        <span sec:authentication="principal.id"></span></a>
-    </a>
 
     <!-- Main area with dropzones and source code -->
     <div class="col-md-10">

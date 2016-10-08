@@ -3,6 +3,7 @@ package com.pulp.user.model;
 import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -29,13 +30,13 @@ public class Site {
     }
 
     @OneToMany(mappedBy = "site",cascade = CascadeType.ALL)
-    private Set<Page> pages;
+    private List<Page> pages;
 
     public Site(){}
 
 
 //
-    public Site(String name, Set<Page> pages) {
+    public Site(String name, List<Page> pages) {
         this.name = name;
         this.pages = pages;
     }
@@ -60,11 +61,11 @@ public class Site {
         this.name = name;
     }
 
-    public Set<Page> getPages() {
+    public List<Page> getPages() {
         return pages;
     }
 
-    public void setPages(Set<Page> pages) {
+    public void setPages(List<Page> pages) {
         this.pages = pages;
     }
 
