@@ -4,9 +4,11 @@
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="user-layout.html :: head">
 </head>
-<body ng-app="demo" ng-controller="SimpleDemoController">
+<body ng-app="demo" ng-controller="SimpleDemoController" th:attr="ng-init='site=\'' + ${siteName} + '\''">
 <div sec:authorize="isAuthenticated()">
     <div th:include="user-layout.html :: navAuthorized"></div>
+
+    <span th:text="${pageName}"></span>
 
     <script type="text/ng-template" id="list.html">
         <ul dnd-list="list">
