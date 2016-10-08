@@ -38,25 +38,12 @@ public class PageController {
     private SitesRepository sitesRepository;
 
     @Transactional
-    @RequestMapping(value="/sites/{siteName}/pages/create",method = RequestMethod.POST)
-    public String savePage(@PathVariable(value = "siteName") String siteName, @RequestBody String data, @Valid @ModelAttribute("form") PageForm pageForm, BindingResult result) {
-        if(result.hasErrors()){
-            return "redirect:/sites/" + siteName+ "/pages/create";
-        }
-        String name = pageForm.getName();
-
+    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
+    public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data, @Valid @ModelAttribute("form") PageForm pageForm, BindingResult result) {
         Site site = sitesRepository.findByName(siteName);
-        if(pageNameExists(site,name))
-        {
-            addFieldError("form","name",name,"Page with that name already exists",result);
-            return "pages/create.html";
-        }
 
-        Page page = new Page();
-        page.setName(name);
-        page.setSite(site);
+        Page page = pagesRepository.findBySiteAndName(site, pageName);
         page.setData(data);
-        page.setMainPage(true);
         pagesRepository.save(page);
 
         return "redirect:/sites/" + siteName;
@@ -64,38 +51,18 @@ public class PageController {
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}",method = RequestMethod.GET)
     public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model) {
-        Page page = pagesRepository.findByName(pageName);
+        Site site = sitesRepository.findByName(siteName);
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
         model.addAttribute("page",page);
 
         return "/pages/index.html";
     }
 
-    @RequestMapping(value="/sites/{siteName}/pages/create",method = RequestMethod.GET)
-    public String createPage(@PathVariable(value = "siteName") String siteName, Model model)
+    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.GET)
+    public String createPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model)
     {
-        SiteForm siteform = new SiteForm();
-        model.addAttribute("form", siteform);
         model.addAttribute("siteName", siteName);
+        model.addAttribute("pageName", pageName);
         return "/pages/create.html";
-    }
-
-    private boolean pageNameExists(Site site, String name) {
-        Page page = pagesRepository.findBySiteAndName(site, name);
-
-        return page != null;
-    }
-
-    private void addFieldError(String objectName, String fieldName, String fieldValue,  String errorCode, BindingResult result) {
-        FieldError error = new FieldError(
-                objectName,
-                fieldName,
-                fieldValue,
-                false,
-                new String[]{errorCode},
-                new Object[]{},
-                errorCode
-        );
-
-        result.addError(error);
     }
 }

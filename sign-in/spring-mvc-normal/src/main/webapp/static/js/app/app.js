@@ -4,6 +4,7 @@ angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
         // ,'colorpicker.module', 'wysiwyg.module'
 
         $scope.text ="";
+        $scope.site = "";
 
         $scope.models = {
             selected: null,
@@ -48,7 +49,8 @@ angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
         };
         
         $scope.save = function () {
-            var post = $http.post('/pages', $scope.modelAsJson);
+            console.log($scope.site);
+            var post = $http.post('/sites/'+site+'/pages', $scope.modelAsJson);
             post.success(function(data) {
                 console.log(data);
                 $window.location.href = '/pages';
