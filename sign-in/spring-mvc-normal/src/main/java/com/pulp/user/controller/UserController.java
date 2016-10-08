@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by user on 08.10.2016.
@@ -36,7 +33,9 @@ public class UserController {
         model.addAttribute("user",user);
         if(user.getSites()!=null){
             List<Site> sites=new ArrayList<>();
+
             sites.addAll(user.getSites());
+            Collections.reverse(sites);
             model.addAttribute("sites",sites);
             System.out.println(showSite(user.getSites()));
         }

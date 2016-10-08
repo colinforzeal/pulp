@@ -41,10 +41,10 @@ public class PagesController {
         return "redirect:/pages";
     }
 
-    @RequestMapping(value="/pages",method = RequestMethod.GET)
-    public String showPages(ModelMap model) {
-        List<Page> pages = pagesRepository.findAll();
-        model.addAttribute("pages",pages);
+    @RequestMapping(value="/pages/{pageName}",method = RequestMethod.GET)
+    public String showPages(@PathVariable(value="pageName") String pageName,Model model) {
+        Page page = pagesRepository.findByName(pageName);
+       model.addAttribute("page",page);
 
         return "/pages/index.html";
     }

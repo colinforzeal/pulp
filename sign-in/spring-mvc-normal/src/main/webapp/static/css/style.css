@@ -16,3 +16,19 @@
     font-size: x-large;
     font-weight: 800;
 }
+li {
+    list-style-type: none; /* Убираем маркеры */
+}
+.divide{
+    height: 1px;
+    /*margin: 9px 0;*/
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+.a_button{
+    margin-bottom: 0px;
+    margin-left: 0px;
+}
+.help_toggle{
+    padding-right: 30px;
+}
