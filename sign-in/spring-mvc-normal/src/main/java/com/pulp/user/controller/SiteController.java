@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -35,7 +36,7 @@ public class SiteController {
     public SiteController(){};
 
 
-    @RequestMapping(value = "/users/add_site",method = RequestMethod.GET)
+    @RequestMapping(value = "/users/create",method = RequestMethod.GET)
     public String siteForm(Model model, Principal principal){
         if(principal==null)
         {return "redirect:/login";}
@@ -44,7 +45,7 @@ public class SiteController {
         return "sites/create.html";
     }
     @Transactional
-    @RequestMapping(value = "/users/add_site",method = RequestMethod.POST)
+    @RequestMapping(value = "/users/create",method = RequestMethod.POST)
     public String addSite(@Valid @ModelAttribute("site")SiteForm siteForm, BindingResult result,Principal principal){
 
 
@@ -56,7 +57,7 @@ public class SiteController {
             Site site = new Site(name, user);
 
             sitesRepository.save(site);
-            Set set1 = new HashSet<Site>();
+            ArrayList set1 = new ArrayList<Site>();
             set1.add(site);
             user.setSites(set1);
             userRepository.save(user);
@@ -85,7 +86,7 @@ public class SiteController {
         }
 
        if (pagesRepository.findBySite(site)!=null)
-       {ArrayList<Page> pages =pagesRepository.findBySite(site); System.out.println(pages);}
+       {List<Page> pages =pagesRepository.findBySite(site); System.out.println(pages);}
         else System.out.println("NULL");
 
         return "pages/index.html";

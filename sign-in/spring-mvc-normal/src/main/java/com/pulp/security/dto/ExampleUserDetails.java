@@ -1,15 +1,15 @@
 package com.pulp.security.dto;
 
 import com.pulp.user.model.Role;
+import com.pulp.user.model.Site;
 import com.pulp.user.model.SocialMediaService;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.concurrent.BackgroundInitializer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.social.security.SocialUser;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ExampleUserDetails extends SocialUser {
 
@@ -22,6 +22,8 @@ public class ExampleUserDetails extends SocialUser {
     private Role role;
 
     private SocialMediaService socialSignInProvider;
+
+    private List<Site> sites;
 
     public ExampleUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -63,6 +65,10 @@ public class ExampleUserDetails extends SocialUser {
                 .toString();
     }
 
+    public List<Site> getSites() {
+        return sites;
+    }
+
     public static class Builder {
 
         private Long id;
@@ -73,7 +79,7 @@ public class ExampleUserDetails extends SocialUser {
 
         private String lastName;
 
-
+        private List<Site> sites;
 
         private Role role;
 
@@ -89,7 +95,10 @@ public class ExampleUserDetails extends SocialUser {
             this.firstName = firstName;
             return this;
         }
-
+        public Builder sites(List<Site> sites){
+            this.sites=sites;
+            return this;
+        }
         public Builder id(Long id) {
             this.id = id;
             return this;
@@ -119,6 +128,7 @@ public class ExampleUserDetails extends SocialUser {
             return this;
         }
 
+
         public ExampleUserDetails build() {
             ExampleUserDetails user = new ExampleUserDetails(username, id.toString(), authorities);
 
@@ -127,8 +137,10 @@ public class ExampleUserDetails extends SocialUser {
             user.lastName = lastName;
             user.role = role;
             user.socialSignInProvider = socialSignInProvider;
-
+            user.sites=sites;
             return user;
         }
+
+
     }
 }

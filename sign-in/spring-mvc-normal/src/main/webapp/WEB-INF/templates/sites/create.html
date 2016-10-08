@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/users/add_site}" th:object="${site}" method="post" role="form">
+<form th:action="@{/users/create}" th:object="${site}" method="post" role="form">
 
     <div class="row">
         <div id="form-group-firstName" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">

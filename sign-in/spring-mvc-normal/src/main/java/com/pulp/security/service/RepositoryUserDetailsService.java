@@ -45,6 +45,7 @@ public class RepositoryUserDetailsService implements UserDetailsService {
                 .firstName(user.getFirstName())
                 .id(user.getId())
                 .lastName(user.getLastName())
+                .sites(user.getSites())
 //                .password(user.getPassword())
                 .role(user.getRole())
                 .socialSignInProvider(user.getSignInProvider())
