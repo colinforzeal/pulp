@@ -5,9 +5,7 @@ import com.pulp.user.repository.FileUploadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by user on 03.10.2016.
- */
+
 
 @Service
 public class FileUploadService {

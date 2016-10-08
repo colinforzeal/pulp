@@ -1,4 +1,4 @@
-angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
+angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload','colorpicker.module', 'wysiwyg.module'])
     .controller("SimpleDemoController", ['$scope','Upload', function ($scope,Upload) {
 
         $scope.text ="";

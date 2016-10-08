@@ -1,6 +1,5 @@
 package com.pulp.config;
 
-import libs.springframework.social.vkontakte.connect.VKontakteConnectionFactory;
 //import com.pulp.user.signin.SimpleSignInAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -28,9 +27,7 @@ import javax.sql.DataSource;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
-/**
- * @author Petri Kainulainen
- */
+
 @Configuration
 @EnableSocial
 public class SocialContext implements SocialConfigurer {
@@ -63,10 +60,10 @@ public class SocialContext implements SocialConfigurer {
         facebook.setDefaultScope("email");
         cfConfig.addConnectionFactory(facebook.getConnectionFactory());
 
-        cfConfig.addConnectionFactory(new VKontakteConnectionFactory(
-                env.getProperty("vk.consumer.key"),
-                env.getProperty("vk.consumer.secret")
-        ));
+//        cfConfig.addConnectionFactory(new VKontakteConnectionFactory(
+//                env.getProperty("vk.consumer.key"),
+//                env.getProperty("vk.consumer.secret")
+//        ));
     }
 
     /**

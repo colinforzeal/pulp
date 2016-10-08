@@ -8,7 +8,8 @@
 <body>
 <div sec:authorize="isAnonymous()">
     <div th:include="user-layout.html :: navAnonymous"></div>
-
+    <div class="container">
+    <div class="col-sm-6 col-md-5 col-lg-6 col-md-offset-5">
     <ul class="nav nav-pills nav-stacked">
         <li>
             <div class="row social-button-row">
@@ -26,15 +27,18 @@
                 </div>
             </div>
         </li>
-        <li>
-            <div class="row social-button-row">
-                <div class="col-lg-4">
-                    <a th:href="@{/auth/vkontakte}"><button class="btn btn-vk" th:text="#{label.vk.sign.in.button}"><i class="icon-vk"></i>
-                    </button></a>
-                </div>
-            </div>
-        <li>
+        <!--<li>-->
+            <!--<div class="row social-button-row">-->
+                <!--<div class="col-lg-4">-->
+                    <!--<a th:href="@{/auth/vkontakte}"><button class="btn btn-vk" th:text="#{label.vk.sign.in.button}"><i class="icon-vk"></i>-->
+                    <!--</button></a>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--<li>-->
     </ul>
+    </div>
+    </div>
 </div>
+
 </body>
 </html>

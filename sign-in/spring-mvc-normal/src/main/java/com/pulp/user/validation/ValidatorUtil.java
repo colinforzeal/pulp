@@ -3,9 +3,7 @@ package com.pulp.user.validation;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
 
-/**
- * @author Petri Kainulainen
- */
+
 public class ValidatorUtil {
 
     public static void addValidationError(String field, ConstraintValidatorContext context) {

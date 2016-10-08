@@ -20,9 +20,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.Properties;
 
-/**
- * @author Petri Kainulainen
- */
+
 @Configuration
 @ComponentScan(basePackages = {
         "com.pulp.common.controller",

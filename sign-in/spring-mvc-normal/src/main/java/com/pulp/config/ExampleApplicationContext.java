@@ -5,9 +5,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-/**
- * @author Petri Kainulainen
- */
 @Configuration
 @ComponentScan(basePackages = {
         "com.pulp.user.service"

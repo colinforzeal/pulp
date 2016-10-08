@@ -5,17 +5,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * @author Petri Kainulainen
- */
+
 @Entity
 @Table(name = "user_accounts")
 public class User  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USER_ID", unique = true, nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)
     private Long id;
+
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
@@ -34,7 +33,7 @@ public class User  {
     private Role role;
 
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Site> sites;
 
 
@@ -89,16 +88,16 @@ public class User  {
 
 
     public String toString() {
-        if(sites!=null){
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("site",sites)
-                .append("email", email)
-                .append("firstName", firstName)
-                .append("lastName", lastName)
-                .append("signInProvider", this.getSignInProvider())
+        if(sites!=null) {
+            return new ToStringBuilder(this)
+                    .append("id", id)
+                    .append("site", sites)
+                    .append("email", email)
+                    .append("firstName", firstName)
+                    .append("lastName", lastName)
+                    .append("signInProvider", this.getSignInProvider()).toString();
 
-                .toString();}
+        }
         else {return new ToStringBuilder(this)
                 .append("id", id)
                 .append("site",sites)

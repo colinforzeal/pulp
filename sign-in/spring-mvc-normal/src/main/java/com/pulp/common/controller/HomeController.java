@@ -22,8 +22,6 @@ public class HomeController {
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
 
     private static final String VIEW_NAME_HOMEPAGE = "/users/index.html";
@@ -33,8 +31,8 @@ public class HomeController {
     public String showHomePage(Principal principal,Model model) {
 
         User user = userRepository.findByEmail(principal.getName());
-        model.addAttribute("sites",user.getSites().toString());
-        System.out.println(principal.getName());
+        model.addAttribute("user",user);
+
 
         LOGGER.debug("Rendering homepage.");
         return VIEW_NAME_HOMEPAGE;

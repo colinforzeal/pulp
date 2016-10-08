@@ -16,13 +16,13 @@ public class RepositoryUserService implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryUserService.class);
 
-    private PasswordEncoder passwordEncoder;
+
 
     private UserRepository repository;
 
     @Autowired
-    public RepositoryUserService(PasswordEncoder passwordEncoder, UserRepository repository) {
-        this.passwordEncoder = passwordEncoder;
+    public RepositoryUserService( UserRepository repository) {
+
         this.repository = repository;
     }
 
@@ -38,13 +38,12 @@ public class RepositoryUserService implements UserService {
 
         LOGGER.debug("Email: {} does not exist. Continuing registration.", userAccountData.getEmail());
 
-        String encodedPassword = encodePassword(userAccountData);
+
 
         User.Builder user = User.getBuilder()
                 .email(userAccountData.getEmail())
                 .firstName(userAccountData.getFirstName())
-                .lastName(userAccountData.getLastName())
-                .password(encodedPassword);
+                .lastName(userAccountData.getLastName());
 
         if (userAccountData.isSocialSignIn()) {
             user.signInProvider(userAccountData.getSignInProvider());
@@ -72,14 +71,4 @@ public class RepositoryUserService implements UserService {
         return false;
     }
 
-    private String encodePassword(RegistrationForm dto) {
-        String encodedPassword = null;
-
-        if (dto.isNormalRegistration()) {
-            LOGGER.debug("Registration is normal registration. Encoding password.");
-            encodedPassword = passwordEncoder.encode(dto.getPassword());
-        }
-
-        return encodedPassword;
-    }
 }

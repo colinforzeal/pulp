@@ -8,9 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-/**
- * @author Petri Kainulainen
- */
+
 public class SecurityUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtil.class);
@@ -22,7 +20,7 @@ public class SecurityUtil {
                 .firstName(user.getFirstName())
                 .id(user.getId())
                 .lastName(user.getLastName())
-                .password(user.getPassword())
+
                 .role(user.getRole())
                 .socialSignInProvider(user.getSignInProvider())
                 .username(user.getEmail())

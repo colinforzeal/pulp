@@ -12,7 +12,6 @@ import org.springframework.social.security.SocialUserDetailsService;
 /**
  * This class delegates requests forward to our UserDetailsService implementation.
  * This is possible because we use the username of the user as the account ID.
- * @author Petri Kainulainen
  */
 public class SimpleSocialUserDetailsService implements SocialUserDetailsService {
 

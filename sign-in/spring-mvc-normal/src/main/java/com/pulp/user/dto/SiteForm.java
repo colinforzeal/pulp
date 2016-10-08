@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 
 
 public class SiteForm {
+
     @Size(max = 30)
     @NotEmpty
     @NotNull

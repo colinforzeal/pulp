@@ -11,9 +11,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author Petri Kainulainen
- */
 public class ExampleUserDetails extends SocialUser {
 
     private Long id;
@@ -76,7 +73,7 @@ public class ExampleUserDetails extends SocialUser {
 
         private String lastName;
 
-        private String password;
+
 
         private Role role;
 
@@ -103,15 +100,6 @@ public class ExampleUserDetails extends SocialUser {
             return this;
         }
 
-        public Builder password(String password) {
-            if (password == null) {
-                password = "SocialUser";
-            }
-
-            this.password = password;
-            return this;
-        }
-
         public Builder role(Role role) {
             this.role = role;
 
@@ -132,7 +120,7 @@ public class ExampleUserDetails extends SocialUser {
         }
 
         public ExampleUserDetails build() {
-            ExampleUserDetails user = new ExampleUserDetails(username, password, authorities);
+            ExampleUserDetails user = new ExampleUserDetails(username, id.toString(), authorities);
 
             user.id = id;
             user.firstName = firstName;

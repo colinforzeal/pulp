@@ -11,8 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
- * This class loads the requested user by using a Spring Data JPA repository.
- * @author Petri Kainulainen
+ * This class loads the requested user by using a Spring Data JPA repository
  */
 public class RepositoryUserDetailsService implements UserDetailsService {
 
@@ -46,7 +45,7 @@ public class RepositoryUserDetailsService implements UserDetailsService {
                 .firstName(user.getFirstName())
                 .id(user.getId())
                 .lastName(user.getLastName())
-                .password(user.getPassword())
+//                .password(user.getPassword())
                 .role(user.getRole())
                 .socialSignInProvider(user.getSignInProvider())
                 .username(user.getEmail())
