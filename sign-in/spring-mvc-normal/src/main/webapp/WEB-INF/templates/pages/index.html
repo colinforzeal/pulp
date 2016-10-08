@@ -6,10 +6,11 @@
     <title>Title</title>
 </head>
 <body>
-<div th:each="page : ${pages}">
-    <h1 th:text="${page.data}"></h1>
-</div>
 
-<a th:href="@{/pages/create}">Create new page</a>
+<div th:text="${page.name}">
+</div>
+<div th:text="${page.data}"></div>
+
+
 </body>
 </html>

@@ -38,7 +38,7 @@ public class SiteController {
     public SiteController(){};
 
 
-    @RequestMapping(value = "/users/create",method = RequestMethod.GET)
+    @RequestMapping(value = "/create",method = RequestMethod.GET)
     public String siteForm(Model model, Principal principal){
         if(principal==null)
         {return "redirect:/login";}
@@ -47,11 +47,11 @@ public class SiteController {
         return "sites/create.html";
     }
     @Transactional
-    @RequestMapping(value = "/users/create",method = RequestMethod.POST)
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
     public String addSite(@Valid @ModelAttribute("site")SiteForm siteForm, BindingResult result, WebRequest request, Principal principal){
 
         if(result.hasErrors()){
-            return "redirect:/users/create";
+            return "redirect:/create";
         }
         String name = siteForm.getName();
 
@@ -81,7 +81,7 @@ public class SiteController {
 
         return "redirect:/users/"+user.getId();
     }
-    @RequestMapping(value = "/users/sites/{site_name}",method = RequestMethod.GET)
+    @RequestMapping(value = "/sites/{site_name}",method = RequestMethod.GET)
     public String showSite(@PathVariable(value="site_name") String siteName,Model model, Principal principal){
 
         Site site = sitesRepository.findOneByName(siteName);
@@ -95,16 +95,10 @@ public class SiteController {
             return "redirect:/";
         }
         else if(site.getPages()==null){
-            return "pages/create.html";
+            return "redirect:/pages/create";
         }
-
-       if (pagesRepository.findBySite(site)!=null)
-       {List<Page> pages =pagesRepository.findBySite(site); System.out.println(pages);}
-        else System.out.println("NULL");
-
-        return "pages/index.html";
-//        else
-//            return "sites/"+siteName+pagesRepository.findBySiteOrderByPageidDesc(site.getId()).get(0).getName()+".html";
+        Page page =pagesRepository.findBySiteAndIsMainPage(site,true);
+        return "redirect:/pages/"+page.getName();
     }
 
 
