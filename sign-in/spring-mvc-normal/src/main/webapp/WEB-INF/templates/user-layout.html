@@ -46,13 +46,6 @@
         li {
             list-style-type: none; /* Убираем маркеры */
         }
-        #true {
-            visibility:hidden;
-            /*display: none;*/
-        }
-        #nav{
-             margin-right: 15px;
-        }
         .divide{
             height: 1px;
             /*margin: 9px 0;*/
@@ -61,7 +54,10 @@
         }
         .a_button{
             margin-bottom: 0px;
-            margin-left: 50px;
+            margin-left: 0px;
+        }
+        .help_toggle{
+            padding-right: 30px;
         }
 
     </style>
@@ -92,20 +88,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand">Pulp</span>
+            <span class="navbar-brand"><a style=" text-decoration: none;" href="/">Pulp</a></span>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
 
             <ul class="nav navbar-nav navbar-right">
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle help_toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Info <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a th:href="@{users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
+                            <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
 
                         </li>
-                        <li><a th:href="@{users/create}">Create new site</a></li>
+                        <li><a th:href="@{~/users/create}">Create new site</a></li>
                         <li role="separator" class="divider divide"></li>
 
                         <li>
@@ -113,7 +109,7 @@
                             <div class="container-fluid">
                                 <div class="row-fluid">
                                     <form th:action="@{/logout}" method="POST" >
-                                        <button type="submit" class="btn btn-default navbar-btn a_button" th:text="#{label.navigation.logout.link}"></button>
+                                        <button type="submit" class="btn  btn-block  a_button btn-default" th:text="#{label.navigation.logout.link}"></button>
                                     </form>
                             </div>
                                 </div>
@@ -121,21 +117,21 @@
                     </ul>
                 </li>
             </ul>
-            <div class="nav navbar-nav navbar-right navbar-text sign-in-text" id="nav">
-                <div sec:authentication="principal.socialSignInProvider">
-                    <a th:if="@{signInProvider == 'FACEBOOK'}">
-                        <i class="icon-facebook-sign"></i>
-                    </a>
-                    <a th:if="@{signInProvider == 'TWITTER'}">
-                        <i class="icon-twitter-sign"></i>
-                    </a>
-                    <a th:if="@{empty signInProvider}">
-                        <h1 th:text="#{label.navigation.signed.in.as.text}"></h1>
-                    </a>
-                    <p sec:authentication="principal.username">
-                    </p>
-                </div>
-            </div>
+            <!--<div class="nav navbar-nav navbar-right navbar-text sign-in-text" id="nav">-->
+                <!--<div sec:authentication="principal.socialSignInProvider">-->
+                    <!--<a th:if="@{signInProvider == 'FACEBOOK'}">-->
+                        <!--<i class="icon-facebook-sign"></i>-->
+                    <!--</a>-->
+                    <!--<a th:if="@{signInProvider == 'TWITTER'}">-->
+                        <!--<i class="icon-twitter-sign"></i>-->
+                    <!--</a>-->
+                    <!--<a th:if="@{empty signInProvider}">-->
+                        <!--<h1 th:text="#{label.navigation.signed.in.as.text}"></h1>-->
+                    <!--</a>-->
+                    <!--<p sec:authentication="principal.username">-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</div>-->
         </div><!-- /.navbar-collapse -->
     </div>
 </div>

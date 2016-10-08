@@ -1,6 +1,7 @@
 package com.pulp.common.controller;
 
 import com.pulp.user.model.User;
+import com.pulp.user.repository.SitesRepository;
 import com.pulp.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import java.security.Principal;
 @Controller
 public class HomeController {
     @Autowired
-    private UserRepository userRepository;
+    private SitesRepository sitesRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     private static final String VIEW_NAME_HOMEPAGE = "/users/index.html";
@@ -27,9 +28,7 @@ public class HomeController {
     @RequestMapping(value="/",method = RequestMethod.GET)
     public String showHomePage(Principal principal,Model model) {
 
-        User user = userRepository.findByEmail(principal.getName());
-        model.addAttribute("user",user);
-
+        model.addAttribute("sites",sitesRepository.findAll());
         LOGGER.debug("Rendering homepage.");
         return VIEW_NAME_HOMEPAGE;
     }
