@@ -1,5 +1,7 @@
-angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload','colorpicker.module', 'wysiwyg.module'])
-    .controller("SimpleDemoController", ['$scope','Upload', function ($scope,Upload) {
+angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
+    .controller("SimpleDemoController", ['$scope','Upload', '$http', '$window', function ($scope,Upload,$http,$window) {
+
+        // ,'colorpicker.module', 'wysiwyg.module'
 
         $scope.text ="";
 
@@ -15,28 +17,20 @@ angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload','
                     {
                         type: "",
                         hidden:true,
-                        value:"",
+                        value:""
                     },
                     {
                         type: "text",
-                        value:"",
+                        value:""
                     }
                 ]
             }
         };
 
-        $scope.$watch('models.dropzones', function(model) {
+        $scope.$watch('models.dropzones.A', function(model) {
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
 
-        $scope.func = function () {
-            if($scope.models.selected.showme===true){
-                $scope.models.selected.showme=false;
-            }
-            else if($scope.models.selected.showme===false){
-                $scope.models.selected.showme=true;
-            }
-        };
 
         // upload on file select or drop
         $scope.upload = function (file) {
@@ -52,6 +46,18 @@ angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload','
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
         };
+        
+        $scope.save = function () {
+            var post = $http.post('/pages', $scope.modelAsJson);
+            post.success(function(data) {
+                console.log(data);
+                $window.location.href = '/pages';
+            });
+        };
     }
-]);
+])
+    .controller("PageViewController", ['$scope', '$http', '$window', function ($scope,$http,$window){
+
+    }
+    ]);
 

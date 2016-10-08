@@ -21,9 +21,6 @@ public class HomeController {
     private UserRepository userRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
-
-
-
     private static final String VIEW_NAME_HOMEPAGE = "/users/index.html";
 
     @Transactional
@@ -32,7 +29,6 @@ public class HomeController {
 
         User user = userRepository.findByEmail(principal.getName());
         model.addAttribute("user",user);
-
 
         LOGGER.debug("Rendering homepage.");
         return VIEW_NAME_HOMEPAGE;
