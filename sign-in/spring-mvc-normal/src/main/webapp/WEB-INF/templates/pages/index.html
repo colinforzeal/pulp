@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h1>
-    Hi, lox.
-</h1>
+<div th:each="page : ${pages}">
+    <h1 th:text="${page.data}"></h1>
+</div>
+
+<a th:href="@{/pages/create}">Create new page</a>
 </body>
 </html>

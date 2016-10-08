@@ -49,6 +49,6 @@ public class UserController {
             result+="Site name : "+ site.getName()+ "\n";
         }
             return result;
-    };
+    }
 }
 

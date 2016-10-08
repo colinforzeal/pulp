@@ -1,5 +1,7 @@
 package com.pulp.user.model;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import javax.persistence.*;
 
 
@@ -20,6 +22,10 @@ public class Page {
     private String url_to_html;
     @Column
     private boolean isMainPage;
+
+    @Column(name = "data")
+    private String data;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "site_id", nullable = false)
     private Site site;
@@ -94,5 +100,13 @@ public class Page {
 
     public void setMainPage(boolean mainPage) {
         isMainPage = mainPage;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

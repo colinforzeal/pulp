@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/colorpicker.css}"/>
-
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/social-buttons-3.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css}"/>
 
@@ -25,8 +24,6 @@
     <script type="text/javascript" th:src="@{/static/js/app/angular.min.js}"></script>
     <!--<script type="text/javascript" th:src="@{/static/js/vendor/bootstrap-colorpicker-module.js}"></script>-->
     <!--<script type="text/javascript" th:src="@{/static/js/vendor/angular-wysiwyg.js}"></script>-->
-    <script type="text/javascript" th:src="@{/static/js/vendor/angular-wysiwyg.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/vendor/bootstrap-colorpicker-module.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/app/angular-drag-and-drop-lists.js}"></script>
 
     <!-- Include YT library and this directive -->
@@ -51,17 +48,7 @@
             /*display: none;*/
         }
         #nav{
-             margin-right: 15px;
-        }
-        .divide{
-            height: 1px;
-            /*margin: 9px 0;*/
-            overflow: hidden;
-            background-color: #e5e5e5;
-        }
-        .a_button{
-            margin-bottom: 0px;
-            margin-left: 50px;
+            margin-right: 15px;
         }
 
     </style>
@@ -77,7 +64,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand">Pulp</span>
+            <span class="navbar-brand">Spring Social Example</span>
         </div>
     </div>
 
@@ -92,34 +79,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand">Pulp</span>
+            <span class="navbar-brand">Spring Social Example</span>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-
-            <ul class="nav navbar-nav navbar-right">
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a th:href="@{users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
-
-                        </li>
-                        <li><a th:href="@{users/create}">Create new site</a></li>
-                        <li role="separator" class="divider divide"></li>
-
-                        <li>
-
-                            <div class="container-fluid">
-                                <div class="row-fluid">
-                                    <form th:action="@{/logout}" method="POST" >
-                                        <button type="submit" class="btn btn-default navbar-btn a_button" th:text="#{label.navigation.logout.link}"></button>
-                                    </form>
-                            </div>
-                                </div>
-                        </li>
-                    </ul>
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a th:href="@{/}" th:text="#{label.navigation.home.link}"></a>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form th:action="@{/logout}" method="POST">
+                        <button type="submit" class="btn btn-default navbar-btn" th:text="#{label.navigation.logout.link}"></button>
+                    </form>
+                </li>
+
             </ul>
             <div class="nav navbar-nav navbar-right navbar-text sign-in-text" id="nav">
                 <div sec:authentication="principal.socialSignInProvider">
