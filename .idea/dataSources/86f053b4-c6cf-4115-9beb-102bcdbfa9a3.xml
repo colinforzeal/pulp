@@ -14,10 +14,10 @@
     <table id="9" parent="1" name="databasechangelog"/>
     <table id="10" parent="1" name="databasechangeloglock"/>
     <table id="11" parent="1" name="fileupload"/>
-    <table id="12" parent="1" name="page"/>
-    <table id="13" parent="1" name="site"/>
-    <table id="14" parent="1" name="user_accounts"/>
-    <table id="15" parent="1" name="userconnection"/>
+    <table id="12" parent="1" name="site"/>
+    <table id="13" parent="1" name="user_accounts"/>
+    <table id="14" parent="1" name="userconnection"/>
+    <table id="15" parent="1" name="page"/>
     <column id="16" parent="9" name="ID">
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
@@ -89,7 +89,7 @@
       <columns>filename</columns>
       <primary>1</primary>
     </key>
-    <column id="36" parent="12" name="pageid">
+    <column id="36" parent="12" name="site_id">
       <mandatory>1</mandatory>
       <data-type>bigint(20)|0</data-type>
       <sequence-identity>1</sequence-identity>
@@ -98,157 +98,160 @@
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="38" parent="12" name="url">
-      <mandatory>1</mandatory>
-      <data-type>varchar(255)|0</data-type>
-    </column>
-    <column id="39" parent="12" name="url_to_html">
-      <mandatory>1</mandatory>
-      <data-type>varchar(255)|0</data-type>
-    </column>
-    <column id="40" parent="12" name="site_id">
-      <mandatory>1</mandatory>
+    <column id="38" parent="12" name="user_id">
       <data-type>bigint(20)|0</data-type>
     </column>
-    <index id="41" parent="12" name="FK_kd6kutdujd8x9c9cft9l26hbu">
-      <columns>site_id</columns>
-      <desc-columns></desc-columns>
-    </index>
-    <index id="42" parent="12" name="UK_9xxvsfrwsurjwnxd62oo1ruwy">
-      <columns>url_to_html</columns>
-      <desc-columns></desc-columns>
-      <unique>1</unique>
-    </index>
-    <key id="43" parent="12" name="PRIMARY">
-      <columns>pageid</columns>
-      <primary>1</primary>
-    </key>
-    <key id="44" parent="12" name="UK_9xxvsfrwsurjwnxd62oo1ruwy">
-      <columns>url_to_html</columns>
-      <underlying-index>UK_9xxvsfrwsurjwnxd62oo1ruwy</underlying-index>
-    </key>
-    <foreign-key id="45" parent="12" name="FK_kd6kutdujd8x9c9cft9l26hbu">
-      <columns>site_id</columns>
-      <ref-key>~.site.PRIMARY</ref-key>
-      <cascade-update-rule>restrict</cascade-update-rule>
-      <cascade-delete-rule>restrict</cascade-delete-rule>
-    </foreign-key>
-    <column id="46" parent="13" name="site_id">
-      <mandatory>1</mandatory>
-      <data-type>bigint(20)|0</data-type>
-      <sequence-identity>1</sequence-identity>
-    </column>
-    <column id="47" parent="13" name="name">
-      <mandatory>1</mandatory>
-      <data-type>varchar(255)|0</data-type>
-    </column>
-    <column id="48" parent="13" name="user_id">
-      <data-type>bigint(20)|0</data-type>
-    </column>
-    <index id="49" parent="13" name="FK_5a2wwclkpsk6ihqek44dsenuu">
+    <index id="39" parent="12" name="FK_5a2wwclkpsk6ihqek44dsenuu">
       <columns>user_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="50" parent="13" name="UK_f9iil6uu8d9ohutpr2irlpvio">
+    <index id="40" parent="12" name="UK_f9iil6uu8d9ohutpr2irlpvio">
       <columns>name</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
-    <key id="51" parent="13" name="PRIMARY">
+    <key id="41" parent="12" name="PRIMARY">
       <columns>site_id</columns>
       <primary>1</primary>
     </key>
-    <key id="52" parent="13" name="UK_f9iil6uu8d9ohutpr2irlpvio">
+    <key id="42" parent="12" name="UK_f9iil6uu8d9ohutpr2irlpvio">
       <columns>name</columns>
       <underlying-index>UK_f9iil6uu8d9ohutpr2irlpvio</underlying-index>
     </key>
-    <foreign-key id="53" parent="13" name="FK_5a2wwclkpsk6ihqek44dsenuu">
+    <foreign-key id="43" parent="12" name="FK_5a2wwclkpsk6ihqek44dsenuu">
       <columns>user_id</columns>
       <ref-key>~.user_accounts.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="54" parent="14" name="user_id">
+    <column id="44" parent="13" name="user_id">
       <mandatory>1</mandatory>
       <data-type>bigint(20)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="55" parent="14" name="email">
+    <column id="45" parent="13" name="email">
       <mandatory>1</mandatory>
       <data-type>varchar(100)|0</data-type>
     </column>
-    <column id="56" parent="14" name="first_name">
+    <column id="46" parent="13" name="first_name">
       <mandatory>1</mandatory>
       <data-type>varchar(100)|0</data-type>
     </column>
-    <column id="57" parent="14" name="last_name">
+    <column id="47" parent="13" name="last_name">
       <mandatory>1</mandatory>
       <data-type>varchar(100)|0</data-type>
     </column>
-    <column id="58" parent="14" name="password">
+    <column id="48" parent="13" name="password">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="59" parent="14" name="role">
+    <column id="49" parent="13" name="role">
       <mandatory>1</mandatory>
       <data-type>varchar(20)|0</data-type>
     </column>
-    <column id="60" parent="14" name="sign_in_provider">
+    <column id="50" parent="13" name="sign_in_provider">
       <data-type>varchar(20)|0</data-type>
     </column>
-    <index id="61" parent="14" name="UK_f9sl209luxhu4rylls0h1m625">
+    <index id="51" parent="13" name="UK_f9sl209luxhu4rylls0h1m625">
       <columns>email</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
-    <key id="62" parent="14" name="PRIMARY">
+    <key id="52" parent="13" name="PRIMARY">
       <columns>user_id</columns>
       <primary>1</primary>
     </key>
-    <key id="63" parent="14" name="UK_f9sl209luxhu4rylls0h1m625">
+    <key id="53" parent="13" name="UK_f9sl209luxhu4rylls0h1m625">
       <columns>email</columns>
       <underlying-index>UK_f9sl209luxhu4rylls0h1m625</underlying-index>
     </key>
-    <column id="64" parent="15" name="providerId">
+    <column id="54" parent="14" name="providerId">
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="65" parent="15" name="providerUserId">
+    <column id="55" parent="14" name="providerUserId">
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="66" parent="15" name="userId">
+    <column id="56" parent="14" name="userId">
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="67" parent="15" name="accessToken">
+    <column id="57" parent="14" name="accessToken">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="68" parent="15" name="displayName">
+    <column id="58" parent="14" name="displayName">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="69" parent="15" name="expireTime">
+    <column id="59" parent="14" name="expireTime">
       <data-type>bigint(20)|0</data-type>
     </column>
-    <column id="70" parent="15" name="imageUrl">
+    <column id="60" parent="14" name="imageUrl">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="71" parent="15" name="profileUrl">
+    <column id="61" parent="14" name="profileUrl">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="72" parent="15" name="rank">
+    <column id="62" parent="14" name="rank">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="73" parent="15" name="refreshToken">
+    <column id="63" parent="14" name="refreshToken">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="74" parent="15" name="secret">
+    <column id="64" parent="14" name="secret">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <key id="75" parent="15" name="PRIMARY">
+    <key id="65" parent="14" name="PRIMARY">
       <columns>providerId
 providerUserId
 userId</columns>
       <primary>1</primary>
     </key>
+    <column id="66" parent="15" name="pageid">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="67" parent="15" name="isMainPage">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="68" parent="15" name="name">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="69" parent="15" name="url">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="70" parent="15" name="url_to_html">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="71" parent="15" name="site_id">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <index id="72" parent="15" name="FK_kd6kutdujd8x9c9cft9l26hbu">
+      <columns>site_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="73" parent="15" name="UK_9xxvsfrwsurjwnxd62oo1ruwy">
+      <columns>url_to_html</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="74" parent="15" name="PRIMARY">
+      <columns>pageid</columns>
+      <primary>1</primary>
+    </key>
+    <key id="75" parent="15" name="UK_9xxvsfrwsurjwnxd62oo1ruwy">
+      <columns>url_to_html</columns>
+      <underlying-index>UK_9xxvsfrwsurjwnxd62oo1ruwy</underlying-index>
+    </key>
+    <foreign-key id="76" parent="15" name="FK_kd6kutdujd8x9c9cft9l26hbu">
+      <columns>site_id</columns>
+      <ref-key>~.site.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
   </database-model>
 </dataSource>

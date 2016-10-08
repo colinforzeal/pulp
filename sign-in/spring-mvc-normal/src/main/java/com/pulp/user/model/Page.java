@@ -18,7 +18,8 @@ public class Page {
     private String url;
     @Column(nullable = false,unique = true)
     private String url_to_html;
-
+    @Column
+    private boolean isMainPage;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "site_id", nullable = false)
     private Site site;
@@ -85,5 +86,13 @@ public class Page {
 
     public void setPageid(Long pageid) {
         this.pageid = pageid;
+    }
+
+    public boolean isMainPage() {
+        return isMainPage;
+    }
+
+    public void setMainPage(boolean mainPage) {
+        isMainPage = mainPage;
     }
 }
