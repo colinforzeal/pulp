@@ -1,7 +1,7 @@
 package com.pulp.user.controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.pulp.user.dto.PageForm;
+
 import com.pulp.user.dto.SiteForm;
 import com.pulp.user.model.Page;
 import com.pulp.user.model.Site;
@@ -36,18 +36,22 @@ public class PageController {
     private PagesRepository pagesRepository;
     @Autowired
     private SitesRepository sitesRepository;
+/*!
+  !  //TODO when we have some pages and wonna add one more "sites/{siteName}/create"!!!!!!
+!
 
-    @Transactional
-    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
-    public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data, @Valid @ModelAttribute("form") PageForm pageForm, BindingResult result) {
-        Site site = sitesRepository.findByName(siteName);
-
-        Page page = pagesRepository.findBySiteAndName(site, pageName);
-        page.setData(data);
-        pagesRepository.save(page);
-
-        return "redirect:/sites/" + siteName;
-    }
+*/
+//    @Transactional
+//    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
+//    public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data, @Valid @ModelAttribute("form") PageForm pageForm, BindingResult result) {
+//        Site site = sitesRepository.findByName(siteName);
+//
+//        Page page = pagesRepository.findBySiteAndName(site, pageName);
+//        page.setData(data);
+//        pagesRepository.save(page);
+//
+//        return "redirect:/sites/" + siteName;
+//    }
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}",method = RequestMethod.GET)
     public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model) {

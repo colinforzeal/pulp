@@ -54,32 +54,31 @@ public class SiteController {
             return "redirect:/sites/create";
         }
         String name = siteForm.getName();
+        String pageName = siteForm.getPageName();
 
         Site registered = null;
+
         if(siteNameExists(name))
         {
             addFieldError("site","name",name,"Site with that name already exists",result);
             return "sites/create.html";
         }
 
-
-
         System.out.println(siteForm.getName());
         User user =userRepository.findByEmail(principal.getName());
+        Site site = new Site(name, user);
 
+        sitesRepository.save(site);
 
+        if(pageNameExists(pageName,site))
+        {
+            addFieldError("site","pageName",pageName,"Page with that name already exists",result);
+            return "sites/create.html";
+        }
+        Page page = new Page(pageName,site,true);
+        pagesRepository.save(page);
 
-            Site site = new Site(name, user);
-            sitesRepository.save(site);
-//            ArrayList set1 = new ArrayList<Site>();
-//            set1.add(site);
-//            user.setSites(set1);
-//            userRepository.save(user);
-
-
-
-
-        return "redirect:/users/"+user.getId();
+        return "redirect:/sites/"+name+"/pages/"+pageName+"/create";
     }
 
     @RequestMapping(value = "/sites/{site_name}",method = RequestMethod.GET)
@@ -91,7 +90,7 @@ public class SiteController {
             Page page = pagesRepository.findBySiteAndIsMainPage(site,true);
 
             if (page == null){
-                return "redirect:/sites/" + siteName + "/pages/create";
+                return "redirect:/sites/" + siteName + "/create";
             }
             else{
                 return "redirect:/sites/" + siteName + "/pages/" + page.getName();
@@ -109,6 +108,15 @@ public class SiteController {
 
 
         return site != null;
+
+
+    }
+    private boolean pageNameExists(String name,Site site) {
+
+        Page page = pagesRepository.findBySiteAndName(site,name);
+
+
+        return page != null;
 
 
     }

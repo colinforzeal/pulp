@@ -26,8 +26,10 @@ public class Page {
     @JoinColumn(name = "site_id", nullable = false)
     private Site site;
 
-    public Page(String name, Site site) {
+    public Page(String name, Site site,Boolean isMainPage) {
         this.name = name;
+        this.site=site;
+        this.isMainPage=isMainPage;
 
     }
 
