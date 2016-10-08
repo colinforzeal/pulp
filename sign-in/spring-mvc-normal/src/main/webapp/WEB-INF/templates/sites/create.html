@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<form th:action="@{/users/add_site}" th:object="${site}" method="post" role="form">
 
+    <div class="row">
+        <div id="form-group-firstName" class="form-group col-lg-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+            <label class="control-label" for="user-firstName" >Enter name:</label>
+            <input type="text" id="user-firstName" th:field="*{name}" th:class="form-control" />
+            <span class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+    </div>
 </body>
 </html>

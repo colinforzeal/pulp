@@ -20,7 +20,7 @@ public class SecurityUtil {
                 .firstName(user.getFirstName())
                 .id(user.getId())
                 .lastName(user.getLastName())
-                .password(user.getPassword())
+
                 .role(user.getRole())
                 .socialSignInProvider(user.getSignInProvider())
                 .username(user.getEmail())

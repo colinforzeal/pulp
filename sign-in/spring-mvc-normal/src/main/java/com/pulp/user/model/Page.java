@@ -8,9 +8,9 @@ import javax.persistence.*;
 public class Page {
 
     @Id
-    @Column(name = "PAGE_ID", unique = true, nullable = false)
+    @Column(name = "pageid", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long page_id;
+    private Long pageid;
 
     @Column(nullable = false)
     private String name;
@@ -20,7 +20,7 @@ public class Page {
     private String url_to_html;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "SITE_ID", nullable = false)
+    @JoinColumn(name = "site_id", nullable = false)
     private Site site;
 
     public Page(String name, String url, String url_to_html) {
@@ -80,10 +80,10 @@ public class Page {
     }
 
     public Long getPageid() {
-        return page_id;
+        return pageid;
     }
 
     public void setPageid(Long pageid) {
-        this.page_id = pageid;
+        this.pageid = pageid;
     }
 }

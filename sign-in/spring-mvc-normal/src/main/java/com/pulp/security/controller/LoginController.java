@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
+
 
 @Controller
 public class LoginController {
@@ -15,7 +17,10 @@ public class LoginController {
     protected static final String VIEW_NAME_LOGIN_PAGE = "/users/login.html";
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String showLoginPage() {
+    public String showLoginPage(Principal principal) {
+        if(principal != null) {
+            return "redirect:/";
+        }
         LOGGER.debug("Rendering login page.");
         return VIEW_NAME_LOGIN_PAGE;
     }

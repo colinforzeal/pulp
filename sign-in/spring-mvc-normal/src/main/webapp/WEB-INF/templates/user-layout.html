@@ -10,15 +10,20 @@
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/font-awesome.css}"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/colorpicker.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/social-buttons-3.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
 
     <script type="text/javascript" th:src="@{/static/js/vendor/jquery-2.0.3.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/vendor/bootstrap.js}"></script>
 
     <script type="text/javascript" th:src="@{/static/js/app/user.form.js}"></script>
 
+
     <!-- angular is the only dependency! -->
     <script type="text/javascript" th:src="@{/static/js/app/angular.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/vendor/bootstrap-colorpicker-module.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/vendor/angular-wysiwyg.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/app/angular-drag-and-drop-lists.js}"></script>
 
     <!-- Include YT library and this directive -->
@@ -42,6 +47,10 @@
             visibility:hidden;
             /*display: none;*/
         }
+        #nav{
+             margin-right: 15px;
+        }
+
     </style>
 </head>
 <body>
@@ -57,13 +66,13 @@
             </button>
             <span class="navbar-brand">Spring Social Example</span>
         </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a th:href="@{/user/register}" th:text="#{label.navigation.registration.link}"></a>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
+        <!--<div class="collapse navbar-collapse navbar-ex1-collapse">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li>-->
+                    <!--<a th:href="@{/login}" th:text="#{label.user.login.page.title}"></a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
     </div>
 
 </div>
@@ -91,8 +100,9 @@
                         <button type="submit" class="btn btn-default navbar-btn" th:text="#{label.navigation.logout.link}"></button>
                     </form>
                 </li>
+
             </ul>
-            <div class="nav navbar-nav navbar-right navbar-text sign-in-text">
+            <div class="nav navbar-nav navbar-right navbar-text sign-in-text" id="nav">
                 <div sec:authentication="principal.socialSignInProvider">
                     <a th:if="@{signInProvider == 'FACEBOOK'}">
                         <i class="icon-facebook-sign"></i>
@@ -100,9 +110,9 @@
                     <a th:if="@{signInProvider == 'TWITTER'}">
                         <i class="icon-twitter-sign"></i>
                     </a>
-                    <a th:if="@{signInProvider == 'VKONTAKTE'}">
-                        <i class="icon-vk-sign"></i>
-                    </a>
+                    <!--<a th:if="@{signInProvider == 'VKONTAKTE'}">-->
+                        <!--<i class="icon-vk-sign"></i>-->
+                    <!--</a>-->
                     <a th:if="@{empty signInProvider}">
                         <h1 th:text="#{label.navigation.signed.in.as.text}"></h1>
                     </a>

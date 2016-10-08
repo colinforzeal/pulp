@@ -11,7 +11,7 @@ import java.util.Set;
 public class Site {
 
     @Id
-    @Column(name="SITE_ID", unique = true, nullable = false)
+    @Column(name="site_id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long site_id;
 
@@ -20,7 +20,7 @@ public class Site {
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Site(String name, User user) {

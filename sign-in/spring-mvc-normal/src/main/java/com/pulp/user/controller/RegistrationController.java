@@ -9,6 +9,7 @@ import com.pulp.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreInvocationAttribute;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.UserProfile;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 
 @Controller
@@ -47,11 +49,16 @@ public class RegistrationController {
      * Renders the registration page.
      */
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
+    public String showRegistrationForm(WebRequest request, Model model, Principal principal) {
+        if(principal != null) {
+            return "redirect:/";
+        }
         LOGGER.debug("Rendering registration page.");
 
         Connection<?> connection = ProviderSignInUtils.getConnection(request);
-
+        if(connection==null){
+            return "redirect:/login";
+        }
         RegistrationForm registration = createRegistrationDTO(connection);
         LOGGER.debug("Rendering registration form with information: {}", registration);
 

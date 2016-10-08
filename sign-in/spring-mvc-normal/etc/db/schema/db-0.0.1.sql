@@ -1,4 +1,3 @@
-BEGIN;
 
 create table UserConnection (userId varchar(255) not null,
     providerId varchar(255) not null,
@@ -13,5 +12,3 @@ create table UserConnection (userId varchar(255) not null,
     expireTime bigint,
     primary key (userId, providerId, providerUserId));
 create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
-
-COMMIT;
