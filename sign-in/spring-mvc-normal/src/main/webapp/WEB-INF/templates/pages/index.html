@@ -8,6 +8,12 @@
     <div th:text="${page.name}">
     </div>
 
+    <div th:if="${isPrincipal} == true">
+        <form th:action="@{${path}}">
+            <button type="submit" class="btn btn-default" th:text="Edit"></button>
+        </form>
+    </div>
+
     <!-- Main area with dropzones and source code -->
     <div class="col-md-10">
         <div class="container-fluid">
