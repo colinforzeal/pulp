@@ -2,6 +2,7 @@ package com.pulp.user.controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
+import com.pulp.user.dto.PageForm;
 import com.pulp.user.dto.SiteForm;
 import com.pulp.user.model.Page;
 import com.pulp.user.model.Site;
@@ -56,11 +57,17 @@ public class PageController {
     }
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}",method = RequestMethod.GET)
-    public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model) {
+    public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model,Principal principal) {
         Site site = sitesRepository.findByName(siteName);
         Page page = pagesRepository.findBySiteAndName(site,pageName);
+
+        User currentUser = userRepository.findByEmail(principal.getName());
+        if (currentUser != null){
+            model.addAttribute("isPrincipal",true);
+            model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName+"/edit");
+        }
+
         model.addAttribute("page",page);
-        model.addAttribute("site",site.getName());
 
         return "/pages/index.html";
     }
@@ -70,5 +77,61 @@ public class PageController {
     {
         model.addAttribute("pageName", pageName);
         return "/pages/create.html";
+    }
+
+    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/edit",method = RequestMethod.GET)
+    public String editPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model)
+    {
+        PageForm pageForm = new PageForm();
+        pageForm.setPageName(pageName);
+        model.addAttribute("page", pageForm);
+        model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName+"/edit");
+        model.addAttribute("pageName",pageName);
+        return "/pages/edit_page_name.html";
+    }
+
+    @Transactional
+    @RequestMapping(value = "/sites/{siteName}/pages/{pageName}/edit",method = RequestMethod.POST)
+    public String createPageName(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName,@Valid @ModelAttribute("page") PageForm pageForm, BindingResult result, Principal principal) {
+
+        if (result.hasErrors()) {
+            return "redirect:/sites/"+siteName+"/pages/"+pageName+"/edit";
+        }
+
+
+        Site site = sitesRepository.findByName(siteName);
+        if(site==null)return "redirect:/sites/create";
+
+        if(pageNameExists(pageForm.getPageName(),site))
+        {
+            addFieldError("site","pageName",pageName,"Page with that name already exists",result);
+            return "pages/edit_page_name.html";
+        }
+
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
+        page.setName(pageForm.getPageName());
+        pagesRepository.save(page);
+
+        return "redirect:/sites/"+site.getName();
+    }
+
+    private boolean pageNameExists(String name,Site site) {
+        Page page = pagesRepository.findBySiteAndName(site,name);
+        return page != null;
+
+
+    }
+    private void addFieldError(String objectName, String fieldName, String fieldValue,  String errorCode, BindingResult result) {
+        FieldError error = new FieldError(
+                objectName,
+                fieldName,
+                fieldValue,
+                false,
+                new String[]{errorCode},
+                new Object[]{},
+                errorCode
+        );
+
+        result.addError(error);
     }
 }

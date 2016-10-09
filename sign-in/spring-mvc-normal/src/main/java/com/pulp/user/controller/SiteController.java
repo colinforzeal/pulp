@@ -111,6 +111,7 @@ public class SiteController {
         model.addAttribute("page", pageForm);
         return "sites/create_page_name.html";
     }
+
     @Transactional
     @RequestMapping(value = "/sites/{site_name}/create",method = RequestMethod.POST)
     public String createPageName(@PathVariable(value = "site_name") String siteName,@Valid @ModelAttribute("page") PageForm pageForm, BindingResult result, Principal principal) {

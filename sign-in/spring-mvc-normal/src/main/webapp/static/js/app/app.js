@@ -57,7 +57,7 @@ var app = angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFil
             });
         };
     }
-])
+]);
     app.controller("PageViewController", ['$scope', '$http', '$window', function ($scope,$http,$window){
         $scope.data = {};
     }
@@ -68,5 +68,5 @@ app.filter('html', ['$sce', function ($sce) {
     return function (text) {
         return $sce.trustAsHtml(text);
     };
-}])
+}]);
 
