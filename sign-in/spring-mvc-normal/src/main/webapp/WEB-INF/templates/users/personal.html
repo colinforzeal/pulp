@@ -20,6 +20,8 @@
                         <a th:href="@{~/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
                         <span> | </span>
                         <a th:href="@{~/sites/{id}/edit(id=${site.name})}">Edit</a>
+                        <span> | </span>
+                        <a th:href="@{~/sites/{id}/delete(id=${site.name})}">Delete</a>
                     </div>
                 </div>
         </div>
@@ -28,6 +30,10 @@
             </div>
 
     </div>
+
+
+</div>
+</div>
 </div>
 </body>
 </html>

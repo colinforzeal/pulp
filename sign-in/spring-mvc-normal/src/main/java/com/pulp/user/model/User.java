@@ -35,7 +35,7 @@ public class User  {
     private Role role;
 
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<Site> sites;
 
 
