@@ -41,17 +41,19 @@ public class PageController {
 !
 
 */
-//    @Transactional
-//    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
-//    public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data, @Valid @ModelAttribute("form") PageForm pageForm, BindingResult result) {
-//        Site site = sitesRepository.findByName(siteName);
-//
-//        Page page = pagesRepository.findBySiteAndName(site, pageName);
-//        page.setData(data);
-//        pagesRepository.save(page);
-//
-//        return "redirect:/sites/" + siteName;
-//    }
+    @Transactional
+    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
+    public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data) {
+        Site site = sitesRepository.findByName(siteName);
+
+        Page page = pagesRepository.findBySiteAndName(site, pageName);
+        page.setData(data);
+
+
+        pagesRepository.save(page);
+
+        return "redirect:/sites/" + siteName;
+    }
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}",method = RequestMethod.GET)
     public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model) {
@@ -66,7 +68,6 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.GET)
     public String createPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model)
     {
-        model.addAttribute("siteName", siteName);
         model.addAttribute("pageName", pageName);
         return "/pages/create.html";
     }

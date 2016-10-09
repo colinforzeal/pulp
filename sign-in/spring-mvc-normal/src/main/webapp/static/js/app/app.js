@@ -1,10 +1,5 @@
-angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
+var app = angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload', 'colorpicker.module', 'wysiwyg.module'])
     .controller("SimpleDemoController", ['$scope','Upload', '$http', '$window', function ($scope,Upload,$http,$window) {
-
-        // ,'colorpicker.module', 'wysiwyg.module'
-
-        $scope.text ="";
-        $scope.site = "";
 
         $scope.models = {
             selected: null,
@@ -49,17 +44,29 @@ angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'ngFileUpload'])
         };
         
         $scope.save = function () {
-            console.log($scope.site);
-            var post = $http.post('/sites/'+site+'/pages', $scope.modelAsJson);
+            var pathArray = $window.location.pathname.split('/');
+            var siteName = pathArray[2];
+            console.log(siteName);
+            var pageName = pathArray[4];
+            console.log(pageName);
+
+            var post = $http.post('/sites/'+siteName+'/pages/'+pageName+'/create', $scope.modelAsJson);
             post.success(function(data) {
                 console.log(data);
-                $window.location.href = '/pages';
+                $window.location.href = '/sites/'+siteName+'/pages/'+pageName;
             });
         };
     }
 ])
-    .controller("PageViewController", ['$scope', '$http', '$window', function ($scope,$http,$window){
-
+    app.controller("PageViewController", ['$scope', '$http', '$window', function ($scope,$http,$window){
+        $scope.data = {};
     }
     ]);
+
+// html filter (render text as html)
+app.filter('html', ['$sce', function ($sce) {
+    return function (text) {
+        return $sce.trustAsHtml(text);
+    };
+}])
 
