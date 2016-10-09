@@ -16,8 +16,6 @@ public class Page {
 
     @Column(nullable = false)
     private String name;
-    @Column
-    private boolean isMainPage;
 
     @Column(name = "data",length = 10000000)
     private String data;
@@ -26,11 +24,9 @@ public class Page {
     @JoinColumn(name = "site_id", nullable = false)
     private Site site;
 
-    public Page(String name, Site site,Boolean isMainPage) {
+    public Page(String name, Site site) {
         this.name = name;
         this.site=site;
-        this.isMainPage=isMainPage;
-
     }
 
     public Page(){}
@@ -61,14 +57,6 @@ public class Page {
 
     public void setPageid(Long pageid) {
         this.pageid = pageid;
-    }
-
-    public boolean isMainPage() {
-        return isMainPage;
-    }
-
-    public void setMainPage(boolean mainPage) {
-        isMainPage = mainPage;
     }
 
     public String getData() {
