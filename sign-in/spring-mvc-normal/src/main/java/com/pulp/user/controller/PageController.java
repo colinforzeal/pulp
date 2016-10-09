@@ -66,7 +66,7 @@ public class PageController {
             model.addAttribute("isPrincipal",true);
             model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName+"/edit");
         }
-
+        model.addAttribute("site",siteName);
         model.addAttribute("page",page);
 
         return "/pages/index.html";
@@ -80,8 +80,19 @@ public class PageController {
     }
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/edit",method = RequestMethod.GET)
-    public String editPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model)
+    public String editPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model,Principal principal)
     {
+
+        Site site = sitesRepository.findByName(siteName);
+        if(site==null)
+            return "redirect:/sites/create";
+
+        if(!(site.getUser().getId().equals(userRepository.findByEmail(principal.getName()).getId())))
+        {
+            return "redirect:/";
+        }
+
+
         PageForm pageForm = new PageForm();
         pageForm.setPageName(pageName);
         model.addAttribute("page", pageForm);

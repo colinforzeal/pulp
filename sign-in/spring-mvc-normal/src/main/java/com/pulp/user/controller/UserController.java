@@ -31,7 +31,7 @@ public class UserController {
             return "redirect:/";
         }
         model.addAttribute("user",user);
-        if(user.getSites()!=null){
+        if(user.getSites()!=null || !user.getSites().isEmpty()){
             List<Site> sites=new ArrayList<>();
 
             sites.addAll(user.getSites());
