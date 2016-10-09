@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="page-layout.html :: head">
+<head th:replace="head.html :: head">
     <title>Title</title>
 </head>
 <body ng-app="demo" ng-controller="PageViewController" th:attr="ng-init='data='+${page.data}+''">
