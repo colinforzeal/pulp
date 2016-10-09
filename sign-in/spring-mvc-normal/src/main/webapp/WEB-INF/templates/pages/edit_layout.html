@@ -3,10 +3,52 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="editor-head.html :: editor-head">
+    <title>Editing page layout</title>
 </head>
-<body ng-app="demo" ng-controller="SimpleDemoController" >
+<body ng-app="demo" ng-controller="SimpleDemoController" th:attr="ng-init='models.dropzones.A='+${page.data}+''">
 <div sec:authorize="isAuthenticated()">
-    <div th:include="user-layout.html :: navAuthorized" th:attr="ng-init='models.dropzones.A='+${page.data}+''"></div>
+    <!--Navbar-->
+    <div th:fragment="navAuthorized">
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only" th:text="#{label.navigation.toggle.navigation.button}"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand"><a style=" text-decoration: none;" href="/">Pulp</a></span>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle help_toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Info <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
+                            </li>
+                            <li><a th:href="@{~/sites/{name}/edit(name=${siteName})}">Edit site</a></li>
+                            <li><a th:href="@{~/sites/{name}/delete(name=${siteName})}">Delete site</a></li>
+                            <li role="separator" class="divider divide"></li>
+                            <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit(sitename=${siteName},pagename=${pageName})}">Edit page</a></li>
+                            <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit layout</a></li>
+                            <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/delete(sitename=${siteName},pagename=${pageName})}">Delete page</a></li>
+                            <li role="separator" class="divider divide"></li>
+                            <li>
+                                <div class="container-fluid">
+                                    <div class="row-fluid">
+                                        <form th:action="@{/logout}" method="POST" >
+                                            <button type="submit" class="btn  btn-block  a_button btn-default" th:text="#{label.navigation.logout.link}"></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </div>
 
     <span th:text="${page.name}"></span>
 

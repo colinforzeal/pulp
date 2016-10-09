@@ -8,7 +8,7 @@
 </head>
 <body>
 <div sec:authorize="isAuthenticated()">
-    <div th:include="user-layout.html :: navAuthorizedNotPrincipalNotSite"></div>
+    <div th:include="user-layout.html :: navAuthorized"></div>
     <div   style="margin-bottom: 50px;" class="col-md-6 col-md-offset-3">
 
         <h1> Hi, <span th:text="${user.firstName}"> </span></h1>
