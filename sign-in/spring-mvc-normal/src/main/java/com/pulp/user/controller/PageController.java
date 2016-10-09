@@ -55,7 +55,7 @@ public class PageController {
         Page page = pagesRepository.findBySiteAndName(site,pageName);
 
         User currentUser = userRepository.findByEmail(principal.getName());
-        if (currentUser != null){
+        if (site.getUser().getId().equals(currentUser.getId())){
             model.addAttribute("isPrincipal",true);
             model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         }

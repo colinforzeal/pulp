@@ -180,6 +180,32 @@ public class SiteController {
         return "redirect:/sites/"+site.getName();
     }
 
+
+    @RequestMapping(value = "/sites/{site_name}/delete",method = RequestMethod.GET)
+    public String deleteSite(@PathVariable(value="site_name") String siteName, Principal principal){
+
+        Site site = sitesRepository.findOneByName(siteName);
+
+        if(site != null)
+        {   Long userId = userRepository.findByEmail(principal.getName()).getId();
+            if(((site.getUser()).getId()).equals(userId)){
+                sitesRepository.delete(site);
+                return "redirect:/users/"+userId;
+            }
+        }
+
+        return "redirect:/";
+
+    }
+
+
+
+
+
+
+
+
+
     private boolean siteNameExists(String name) {
 
         Site site = sitesRepository.findOneByName(name);
