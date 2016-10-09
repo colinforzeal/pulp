@@ -4,10 +4,6 @@
       xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link rel="stylesheet" type="text/css" th:href="@{//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/static/css/bootstrap.css}"/>
-    <script type="text/javascript" th:src="@{/static/js/vendor/jquery-2.0.3.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/vendor/bootstrap.js}"></script>
 </head>
 <body>
 
@@ -16,43 +12,22 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar1">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only" th:text="#{label.navigation.toggle.navigation.button}"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">TrendZZ</a>
+                <a class="navbar-brand" th:action="@{/}">Pulp</a>
             </div>
-            <!-- menu items -->
-            <div class="collapse navbar-collapse" id="navbar1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Mens</a></li>
-                    <li><a href="#">Womens</a></li>
-                    <li><a href="#">Kiddies</a></li>
-                </ul>
-                <!-- social media icons -->
+
+            <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right social">
                     <li><a href="#"><i class="fa fa-lg fa-facebook"></i></a></li>
                     <li><a href="#"><i class="fa fa-lg fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fa fa-lg fa-google-plus"></i></a></li>
-                    <li><a href="#"><i class="fa fa-lg fa-linkedin"></i></a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only" th:text="#{label.navigation.toggle.navigation.button}"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand">Pulp</span>
-        </div>
-    </div>
-
 </div>
 
 <div th:fragment="navAuthorized">
