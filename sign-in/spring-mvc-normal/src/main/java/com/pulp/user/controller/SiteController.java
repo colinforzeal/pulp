@@ -77,7 +77,7 @@ public class SiteController {
             addFieldError("site","pageName",pageName,"Page with that name already exists",result);
             return "sites/create.html";
         }
-        Page page = new Page(pageName,site,true);
+        Page page = new Page(pageName,site);
         pagesRepository.save(page);
 
         return "redirect:/sites/"+name+"/pages/"+pageName+"/create";
@@ -89,13 +89,13 @@ public class SiteController {
         Site site = sitesRepository.findOneByName(siteName);
         if(site != null)
         {
-            Page page = pagesRepository.findBySiteAndIsMainPage(site,true);
+            List<Page> pages = pagesRepository.findBySite(site);
 
-            if (page == null){
+            if (pages == null || pages.isEmpty()){
                 return "redirect:/sites/" + siteName + "/create";
             }
             else{
-                return "redirect:/sites/" + siteName + "/pages/" + page.getName();
+                return "redirect:/sites/" + siteName + "/pages/" + pages.get(0).getName();
             }
         }
         else{
@@ -132,7 +132,8 @@ public class SiteController {
             addFieldError("site","pageName",pageName,"Page with that name already exists",result);
             return "pages/create_page_name.html";
         }
-        Page page = new Page(pageName,site,false);
+
+        Page page = new Page(pageName,site);
         pagesRepository.save(page);
 
         return "redirect:/sites/"+site.getName()+"/pages/"+pageName+"/create";

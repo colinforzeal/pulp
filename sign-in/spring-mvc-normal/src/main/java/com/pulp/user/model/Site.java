@@ -29,7 +29,7 @@ public class Site {
         this.user = user;
     }
 
-    @OneToMany(mappedBy = "site",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "site",cascade = CascadeType.REMOVE)
     private List<Page> pages;
 
     public Site(){}

@@ -9,8 +9,14 @@
     </div>
 
     <div th:if="${isPrincipal} == true">
-        <form th:action="@{${path}}">
+        <form th:action="@{{path}/edit(path=${path})}">
             <button type="submit" class="btn btn-default" th:text="Edit"></button>
+        </form>
+        <form th:action="@{{path}/edit_layout(path=${path})}">
+            <button type="submit" class="btn btn-default" th:text="Editlayout"></button>
+        </form>
+        <form th:action="@{{path}/delete(path=${path})}">
+            <button type="submit" class="btn btn-default" th:text="Delete"></button>
         </form>
     </div>
 

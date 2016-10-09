@@ -15,7 +15,6 @@ import java.util.Set;
 public interface PagesRepository extends JpaRepository<Page,Long> {
 
    public List<Page> findBySite(Site site);
-   public Page findBySiteAndIsMainPage(Site site,Boolean isMainPage);
    public Page findByName(String name);
    Page findBySiteAndName(Site site,String name);
    Page findOneBySite(Site site);

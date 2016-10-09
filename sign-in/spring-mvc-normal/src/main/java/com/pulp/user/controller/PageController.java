@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by colinforzeal on 8.10.16.
- */
 @Controller
 public class PageController {
     @Autowired
@@ -37,11 +34,7 @@ public class PageController {
     private PagesRepository pagesRepository;
     @Autowired
     private SitesRepository sitesRepository;
-/*!
-  !  //TODO when we have some pages and wonna add one more "sites/{siteName}/create"!!!!!!
-!
 
-*/
     @Transactional
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
     public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data) {
@@ -64,7 +57,7 @@ public class PageController {
         User currentUser = userRepository.findByEmail(principal.getName());
         if (currentUser != null){
             model.addAttribute("isPrincipal",true);
-            model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName+"/edit");
+            model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         }
         model.addAttribute("site",siteName);
         model.addAttribute("page",page);
@@ -92,13 +85,55 @@ public class PageController {
             return "redirect:/";
         }
 
-
         PageForm pageForm = new PageForm();
         pageForm.setPageName(pageName);
         model.addAttribute("page", pageForm);
-        model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName+"/edit");
+        model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         model.addAttribute("pageName",pageName);
         return "/pages/edit_page_name.html";
+    }
+
+    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/edit_layout",method = RequestMethod.GET)
+    public String editLayout(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model,Principal principal)
+    {
+
+        Site site = sitesRepository.findByName(siteName);
+        if(site==null)
+            return "redirect:/sites/create";
+
+        if(!(site.getUser().getId().equals(userRepository.findByEmail(principal.getName()).getId())))
+        {
+            return "redirect:/";
+        }
+
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
+        model.addAttribute("page",page);
+        model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
+        return "/pages/edit_layout.html";
+    }
+
+    @RequestMapping(value="/sites/{siteName}/pages/{pageName}/delete",method = RequestMethod.GET)
+    public String deletePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName,Principal principal)
+    {
+        Site site = sitesRepository.findByName(siteName);
+        if(site==null)
+            return "redirect:/sites/create";
+
+        if(!(site.getUser().getId().equals(userRepository.findByEmail(principal.getName()).getId())))
+        {
+            return "redirect:/";
+        }
+
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
+        pagesRepository.delete(page);
+
+        List<Page> leftPages = pagesRepository.findBySite(site);
+
+        if (leftPages.isEmpty()){
+            return "redirect:/sites/"+siteName+"/create/";
+        }
+
+        return "redirect:/sites/"+siteName;
     }
 
     @Transactional
@@ -108,7 +143,6 @@ public class PageController {
         if (result.hasErrors()) {
             return "redirect:/sites/"+siteName+"/pages/"+pageName+"/edit";
         }
-
 
         Site site = sitesRepository.findByName(siteName);
         if(site==null)return "redirect:/sites/create";
