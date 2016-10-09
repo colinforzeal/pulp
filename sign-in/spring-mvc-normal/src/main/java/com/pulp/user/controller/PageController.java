@@ -90,6 +90,7 @@ public class PageController {
         model.addAttribute("page", pageForm);
         model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         model.addAttribute("pageName",pageName);
+        model.addAttribute("pageName",pageName);
         return "/pages/edit_page_name.html";
     }
 
@@ -109,6 +110,8 @@ public class PageController {
         Page page = pagesRepository.findBySiteAndName(site,pageName);
         model.addAttribute("page",page);
         model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
+        model.addAttribute("siteName",siteName);
+        model.addAttribute("pageName",pageName);
         return "/pages/edit_layout.html";
     }
 
