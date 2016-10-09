@@ -58,6 +58,7 @@ public class PageController {
         Site site = sitesRepository.findByName(siteName);
         Page page = pagesRepository.findBySiteAndName(site,pageName);
         model.addAttribute("page",page);
+        model.addAttribute("site",site.getName());
 
         return "/pages/index.html";
     }
