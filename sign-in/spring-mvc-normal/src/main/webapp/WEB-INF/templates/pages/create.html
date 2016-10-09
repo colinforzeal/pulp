@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="user-layout.html :: head">
+<head th:replace="page-layout.html :: head">
 </head>
-<body ng-app="demo" ng-controller="SimpleDemoController" th:attr="ng-init='site=\'' + ${siteName} + '\''">
+<body ng-app="demo" ng-controller="SimpleDemoController" >
 <div sec:authorize="isAuthenticated()">
     <div th:include="user-layout.html :: navAuthorized"></div>
 
@@ -95,7 +95,7 @@
     </div>
 
     <!--Upload button-->
-    <button type="button" class="btn btn-success" ng-click="save()">Save</button>
+    <button type="button" class="btn btn-success" ng-click='save()' >Save</button>
 </div>
 
 </body>

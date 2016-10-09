@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<head th:replace="page-layout.html :: head">
     <title>Title</title>
 </head>
-<body>
+<body ng-app="demo" ng-controller="PageViewController" th:attr="ng-init='data='+${page.data}+''">
+    <div th:text="${page.name}">
+    </div>
 
-<div th:text="${page.name}">
-</div>
-<div th:text="${page.data}"></div>
+    <!-- Main area with dropzones and source code -->
+    <div class="col-md-10">
+        <div class="container-fluid">
+            <div class="row">
+                <li ng-repeat="item in data">
 
-<div>
-    <a th:href="@{~/sites/{site}/create(site=${site})}">add page</a>
-</div>
+                    <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
+                    <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
+                    <img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">
+                </li>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a th:href="@{~/sites/{site}/create(site=${site})}">add page</a>
+    </div>
 </body>
 </html>
