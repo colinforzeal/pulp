@@ -3,42 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="head.html :: head" >
-    <title th:text="spring.social.mvc.normal.title"></title>
+    <title>Login</title>
 </head>
 <body>
 <div sec:authorize="isAnonymous()">
     <div th:include="user-layout.html :: navAnonymous"></div>
-    <div class="container">
-    <div class="col-sm-6 col-md-5 col-lg-6 col-md-offset-5">
-    <ul class="nav nav-pills nav-stacked">
-        <li>
-            <div class="row social-button-row">
-                <div class="col-lg-4">
-                    <a style="text-decoration: none;" th:href="@{/auth/facebook}"><button class="btn btn-block btn-facebook" th:text="#{label.facebook.sign.in.button}"><i class="icon-facebook"></i>
-                    </button></a>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="row social-button-row">
-                <div class="col-lg-4">
-                    <a style="text-decoration: none;" th:href="@{/auth/twitter}"><button class="btn btn-block btn-twitter" th:text="#{label.twitter.sign.in.button}"><i class="icon-twitter"></i>
-                    </button></a>
-                </div>
-            </div>
-        </li>
-        <!--<li>-->
-            <!--<div class="row social-button-row">-->
-                <!--<div class="col-lg-4">-->
-                    <!--<a th:href="@{/auth/vkontakte}"><button class="btn btn-vk" th:text="#{label.vk.sign.in.button}"><i class="icon-vk"></i>-->
-                    <!--</button></a>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--<li>-->
-    </ul>
-    </div>
-    </div>
+    <h1>Login with social authorizeation</h1>
 </div>
-
 </body>
 </html>
