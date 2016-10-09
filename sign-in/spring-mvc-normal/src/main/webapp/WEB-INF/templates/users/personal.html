@@ -16,13 +16,15 @@
             <p>Your sites: </p>
         <div class="container">
                 <div class="list-group" th:each="site : ${sites}">
-                        <a class="list-group-item" th:href="@{~/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
-
-
+                    <div class="list-group-item">
+                        <a th:href="@{~/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
+                        <span> | </span>
+                        <a th:href="@{~/sites/{id}/edit(id=${site.name})}">Edit</a>
+                    </div>
                 </div>
         </div>
             <div>
-                <a th:href="@{~/create}">Create new site</a>
+                <a th:href="@{~/sites/create}">Create new site</a>
             </div>
 
     </div>

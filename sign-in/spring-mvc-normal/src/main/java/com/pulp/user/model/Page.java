@@ -19,7 +19,7 @@ public class Page {
     @Column
     private boolean isMainPage;
 
-    @Column(name = "data")
+    @Column(name = "data",length = 10000000)
     private String data;
 
     @ManyToOne(fetch = FetchType.EAGER)
