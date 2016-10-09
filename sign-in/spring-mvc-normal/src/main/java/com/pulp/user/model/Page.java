@@ -1,6 +1,8 @@
 package com.pulp.user.model;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
@@ -23,6 +25,10 @@ public class Page {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "site_id", nullable = false)
     private Site site;
+    @Column(name = "modification_time", nullable = false)
+
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime modificationTime;
 
     public Page(String name, Site site) {
         this.name = name;
@@ -65,5 +71,23 @@ public class Page {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.modificationTime = DateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.modificationTime = DateTime.now();
+    }
+
+    public DateTime getModificationTime() {
+        return modificationTime;
+    }
+
+    public void setModificationTime(DateTime modificationTime) {
+        this.modificationTime = modificationTime;
     }
 }

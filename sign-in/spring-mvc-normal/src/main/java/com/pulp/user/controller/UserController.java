@@ -27,9 +27,7 @@ public class UserController {
     public String showPersonalPage(@PathVariable(value="id") Long id,Principal principal, Model model) {
         User user = userRepository.findById(id);
         System.out.println(user.getFirstName());
-        if(principal == null) {
-            return "redirect:/";
-        }
+
         model.addAttribute("user",user);
         if(user.getSites()!=null || !user.getSites().isEmpty()){
             List<Site> sites=new ArrayList<>();
