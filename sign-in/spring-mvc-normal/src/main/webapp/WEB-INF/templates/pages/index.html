@@ -17,6 +17,7 @@
 
 </head>
 <body ng-app="demo" ng-controller="PageViewController" th:attr="ng-init='data='+${page.data}+''">
+
 <div th:fragment="navAuthorized">
     <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
@@ -61,16 +62,43 @@
         </div><!-- /.navbar-collapse -->
     </div>
 </div>
+<<<<<<< HEAD
 
     <ul class="nav nav-tabs">
         <li th:each="page : ${pages}" role="presentation" th:class="(${page.name} == ${pageName}) ? active : ''"><a th:href="@{~/sites/{sitename}/pages/{pagename}(sitename=${siteName},pagename=${page.name})}" th:text="${page.name}"></a></li>
     </ul>
+=======
+>>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
 
 <div class="container">
 
         <!-- Blog Post Content Column -->
         <div class='class="col-lg-8 col-sm-8 col-md-8 col-sm-offset-1 col-md-offset-2  '>
+<<<<<<< HEAD
 
+=======
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Project name</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
+                            <li><a href="../navbar-static-top/">Static top</a></li>
+                            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </nav>
+>>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
             <div class="row">
                 <div class="col-sm-12">
             <!-- Blog Post -->
@@ -98,10 +126,43 @@
 </div>
 </div>
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+</div>
+>>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
 <script>
     $(document).ready(function () {
         $("img").addClass("img-responsive")
     });
 </script>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
 </body>
 </html>

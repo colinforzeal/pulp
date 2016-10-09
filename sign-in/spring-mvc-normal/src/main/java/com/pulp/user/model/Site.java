@@ -1,5 +1,7 @@
 package com.pulp.user.model;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
@@ -19,6 +21,10 @@ public class Site {
 
     @Column(nullable = false,unique = true)
     private String name;
+    @Column(name = "modification_time", nullable = false)
+
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime modificationTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -84,7 +90,23 @@ public class Site {
 
         return result;
     }
+    @PrePersist
+    public void prePersist() {
+        this.modificationTime = DateTime.now();
+    }
 
+    @PreUpdate
+    public void preUpdate() {
+        this.modificationTime = DateTime.now();
+    }
+
+    public DateTime getModificationTime() {
+        return modificationTime;
+    }
+
+    public void setModificationTime(DateTime modificationTime) {
+        this.modificationTime = modificationTime;
+    }
 
     public User getUser() {
         return user;
