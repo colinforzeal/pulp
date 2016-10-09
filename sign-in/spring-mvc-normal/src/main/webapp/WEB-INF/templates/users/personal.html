@@ -4,36 +4,30 @@
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="head.html :: head">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Profile</title>
 </head>
 <body>
 <div sec:authorize="isAuthenticated()">
-    <div th:include="user-layout.html :: navAuthorized"></div>
+    <div th:include="user-layout.html :: navAuthorizedNotPrincipalNotSite"></div>
     <div   style="margin-bottom: 50px;" class="col-md-6 col-md-offset-3">
 
         <h1> Hi, <span th:text="${user.firstName}"> </span></h1>
-
-            <p>Your sites: </p>
+        <p>Your sites: </p>
         <div class="container">
-                <div class="list-group" th:each="site : ${sites}">
-                    <div class="list-group-item">
-                        <a th:href="@{~/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
-                        <span> | </span>
-                        <a th:href="@{~/sites/{id}/edit(id=${site.name})}">Edit</a>
-                        <span> | </span>
-                        <a th:href="@{~/sites/{id}/delete(id=${site.name})}">Delete</a>
-                    </div>
+            <div class="list-group" th:each="site : ${sites}">
+                <div class="list-group-item">
+                    <a th:href="@{~/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
+                    <span> | </span>
+                    <a th:href="@{~/sites/{id}/edit(id=${site.name})}">Edit</a>
+                    <span> | </span>
+                    <a th:href="@{~/sites/{id}/delete(id=${site.name})}">Delete</a>
                 </div>
-        </div>
-            <div>
-                <a th:href="@{~/sites/create}">Create new site</a>
             </div>
-
+        </div>
+        <div>
+            <a th:href="@{~/sites/create}">Create new site</a>
+        </div>
     </div>
-
-
-</div>
-</div>
 </div>
 </body>
 </html>
