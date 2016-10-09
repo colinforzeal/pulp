@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="head.html :: head">
     <title>Title</title>
     <style>
@@ -31,16 +31,19 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle help_toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Info <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
+                    <ul class="dropdown-menu multi-level">
                         <li>
                             <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
                         </li>
+                        <li role="separator" class="divider divide"></li>
+                        <li><a th:href="@{~/sites/create}">Create site</a></li>
                         <li><a th:href="@{~/sites/{name}/edit(name=${siteName})}">Edit site</a></li>
                         <li><a th:href="@{~/sites/{name}/delete(name=${siteName})}">Delete site</a></li>
                         <li role="separator" class="divider divide"></li>
+                        <li><a th:href="@{~/sites/{sitename}/create(sitename=${siteName})}">Create page</a></li>
                         <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit(sitename=${siteName},pagename=${pageName})}">Edit page</a></li>
-                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit layout</a></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit page layout</a></li>
                         <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/delete(sitename=${siteName},pagename=${pageName})}">Delete page</a></li>
                         <li role="separator" class="divider divide"></li>
                         <li>
@@ -57,66 +60,23 @@
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>
+</div>
 
+    <ul class="nav nav-tabs">
+        <li th:each="page : ${pages}" role="presentation" th:class="(${page.name} == ${pageName}) ? active : ''"><a th:href="@{~/sites/{sitename}/pages/{pagename}(sitename=${siteName},pagename=${page.name})}" th:text="${page.name}"></a></li>
+    </ul>
 
-
-
-
-
-
-<!-- Page Content -->
 <div class="container">
-
-    <!--<div class="row">-->
 
         <!-- Blog Post Content Column -->
         <div class='class="col-lg-8 col-sm-8 col-md-8 col-sm-offset-1 col-md-offset-2  '>
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Project name</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li class="dropdown-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
-                            <li><a href="../navbar-static-top/">Static top</a></li>
-                            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div><!--/.container-fluid -->
-            </nav>
+
             <div class="row">
                 <div class="col-sm-12">
-
-
             <!-- Blog Post -->
 
             <!-- Title -->
-            <h1>  <span th:text="${page.name}">
-            </span></h1>
+            <h1><span th:text="${page.name}"></span></h1>
 
             <!-- Author -->
             <p class="lead">
@@ -124,79 +84,24 @@
             </p>
 
             <hr>
-
-            <!--&lt;!&ndash; Date/Time &ndash;&gt;-->
-            <!--<p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>-->
             <div class="caption" style="word-wrap: break-word;">
-            <!--<div class="col-lg-8">-->
                 <li ng-repeat="item in data">
-
                     <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
                     <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
-                    <img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">
                 </li>
-            <!--</div>-->
             </div>
             <hr>
 
             <hr>
         </div>
-
-    <!--</div>-->
+    </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 
 <script>
     $(document).ready(function () {
-
         $("img").addClass("img-responsive")
-
-
-
     });
 </script>
-
-
-
-    <!--&lt;!&ndash; Main area with dropzones and source code &ndash;&gt;-->
-    <!--<div class="col-md-10">-->
-        <!--<div class="container-fluid">-->
-            <!--<div class="row">-->
-                <!--<li ng-repeat="item in data">-->
-
-                    <!--<div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>-->
-                    <!--<youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>-->
-                    <!--<img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">-->
-                <!--</li>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--<div>-->
-        <!--<a th:href="@{~/sites/{site}/create(site=${site})}">add page</a>-->
-    <!--</div>-->
 </body>
 </html>

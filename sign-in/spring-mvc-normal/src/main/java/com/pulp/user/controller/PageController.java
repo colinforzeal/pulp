@@ -59,10 +59,12 @@ public class PageController {
             model.addAttribute("isPrincipal",true);
             model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         }
-        model.addAttribute("site",siteName);
-        model.addAttribute("user",site.getUser());
 
+        List<Page> pages = pagesRepository.findAll();
+
+        model.addAttribute("user",site.getUser());
         model.addAttribute("page",page);
+        model.addAttribute("pages",pages);
         model.addAttribute("pageName",page.getName());
         model.addAttribute("siteName",site.getName());
 

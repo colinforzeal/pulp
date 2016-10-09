@@ -27,11 +27,14 @@
                             <li>
                                 <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
                             </li>
+                            <li role="separator" class="divider divide"></li>
+                            <li><a th:href="@{~/sites/create}">Create site</a></li>
                             <li><a th:href="@{~/sites/{name}/edit(name=${siteName})}">Edit site</a></li>
                             <li><a th:href="@{~/sites/{name}/delete(name=${siteName})}">Delete site</a></li>
                             <li role="separator" class="divider divide"></li>
+                            <li><a th:href="@{~/sites/{sitename}/create(sitename=${siteName})}">Create page</a></li>
                             <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit(sitename=${siteName},pagename=${pageName})}">Edit page</a></li>
-                            <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit layout</a></li>
+                            <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit page layout</a></li>
                             <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/delete(sitename=${siteName},pagename=${pageName})}">Delete page</a></li>
                             <li role="separator" class="divider divide"></li>
                             <li>
