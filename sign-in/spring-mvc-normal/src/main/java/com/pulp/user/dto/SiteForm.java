@@ -14,6 +14,10 @@ public class SiteForm {
     @NotNull
     private String name;
 
+    @NotEmpty
+    @NotNull
+    private String pageName;
+
     public String getName() {
         return name;
     }
@@ -24,5 +28,13 @@ public class SiteForm {
     public void setName(String name) {
 
         this.name = name;
+    }
+
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setPageName(String pageName) {
+        this.pageName = pageName;
     }
 }

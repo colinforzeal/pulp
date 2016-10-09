@@ -11,6 +11,8 @@
 </div>
 <div th:text="${page.data}"></div>
 
-
+<div>
+    <a th:href="@{~/sites/{site}/create(site=${site})}">add page</a>
+</div>
 </body>
 </html>

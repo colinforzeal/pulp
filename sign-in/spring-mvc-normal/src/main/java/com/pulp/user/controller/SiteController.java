@@ -1,5 +1,6 @@
 package com.pulp.user.controller;
 
+import com.pulp.user.dto.PageForm;
 import com.pulp.user.dto.RegistrationForm;
 import com.pulp.user.dto.SiteForm;
 import com.pulp.user.model.Page;
@@ -54,32 +55,31 @@ public class SiteController {
             return "redirect:/sites/create";
         }
         String name = siteForm.getName();
+        String pageName = siteForm.getPageName();
 
         Site registered = null;
+
         if(siteNameExists(name))
         {
             addFieldError("site","name",name,"Site with that name already exists",result);
             return "sites/create.html";
         }
 
-
-
         System.out.println(siteForm.getName());
         User user =userRepository.findByEmail(principal.getName());
+        Site site = new Site(name, user);
 
+        sitesRepository.save(site);
 
+        if(pageNameExists(pageName,site))
+        {
+            addFieldError("site","pageName",pageName,"Page with that name already exists",result);
+            return "sites/create.html";
+        }
+        Page page = new Page(pageName,site,true);
+        pagesRepository.save(page);
 
-            Site site = new Site(name, user);
-            sitesRepository.save(site);
-//            ArrayList set1 = new ArrayList<Site>();
-//            set1.add(site);
-//            user.setSites(set1);
-//            userRepository.save(user);
-
-
-
-
-        return "redirect:/users/"+user.getId();
+        return "redirect:/sites/"+name+"/pages/"+pageName+"/create";
     }
 
     @RequestMapping(value = "/sites/{site_name}",method = RequestMethod.GET)
@@ -89,9 +89,9 @@ public class SiteController {
         if(site != null)
         {
             Page page = pagesRepository.findBySiteAndIsMainPage(site,true);
-
+            System.out.println(page.getName());
             if (page == null){
-                return "redirect:/sites/" + siteName + "/pages/create";
+                return "redirect:/sites/" + siteName + "/create";
             }
             else{
                 return "redirect:/sites/" + siteName + "/pages/" + page.getName();
@@ -102,6 +102,36 @@ public class SiteController {
         }
     }
 
+    @RequestMapping(value = "/sites/{site_name}/create", method = RequestMethod.GET)
+    public String showPageForm(@PathVariable(value = "site_name") String siteName,Principal principal,Model model){
+        if(principal==null)
+        {return "redirect:/login";}
+        model.addAttribute("siteName",sitesRepository.findOneByName(siteName).getName());
+        PageForm pageForm = new PageForm();
+        model.addAttribute("page", pageForm);
+        return "sites/create_page_name.html";
+    }
+    @Transactional
+    @RequestMapping(value = "/sites/{site_name}/create",method = RequestMethod.POST)
+    public String createPageName(@PathVariable(value = "site_name") String siteName,@Valid @ModelAttribute("page") PageForm pageForm, BindingResult result, Principal principal) {
+
+        if (result.hasErrors()) {
+            return "redirect:/sites/create";
+        }
+        String pageName = pageForm.getPageName();
+        Site site = sitesRepository.findByName(siteName);
+        if(site==null)return "redirect:/sites/create";
+
+        if(pageNameExists(pageName,site))
+        {
+            addFieldError("site","pageName",pageName,"Page with that name already exists",result);
+            return "sites/create_page_name.html";
+        }
+        Page page = new Page(pageName,site,false);
+        pagesRepository.save(page);
+
+        return "redirect:/sites/"+site.getName()+"/pages/"+pageName+"/create";
+    }
 
     private boolean siteNameExists(String name) {
 
@@ -109,6 +139,12 @@ public class SiteController {
 
 
         return site != null;
+
+
+    }
+    private boolean pageNameExists(String name,Site site) {
+        Page page = pagesRepository.findBySiteAndName(site,name);
+        return page != null;
 
 
     }
