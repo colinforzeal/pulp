@@ -3,39 +3,163 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="head.html :: head">
     <title>Title</title>
+    <style>
+        body {
+            padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            width: auto\9; /* ie8 */
+        }
+
+    </style>0
+
 </head>
 <body ng-app="demo" ng-controller="PageViewController" th:attr="ng-init='data='+${page.data}+''">
-    <div th:text="${page.name}">
+<div th:fragment="navAuthorized">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only" th:text="#{label.navigation.toggle.navigation.button}"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand"><a style=" text-decoration: none;" href="/">Pulp</a></span>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle help_toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Info <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
+                        </li>
+                        <li><a th:href="@{~/sites/{name}/edit(name=${siteName})}">Edit site</a></li>
+                        <li><a th:href="@{~/sites/{name}/delete(name=${siteName})}">Delete site</a></li>
+                        <li role="separator" class="divider divide"></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit(sitename=${siteName},pagename=${pageName})}">Edit page</a></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit layout</a></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/delete(sitename=${siteName},pagename=${pageName})}">Delete page</a></li>
+                        <li role="separator" class="divider divide"></li>
+                        <li>
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <form th:action="@{/logout}" method="POST" >
+                                        <button type="submit" class="btn  btn-block  a_button btn-default" th:text="#{label.navigation.logout.link}"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
     </div>
 
-    <div th:if="${isPrincipal}">
-        <form th:action="@{{path}/edit(path=${path})}">
-            <button type="submit" class="btn btn-default" th:text="Edit"></button>
-        </form>
-        <form th:action="@{{path}/edit_layout(path=${path})}">
-            <button type="submit" class="btn btn-default" th:text="Editlayout"></button>
-        </form>
-        <form th:action="@{{path}/delete(path=${path})}">
-            <button type="submit" class="btn btn-default" th:text="Delete"></button>
-        </form>
-    </div>
 
-    <!-- Main area with dropzones and source code -->
-    <div class="col-md-10">
-        <div class="container-fluid">
+
+
+
+
+
+<!-- Page Content -->
+<div class="container">
+
+    <!--<div class="row">-->
+
+        <!-- Blog Post Content Column -->
+        <div class='class="col-lg-8 col-sm-8 col-md-8 col-sm-offset-1 col-md-offset-2  '>
             <div class="row">
+                <div class="col-sm-12">
+
+
+            <!-- Blog Post -->
+
+            <!-- Title -->
+            <h1>  <span th:text="${page.name}">
+            </span></h1>
+
+            <!-- Author -->
+            <p class="lead">
+                by <a th:href="@{~/users/{id}(id=${user.id})}" ><span th:text="${user.firstName}"></span>  <span th:text="${user.lastName}"></span> </a>
+            </p>
+
+            <hr>
+
+            <!--&lt;!&ndash; Date/Time &ndash;&gt;-->
+            <!--<p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>-->
+            <div class="caption" style="word-wrap: break-word;">
+            <!--<div class="col-lg-8">-->
                 <li ng-repeat="item in data">
 
                     <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
                     <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
                     <img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">
                 </li>
+            <!--</div>-->
             </div>
-        </div>
-    </div>
+            <hr>
 
-    <div>
-        <a th:href="@{~/sites/{site}/create(site=${site})}">add page</a>
-    </div>
+            <hr>
+        </div>
+
+    <!--</div>-->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $("img").addClass("img-responsive")
+
+
+
+    });
+</script>
+
+
+
+    <!--&lt;!&ndash; Main area with dropzones and source code &ndash;&gt;-->
+    <!--<div class="col-md-10">-->
+        <!--<div class="container-fluid">-->
+            <!--<div class="row">-->
+                <!--<li ng-repeat="item in data">-->
+
+                    <!--<div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>-->
+                    <!--<youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>-->
+                    <!--<img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">-->
+                <!--</li>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div>-->
+        <!--<a th:href="@{~/sites/{site}/create(site=${site})}">add page</a>-->
+    <!--</div>-->
 </body>
 </html>

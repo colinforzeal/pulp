@@ -60,7 +60,11 @@ public class PageController {
             model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         }
         model.addAttribute("site",siteName);
+        model.addAttribute("user",site.getUser());
+
         model.addAttribute("page",page);
+        model.addAttribute("pageName",page.getName());
+        model.addAttribute("siteName",site.getName());
 
         return "/pages/index.html";
     }
