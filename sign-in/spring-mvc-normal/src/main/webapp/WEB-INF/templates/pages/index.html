@@ -32,19 +32,16 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
-                    <ul class="dropdown-menu multi-level">
+                    <a href="#" class="dropdown-toggle help_toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Info <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
                         <li>
                             <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
                         </li>
-                        <li role="separator" class="divider divide"></li>
-                        <li><a th:href="@{~/sites/create}">Create site</a></li>
                         <li><a th:href="@{~/sites/{name}/edit(name=${siteName})}">Edit site</a></li>
                         <li><a th:href="@{~/sites/{name}/delete(name=${siteName})}">Delete site</a></li>
                         <li role="separator" class="divider divide"></li>
-                        <li><a th:href="@{~/sites/{sitename}/create(sitename=${siteName})}">Create page</a></li>
                         <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit(sitename=${siteName},pagename=${pageName})}">Edit page</a></li>
-                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit page layout</a></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit layout</a></li>
                         <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/delete(sitename=${siteName},pagename=${pageName})}">Delete page</a></li>
                         <li role="separator" class="divider divide"></li>
                         <li>
@@ -62,21 +59,19 @@
         </div><!-- /.navbar-collapse -->
     </div>
 </div>
-<<<<<<< HEAD
 
-    <ul class="nav nav-tabs">
-        <li th:each="page : ${pages}" role="presentation" th:class="(${page.name} == ${pageName}) ? active : ''"><a th:href="@{~/sites/{sitename}/pages/{pagename}(sitename=${siteName},pagename=${page.name})}" th:text="${page.name}"></a></li>
-    </ul>
-=======
->>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
 
+
+
+
+
+<!-- Page Content -->
 <div class="container">
+
+    <!--<div class="row">-->
 
         <!-- Blog Post Content Column -->
         <div class='class="col-lg-8 col-sm-8 col-md-8 col-sm-offset-1 col-md-offset-2  '>
-<<<<<<< HEAD
-
-=======
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -98,13 +93,15 @@
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
->>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
             <div class="row">
                 <div class="col-sm-12">
+
+
             <!-- Blog Post -->
 
             <!-- Title -->
-            <h1><span th:text="${page.name}"></span></h1>
+            <h1>  <span th:text="${page.name}">
+            </span></h1>
 
             <!-- Author -->
             <p class="lead">
@@ -112,22 +109,27 @@
             </p>
 
             <hr>
+
+            <!--&lt;!&ndash; Date/Time &ndash;&gt;-->
+            <!--<p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>-->
             <div class="caption" style="word-wrap: break-word;">
+            <!--<div class="col-lg-8">-->
                 <li ng-repeat="item in data">
+
                     <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
                     <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
+                    <img ng-if="item.type == 'image'" ngf-thumbnail="file || '/thumb.jpg'">
                 </li>
+            <!--</div>-->
             </div>
             <hr>
 
             <hr>
         </div>
-    </div>
-</div>
+
+    <!--</div>-->
 </div>
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -153,16 +155,16 @@
         </div>
 
 </div>
->>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
 <script>
     $(document).ready(function () {
+
         $("img").addClass("img-responsive")
+
+
+
     });
 </script>
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 3fe306b7493c4884766544392a2346a5db3d1fd9
 </body>
 </html>

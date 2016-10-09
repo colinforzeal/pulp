@@ -1,4 +1,4 @@
-package com.pulp.controller;
+package com.pulp.common.controller;
 
 import com.pulp.user.model.Site;
 import com.pulp.user.repository.SitesRepository;
