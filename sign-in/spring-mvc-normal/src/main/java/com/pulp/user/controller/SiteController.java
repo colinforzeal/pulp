@@ -43,12 +43,15 @@ public class SiteController {
 
     @RequestMapping(value = "/sites/create",method = RequestMethod.GET)
     public String siteForm(Model model, Principal principal){
-        if(principal==null)
-        {return "redirect:/login";}
+        if(principal == null) {
+            return "redirect:/login";
+        }
         SiteForm siteform = new SiteForm();
         model.addAttribute(MODEL_NAME_REGISTRATION_DTO, siteform);
         return "sites/create.html";
     }
+
+
     @Transactional
     @RequestMapping(value = "/sites/create",method = RequestMethod.POST)
     public String addSite(@Valid @ModelAttribute("site")SiteForm siteForm, BindingResult result, Principal principal){
@@ -59,16 +62,13 @@ public class SiteController {
         String name = siteForm.getName();
         String pageName = siteForm.getPageName();
 
-        Site registered = null;
-
         if(siteNameExists(name))
         {
             addFieldError("site","name",name,"Site with that name already exists",result);
             return "sites/create.html";
         }
 
-        System.out.println(siteForm.getName());
-        User user =userRepository.findByEmail(principal.getName());
+        User user = userRepository.findByEmail(principal.getName());
         Site site = new Site(name, user);
 
         sitesRepository.save(site);
@@ -83,6 +83,7 @@ public class SiteController {
 
         return "redirect:/sites/"+name+"/pages/"+pageName+"/create";
     }
+
 
     @RequestMapping(value = "/sites/{site_name}",method = RequestMethod.GET)
     public String showSite(@PathVariable(value="site_name") String siteName, Principal principal){
@@ -104,10 +105,13 @@ public class SiteController {
         }
     }
 
+
     @RequestMapping(value = "/sites/{site_name}/create", method = RequestMethod.GET)
     public String showPageForm(@PathVariable(value = "site_name") String siteName,Principal principal,Model model){
-        if(principal==null)
-        {return "redirect:/login";}
+        if(principal == null) {
+            return "redirect:/login";
+        }
+
         User user = userRepository.findByEmail(principal.getName());
         Long currentUserId = user.getId();
         if(!sitesRepository.findByName(siteName).getUser().getId().equals(currentUserId) &&(user.getRole()!= Role.ROLE_ADMIN) ){
@@ -131,7 +135,9 @@ public class SiteController {
         String pageName = pageForm.getPageName();
 
         Site site = sitesRepository.findByName(siteName);
-        if(site==null)return "redirect:/sites/create";
+        if(site == null){
+            return "redirect:/sites/create";
+        }
 
         if(pageNameExists(pageName,site))
         {
@@ -144,28 +150,34 @@ public class SiteController {
 
         return "redirect:/sites/"+site.getName()+"/pages/"+pageName+"/create";
     }
+
+
     @RequestMapping(value = "/sites/{site_name}/edit", method = RequestMethod.GET)
     public String showEditSiteForm(@PathVariable(value = "site_name") String siteName,Principal principal,Model model){
         Site site = sitesRepository.findByName(siteName);
 
-        if(site==null)
+        if(site==null){
             return "redirect:/sites/create";
-        if(principal==null){
+        }
+        else if(principal==null){
             return "redirect:/login";
         }
+
         User user = userRepository.findByEmail(principal.getName());
 
         if(!(site.getUser().getId().equals(user.getId())) && (user.getRole()!= Role.ROLE_ADMIN))
         {
             return "redirect:/";
         }
+
         SiteEditForm siteForm = new SiteEditForm();
         siteForm.setName(siteName);
         model.addAttribute("site", siteForm);
         model.addAttribute("path","/sites/"+siteName+"/edit");
         return "sites/edit_site_name.html";
-
     }
+
+
     @Transactional
     @RequestMapping(value = "/sites/{site_name}/edit",method = RequestMethod.POST)
     public String editSiteName(@PathVariable(value = "site_name") String siteName,@Valid @ModelAttribute("site") SiteEditForm siteForm, BindingResult result, Principal principal) {
@@ -174,10 +186,11 @@ public class SiteController {
             return "redirect:/sites/"+siteName+"/edit";
         }
 
-
         Site site = sitesRepository.findByName(siteName);
 
-        if(site==null)return "redirect:/sites/create";
+        if(site == null){
+            return "redirect:/sites/create";
+        }
 
         String editedSiteName = siteForm.getName();
         if(siteNameExists(editedSiteName))
@@ -197,8 +210,8 @@ public class SiteController {
 
         Site site = sitesRepository.findOneByName(siteName);
 
-        if(site != null)
-        {    User user = userRepository.findByEmail(principal.getName());
+        if (site != null) {
+            User user = userRepository.findByEmail(principal.getName());
             if(((site.getUser()).getId()).equals(user.getId())||(user.getRole()==Role.ROLE_ADMIN)){
                 sitesRepository.delete(site);
                 return "redirect:/";
@@ -206,32 +219,21 @@ public class SiteController {
         }
 
         return "redirect:/";
-
     }
-
-
-
-
-
-
-
 
 
     private boolean siteNameExists(String name) {
-
         Site site = sitesRepository.findOneByName(name);
-
-
         return site != null;
-
-
     }
+
+
     private boolean pageNameExists(String name,Site site) {
         Page page = pagesRepository.findBySiteAndName(site,name);
         return page != null;
-
-
     }
+
+
     private void addFieldError(String objectName, String fieldName, String fieldValue,  String errorCode, BindingResult result) {
         FieldError error = new FieldError(
                 objectName,
@@ -242,10 +244,6 @@ public class SiteController {
                 new Object[]{},
                 errorCode
         );
-
         result.addError(error);
     }
-
-
-
 }
