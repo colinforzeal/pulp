@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,10 +7,7 @@
 <body>
 
 <div th:fragment="main_list">
-    <div  class="col-md-6 col-md-offset-3">
-        <!--style="margin-bottom: 50px; background-color:whitesmoke;-->
-        <!--box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);-->
-        <!--"-->
+    <div class="col-md-6 col-md-offset-3">
         <h1> Welcome to our shitty web builder!</h1>
 
         <h2>Last sites : </h2>
@@ -20,7 +17,9 @@
             </div>
         </div>
         <div>
-            <a th:href="@{~/sites/create}">Create new site</a>
+            <form th:action="@{~/sites/create}">
+                <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-success">Create new site</button>
+            </form>
         </div>
     </div>
 </div>

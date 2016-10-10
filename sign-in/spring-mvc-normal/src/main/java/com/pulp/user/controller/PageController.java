@@ -52,23 +52,24 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}",method = RequestMethod.GET)
     public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model,Principal principal) {
         Site site = sitesRepository.findByName(siteName);
-        System.out.println(site.getName());
         Page page = pagesRepository.findBySiteAndName(site,pageName);
-        System.out.println(page.getName());
-        if(principal==null){
-            model.addAttribute("isPrincipal",false);
-            model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
-        }else {
+
+        if (principal != null){
             User currentUser = userRepository.findByEmail(principal.getName());
             if (site.getUser().getId().equals(currentUser.getId())) {
                 model.addAttribute("isPrincipal", true);
-                model.addAttribute("path", "/sites/" + siteName + "/pages/" + pageName);
+            }
+            else {
+                model.addAttribute("isPrincipal",false);
             }
         }
-
+        else{
+            model.addAttribute("isPrincipal",false);
+        }
 
         List<Page> pages = pagesRepository.findBySite(site);
 
+        model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         model.addAttribute("user",site.getUser());
         model.addAttribute("page",page);
         model.addAttribute("pages",pages);

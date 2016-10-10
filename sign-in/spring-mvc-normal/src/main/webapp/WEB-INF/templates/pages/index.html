@@ -19,47 +19,9 @@
 </head>
 <body ng-app="editor" ng-controller="PageViewController" th:attr="ng-init='data='+${page.data}+''">
 <div sec:authorize="isAuthenticated()">
-    <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only" th:text="#{label.navigation.toggle.navigation.button}"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Pulp</a>
-        </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Info <span class="caret"></span></a>
-                    <ul class="dropdown-menu multi-level">
-                        <li sec:authorize="isAuthenticated()">
-                            <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
-                        </li>
-                        <li role="separator" class="divider divide"></li>
-                        <li><a th:href="@{~/sites/create}">Create site</a></li>
-                        <li><a th:href="@{~/sites/{name}/edit(name=${siteName})}">Edit site</a></li>
-                        <li><a th:href="@{~/sites/{name}/delete(name=${siteName})}">Delete site</a></li>
-                        <li role="separator" class="divider divide"></li>
-                        <li><a th:href="@{~/sites/{sitename}/create(sitename=${siteName})}">Create page</a></li>
-                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit(sitename=${siteName},pagename=${pageName})}">Edit page</a></li>
-                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit page layout</a></li>
-                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/delete(sitename=${siteName},pagename=${pageName})}">Delete page</a></li>
-                        <li role="separator" class="divider divide"></li>
-                        <li>
-                            <div class="container-fluid">
-                                <div class="row-fluid">
-                                    <form th:action="@{/logout}" method="POST" >
-                                        <button type="submit" class="btn  btn-block  a_button btn-default" th:text="#{label.navigation.logout.link}"></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
+    <div th:if="${isPrincipal} == true" th:include="pages/page_fragment.html :: navbar"></div>
+
+    <div th:if="${isPrincipal} == false" th:include="user-layout.html :: navAuthorized">
     </div>
 
     <div th:include="pages/page_fragment.html :: page"></div>
