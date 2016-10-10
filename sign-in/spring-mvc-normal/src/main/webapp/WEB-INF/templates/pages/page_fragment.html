@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="page">
+
+
+
+    <ul class="nav nav-tabs">
+        <li th:each="page : ${pages}" role="presentation" th:class="(${page.name} == ${pageName}) ? active : ''"><a th:href="@{~/sites/{sitename}/pages/{pagename}(sitename=${siteName},pagename=${page.name})}" th:text="${page.name}"></a></li>
+    </ul>
+
+    <div class="container">
+
+        <!-- Blog Post Content Column -->
+        <div class='class="col-lg-8 col-sm-8 col-md-8 col-sm-offset-1 col-md-offset-2  '>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- Blog Post -->
+
+                    <!-- Title -->
+                    <h1><span th:text="${page.name}"></span></h1>
+
+                    <!-- Author -->
+                    <p class="lead">
+                        by <a th:href="@{~/users/{id}(id=${user.id})}" ><span th:text="${user.firstName}"></span>  <span th:text="${user.lastName}"></span> </a>
+                    </p>
+
+                    <hr>
+                    <div class="caption" style="word-wrap: break-word;">
+                        <li ng-repeat="item in data">
+                            <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
+                            <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
+                        </li>
+                    </div>
+                    <hr>
+
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

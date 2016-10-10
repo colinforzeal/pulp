@@ -52,13 +52,20 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}",method = RequestMethod.GET)
     public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model,Principal principal) {
         Site site = sitesRepository.findByName(siteName);
+        System.out.println(site.getName());
         Page page = pagesRepository.findBySiteAndName(site,pageName);
-
-        User currentUser = userRepository.findByEmail(principal.getName());
-        if (site.getUser().getId().equals(currentUser.getId())){
-            model.addAttribute("isPrincipal",true);
+        System.out.println(page.getName());
+        if(principal==null){
+            model.addAttribute("isPrincipal",false);
             model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
+        }else {
+            User currentUser = userRepository.findByEmail(principal.getName());
+            if (site.getUser().getId().equals(currentUser.getId())) {
+                model.addAttribute("isPrincipal", true);
+                model.addAttribute("path", "/sites/" + siteName + "/pages/" + pageName);
+            }
         }
+
 
         List<Page> pages = pagesRepository.findBySite(site);
 
@@ -72,15 +79,19 @@ public class PageController {
     }
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.GET)
-    public String createPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model)
-    {
+    public String createPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName,Principal principal, Model model)
+    {    if(principal==null){
+        return "redirect:/sites/"+siteName+"/pages/"+pageName;
+        }
         model.addAttribute("pageName", pageName);
         return "/pages/create.html";
     }
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/edit",method = RequestMethod.GET)
     public String editPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model,Principal principal)
-    {
+    {   if(principal==null){
+        return "redirect:/sites/"+siteName+"/pages/"+pageName;
+        }
 
         Site site = sitesRepository.findByName(siteName);
         if(site==null)
@@ -103,7 +114,9 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/edit_layout",method = RequestMethod.GET)
     public String editLayout(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model,Principal principal)
     {
-
+        if(principal==null){
+            return "redirect:/sites/"+siteName+"/pages/"+pageName;
+        }
         Site site = sitesRepository.findByName(siteName);
         if(site==null)
             return "redirect:/sites/create";
@@ -124,6 +137,9 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/delete",method = RequestMethod.GET)
     public String deletePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName,Principal principal)
     {
+           if(principal==null){
+            return "redirect:/sites/"+siteName+"/pages/"+pageName;
+        }
         Site site = sitesRepository.findByName(siteName);
         if(site==null)
             return "redirect:/sites/create";
