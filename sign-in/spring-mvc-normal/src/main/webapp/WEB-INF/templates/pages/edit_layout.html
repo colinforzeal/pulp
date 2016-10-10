@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand"><a style=" text-decoration: none;" href="/">Pulp</a></span>
+                <a class="navbar-brand" href="/">Pulp</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -53,12 +53,11 @@
         </div>
     </div>
 
-    <h1>Page layout</h1>
-
     <div class="col-md-10">
         <div class="container-fluid">
             <div class="row">
-                <div class="dropzone box box-yellow">
+                <div class="dropzone box box-blue">
+                    <h3>Layout editor</h3>
                     <ul dnd-list="models.layout">
                         <li ng-repeat="item in models.layout"
                             dnd-draggable="item"
@@ -82,12 +81,14 @@
             </div>
         </div>
 
-
-        <div style="word-wrap: break-word;">
-            <li ng-repeat="item in models.layout">
-                <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
-                <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
-            </li>
+        <div class="box box-yellow">
+            <h3>Result page</h3>
+            <div style="word-wrap: break-word;">
+                <li ng-repeat="item in models.layout">
+                    <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
+                    <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
+                </li>
+            </div>
         </div>
     </div>
 
