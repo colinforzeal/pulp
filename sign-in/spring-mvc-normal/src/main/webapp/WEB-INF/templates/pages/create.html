@@ -5,53 +5,44 @@
 <head th:replace="editor-head.html :: editor-head">
     <title>Create page</title>
 </head>
-<body ng-app="demo" ng-controller="SimpleDemoController" >
+<body ng-app="editor" ng-controller="PageCreateController" >
 <div sec:authorize="isAuthenticated()">
     <div th:include="user-layout.html :: navAuthorized"></div>
 
-    <span th:text="${pageName}"></span>
+    <h1>Page layout</h1>
 
-    <script type="text/ng-template" id="list.html">
-        <ul dnd-list="list">
-            <li ng-repeat="item in list"
-                dnd-draggable="item"
-                dnd-effect-allowed="move"
-                dnd-moved="list.splice($index, 1)"
-                dnd-selected="models.selected = item"
-                ng-class="{selected: models.selected === item}"
-                class="background-{{item.type}}">
-
-                <dnd-nodrag>
-                    <div dnd-handle class="handle">:::</div>
-                    <div>
-                        <div class="name">
-                            <!--<textarea ng-if="item.type == 'text'"  ng-model="item.value" class="background-{{item.type}} form-control input-sm">It will appear here!</textarea>-->
-                            <wysiwyg ng-if="item.type == 'text'"  textarea-id="question" textarea-class="background-{{item.type}} form-control input-sm"  textarea-height="80px" textarea-name="textareaQuestion" textarea-required ng-model="item.value" enable-bootstrap-title="true"></wysiwyg>
-                            <input ng-if="item.type == 'video'" type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">
-                        </div>
-
-                        <h1 ng-if="item.type == 'text'" class="pre-wrap" ><pre>{{item.value }}</pre></h1>
-                        <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
-
-                    </div>
-                </dnd-nodrag>
-            </li>
-        </ul>
-    </script>
-
-
-    <!-- Main area with dropzones and source code -->
     <div class="col-md-10">
         <div class="container-fluid">
             <div class="row">
-                <div ng-repeat="(zone, list) in models.dropzones" >
-                    <div class="dropzone box box-yellow">
-                        <!-- The dropzone also uses the list template -->
-                        <h3>Page layout</h3>
-                        <div ng-include="'list.html'"></div>
-                    </div>
+                <div class="dropzone box box-yellow">
+                    <ul dnd-list="models.layout">
+                        <li ng-repeat="item in models.layout"
+                            dnd-draggable="item"
+                            dnd-effect-allowed="move"
+                            dnd-moved="models.layout.splice($index, 1)"
+                            ng-class="{selected: models.selected === item}"
+                            class="background-{{item.type}}">
+
+                            <dnd-nodrag>
+                                <div dnd-handle class="handle">:::</div>
+                                <div>
+                                    <div class="name">
+                                        <wysiwyg ng-if="item.type == 'text'"  textarea-id="question" textarea-class="background-{{item.type}} form-control input-sm"  textarea-height="80px" textarea-name="textareaQuestion" textarea-required ng-model="item.value" enable-bootstrap-title="true"></wysiwyg>
+                                        <input ng-if="item.type == 'video'" type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">
+                                    </div>
+                                </div>
+                            </dnd-nodrag>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
+
+        <div style="word-wrap: break-word;">
+            <li ng-repeat="item in models.layout">
+                <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
+                <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
+            </li>
         </div>
     </div>
 
@@ -79,10 +70,10 @@
             </ul>
         </div>
 
+        <!--Upload button-->
+        <button type="button" class="btn btn-success" ng-click='save()' >Save</button>
     </div>
 
-    <!--Upload button-->
-    <button type="button" class="btn btn-success" ng-click='save()' >Save</button>
 </div>
 
 </body>

@@ -1,5 +1,5 @@
-var app = angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'colorpicker.module', 'wysiwyg.module'])
-    .controller("SimpleDemoController", ['$scope', '$http', '$window', function ($scope,$http,$window) {
+var app = angular.module('editor', ["ngRoute", "dndLists", 'youtube-embed', 'colorpicker.module', 'wysiwyg.module'])
+    .controller("PageCreateController", ['$scope', '$http', '$window', function ($scope,$http,$window) {
 
         $scope.models = {
             selected: null,
@@ -7,22 +7,15 @@ var app = angular.module('demo', ["ngRoute", "dndLists", 'youtube-embed', 'color
                 {type: "text"},
                 {type: "video"}
             ],
-            dropzones: {
-                "A": [
-                    {
-                        type: "",
-                        hidden:true,
-                        value:""
-                    },
+            layout: [
                     {
                         type: "text",
                         value:""
                     }
-                ]
-            }
+            ]
         };
 
-        $scope.$watch('models.dropzones.A', function(model) {
+        $scope.$watch('models.layout', function(model) {
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
         

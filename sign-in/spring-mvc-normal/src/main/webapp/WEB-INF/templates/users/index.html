@@ -14,9 +14,7 @@
 </div>
 <div sec:authorize="isAnonymous()">
     <div th:include="user-layout.html :: navAnonymous"></div>
-
     <div th:include="users/main_list_fragment.html :: main_list"></div>
-    </div>
 </div>
 
 
