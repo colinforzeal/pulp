@@ -141,6 +141,9 @@ public class SiteController {
     @RequestMapping(value = "/sites/{site_name}/edit", method = RequestMethod.GET)
     public String showEditSiteForm(@PathVariable(value = "site_name") String siteName,Principal principal,Model model){
         Site site = sitesRepository.findByName(siteName);
+        if(principal==null){
+            return "redirect:/login";
+        }
         if(site==null)
             return "redirect:/sites/create";
 

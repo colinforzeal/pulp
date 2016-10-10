@@ -58,7 +58,7 @@ public class WebAppContext extends WebMvcConfigurerAdapter{
 
         Properties statusCodes = new Properties();
 
-        statusCodes.put("error/404.html", "404");
+        statusCodes.put("error/error.html", "404");
         statusCodes.put("error/error.html", "500");
 
         exceptionResolver.setStatusCodes(statusCodes);
