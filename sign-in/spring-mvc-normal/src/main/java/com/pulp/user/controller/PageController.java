@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.pulp.user.dto.PageForm;
 import com.pulp.user.dto.SiteForm;
 import com.pulp.user.model.Page;
+import com.pulp.user.model.Role;
 import com.pulp.user.model.Site;
 import com.pulp.user.model.User;
 import com.pulp.user.repository.PagesRepository;
@@ -38,8 +39,11 @@ public class PageController {
     @Transactional
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
     public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data) {
+
         Site site = sitesRepository.findByName(siteName);
+
         Page page = pagesRepository.findBySiteAndName(site, pageName);
+
         page.setData(data);
 
 
@@ -51,11 +55,16 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}",method = RequestMethod.GET)
     public String showPages(@PathVariable(value = "siteName") String siteName, @PathVariable(value="pageName") String pageName,Model model,Principal principal) {
         Site site = sitesRepository.findByName(siteName);
+        if(site==null){
+            return "redirect:/sites/create";
+        }
         Page page = pagesRepository.findBySiteAndName(site,pageName);
-
+        if(page==null){
+            return "redirect:/sites/"+siteName;
+        }
         if (principal != null){
             User currentUser = userRepository.findByEmail(principal.getName());
-            if (site.getUser().getId().equals(currentUser.getId())) {
+            if (site.getUser().getId().equals(currentUser.getId())&&(currentUser.getRole()== Role.ROLE_ADMIN)) {
                 model.addAttribute("isPrincipal", true);
             }
             else {
@@ -83,23 +92,37 @@ public class PageController {
     {    if(principal==null){
         return "redirect:/sites/"+siteName+"/pages/"+pageName;
         }
+        Site site = sitesRepository.findByName(siteName);
+        if(site==null){
+            return "redirect:/sites/create";
+        }
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
+        if(page==null){
+            return "redirect:/sites/"+siteName+"/create";
+        }
+
         model.addAttribute("pageName", pageName);
         return "/pages/create.html";
     }
 
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/edit",method = RequestMethod.GET)
     public String editPage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model,Principal principal)
-    {   if(principal==null){
-        return "redirect:/sites/"+siteName+"/pages/"+pageName;
-        }
+    {
 
         Site site = sitesRepository.findByName(siteName);
         if(site==null)
             return "redirect:/sites/create";
-
-        if(!(site.getUser().getId().equals(userRepository.findByEmail(principal.getName()).getId())))
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
+        if(page==null){
+            return "redirect:/sites/"+siteName+"/create";
+        }
+        if(principal==null){
+            return "redirect:/sites/"+siteName+"/pages/"+pageName;
+        }
+        User user = userRepository.findByEmail(principal.getName());
+        if(!(site.getUser().getId().equals(user.getId()))&&(user.getRole()!=Role.ROLE_ADMIN))
         {
-            return "redirect:/";
+            return "redirect:/sites/"+siteName+"/pages/"+pageName;
         }
 
         PageForm pageForm = new PageForm();
@@ -114,19 +137,23 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/edit_layout",method = RequestMethod.GET)
     public String editLayout(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, Model model,Principal principal)
     {
-        if(principal==null){
-            return "redirect:/sites/"+siteName+"/pages/"+pageName;
-        }
         Site site = sitesRepository.findByName(siteName);
         if(site==null)
             return "redirect:/sites/create";
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
+        if(page==null){
+            return "redirect:/sites/"+siteName+"/create";
+        }
+        if(principal==null){
+            return "redirect:/sites/"+siteName+"/pages/"+pageName;
+        }
+        User user = userRepository.findByEmail(principal.getName());
 
-        if(!(site.getUser().getId().equals(userRepository.findByEmail(principal.getName()).getId())))
+        if(!(site.getUser().getId().equals(user.getId()))&&(user.getRole()!=Role.ROLE_ADMIN))
         {
-            return "redirect:/";
+            return  "redirect:/sites/"+siteName+"/pages/"+pageName;
         }
 
-        Page page = pagesRepository.findBySiteAndName(site,pageName);
         model.addAttribute("page",page);
         model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         model.addAttribute("siteName",siteName);
@@ -137,19 +164,23 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/delete",method = RequestMethod.GET)
     public String deletePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName,Principal principal)
     {
-           if(principal==null){
-            return "redirect:/sites/"+siteName+"/pages/"+pageName;
-        }
         Site site = sitesRepository.findByName(siteName);
         if(site==null)
             return "redirect:/sites/create";
+        Page page = pagesRepository.findBySiteAndName(site,pageName);
+        if(page==null){
+            return "redirect:/sites/"+siteName+"/create";
+        }
+        if(principal==null){
+            return "redirect:/sites/"+siteName+"/pages/"+pageName;
+        }
+        User user = userRepository.findByEmail(principal.getName());
 
-        if(!(site.getUser().getId().equals(userRepository.findByEmail(principal.getName()).getId())))
+        if(!(site.getUser().getId().equals(user.getId()))&&(user.getRole()!=Role.ROLE_ADMIN))
         {
-            return "redirect:/";
+            return  "redirect:/sites/"+siteName+"/pages/"+pageName;
         }
 
-        Page page = pagesRepository.findBySiteAndName(site,pageName);
         pagesRepository.delete(page);
 
         List<Page> leftPages = pagesRepository.findBySite(site);
