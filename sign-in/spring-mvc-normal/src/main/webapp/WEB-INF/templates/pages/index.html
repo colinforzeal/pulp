@@ -62,13 +62,13 @@
         </div><!-- /.navbar-collapse -->
     </div>
 
-    <div th:include="page_fragment.html :: page"></div>
+    <div th:include="pages/page_fragment.html :: page"></div>
 </div>
 
 <div sec:authorize="isAnonymous()">
     <div th:include="user-layout.html :: navAnonymous"></div>
 
-    <div th:include="page_fragment.html :: page"></div>
+    <div th:include="pages/page_fragment.html :: page"></div>
 
 </div>
 <script>
