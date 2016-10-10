@@ -20,7 +20,7 @@
                 <div class="list-group-item">
                     <div class="container">
                         <a th:href="@{~/sites/{id}(id=${site.name})}"><span th:text="${site.name}"></span></a>
-                        <div style="float: right;" sec:authorize="isAuthenticated()">
+                        <div th:if="${isPrincipal} == true" style="float: right;" sec:authorize="isAuthenticated()">
                         <a th:href="@{~/sites/{id}/edit(id=${site.name})}"><button class="btn btn-default">Edit</button></a>
 
                         <a th:href="@{~/sites/{id}/delete(id=${site.name})}"><button class="btn btn-danger">Delete</button></a>
@@ -30,7 +30,9 @@
             </div>
         </div>
         <div>
-            <a sec:authorize="isAuthenticated()" th:href="@{~/sites/create}">Create new site</a>
+            <form th:action="@{~/sites/create}">
+                <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-success">Create new site</button>
+            </form>
         </div>
     </div>
 </div>
