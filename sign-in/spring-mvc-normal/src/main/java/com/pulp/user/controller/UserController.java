@@ -37,6 +37,20 @@ public class UserController {
             model.addAttribute("sites",sites);
             System.out.println(showSite(user.getSites()));
         }
+
+        if (principal != null){
+            User currentUser = userRepository.findByEmail(principal.getName());
+            if (user.getId().equals(currentUser.getId())) {
+                model.addAttribute("isPrincipal", true);
+            }
+            else {
+                model.addAttribute("isPrincipal",false);
+            }
+        }
+        else{
+            model.addAttribute("isPrincipal",false);
+        }
+
         return "users/personal.html";
     }
 

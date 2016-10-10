@@ -5,10 +5,53 @@
     <title>Title</title>
 </head>
 <body>
+<div th:fragment="navbar">
+    <!--Navbar-->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only" th:text="#{label.navigation.toggle.navigation.button}"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Pulp</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle help_toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Info <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a th:href="@{~/users/{id}(id=${#authentication.principal.id})}" ><span sec:authentication="principal.firstName"></span></a>
+                        </li>
+                        <li role="separator" class="divider divide"></li>
+                        <li><a th:href="@{~/sites/create}">Create site</a></li>
+                        <li><a th:href="@{~/sites/{name}/edit(name=${siteName})}">Edit site</a></li>
+                        <li><a th:href="@{~/sites/{name}/delete(name=${siteName})}">Delete site</a></li>
+                        <li role="separator" class="divider divide"></li>
+                        <li><a th:href="@{~/sites/{sitename}/create(sitename=${siteName})}">Create page</a></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit(sitename=${siteName},pagename=${pageName})}">Edit page</a></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/edit_layout(sitename=${siteName},pagename=${pageName})}">Edit page layout</a></li>
+                        <li><a th:href="@{~/sites/{sitename}/pages/{pagename}/delete(sitename=${siteName},pagename=${pageName})}">Delete page</a></li>
+                        <li role="separator" class="divider divide"></li>
+                        <li>
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <form th:action="@{/logout}" method="POST" >
+                                        <button type="submit" class="btn  btn-block  a_button btn-default" th:text="#{label.navigation.logout.link}"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
+</div>
+
 <div th:fragment="page">
-
-
-
     <ul class="nav nav-tabs">
         <li th:each="page : ${pages}" role="presentation" th:class="(${page.name} == ${pageName}) ? active : ''"><a th:href="@{~/sites/{sitename}/pages/{pagename}(sitename=${siteName},pagename=${page.name})}" th:text="${page.name}"></a></li>
     </ul>
@@ -43,6 +86,74 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div th:fragment="editor">
+    <div class="col-md-10">
+        <div class="container">
+            <div class="row">
+                <div class="dropzone box box-yellow">
+                    <h3>Layout editor</h3>
+                    <ul dnd-list="models.layout">
+                        <li ng-repeat="item in models.layout"
+                            dnd-draggable="item"
+                            dnd-effect-allowed="move"
+                            dnd-moved="models.layout.splice($index, 1)"
+                            ng-class="{selected: models.selected === item}"
+                            class="background-{{item.type}}">
+
+                            <dnd-nodrag>
+                                <div dnd-handle class="handle">:::</div>
+                                <div>
+                                    <div class="name">
+                                        <wysiwyg ng-if="item.type == 'text'"  textarea-id="question" textarea-class="background-{{item.type}} form-control input-sm"  textarea-height="80px" textarea-name="textareaQuestion" textarea-required ng-model="item.value" enable-bootstrap-title="true"></wysiwyg>
+                                        <input ng-if="item.type == 'video'" type="text" ng-model="item.value" class="background-{{item.type}} form-control input-sm" placeholder="YouTube link">
+                                    </div>
+                                </div>
+                            </dnd-nodrag>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="box box-green">
+                    <h3>Result page</h3>
+                    <div style="word-wrap: break-word;">
+                        <li ng-repeat="item in models.layout">
+                            <div ng-if="item.type == 'text'" ng-bind-html="item.value | html"></div>
+                            <youtube-video ng-if="item.type == 'video'" video-url="item.value"></youtube-video>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-sm-2 ">
+        <div class="toolbox box box-grey box-padding">
+            <h3>New Elements</h3>
+            <ul>
+                <!-- The toolbox only allows to copy objects, not move it. After a new
+                     element was created, dnd-copied is invoked and we generate the next id -->
+                <li ng-repeat="item in models.templates"
+                    dnd-draggable="item"
+                    dnd-effect-allowed="copy"
+                >
+                    <button type="button" class="btn btn-default btn-lg" disabled="disabled">{{item.type}}</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="trashcan box box-grey box-padding">
+            <h3>Trashcan</h3>
+            <ul dnd-list="[]">
+                <li><img src="/static/js/vendor/trashcan.jpg"></li>
+            </ul>
+        </div>
+
+        <!--Upload button-->
+        <button type="button" class="btn btn-success" ng-click='save()' >Save</button>
     </div>
 </div>
 </body>
