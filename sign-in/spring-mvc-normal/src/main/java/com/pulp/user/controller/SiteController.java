@@ -5,6 +5,7 @@ import com.pulp.user.dto.RegistrationForm;
 import com.pulp.user.dto.SiteEditForm;
 import com.pulp.user.dto.SiteForm;
 import com.pulp.user.model.Page;
+import com.pulp.user.model.Role;
 import com.pulp.user.model.Site;
 import com.pulp.user.model.User;
 import com.pulp.user.repository.PagesRepository;
@@ -107,6 +108,11 @@ public class SiteController {
     public String showPageForm(@PathVariable(value = "site_name") String siteName,Principal principal,Model model){
         if(principal==null)
         {return "redirect:/login";}
+        User user = userRepository.findByEmail(principal.getName());
+        Long currentUserId = user.getId();
+        if(!sitesRepository.findByName(siteName).getUser().getId().equals(currentUserId) &&(user.getRole()!= Role.ROLE_ADMIN) ){
+            return "redirect:/sites/"+siteName;
+        }
         model.addAttribute("path","/sites/"+siteName+"/create");
         PageForm pageForm = new PageForm();
         model.addAttribute("page", pageForm);
@@ -141,13 +147,15 @@ public class SiteController {
     @RequestMapping(value = "/sites/{site_name}/edit", method = RequestMethod.GET)
     public String showEditSiteForm(@PathVariable(value = "site_name") String siteName,Principal principal,Model model){
         Site site = sitesRepository.findByName(siteName);
+
+        if(site==null)
+            return "redirect:/sites/create";
         if(principal==null){
             return "redirect:/login";
         }
-        if(site==null)
-            return "redirect:/sites/create";
+        User user = userRepository.findByEmail(principal.getName());
 
-        if(!(site.getUser().getId().equals(userRepository.findByEmail(principal.getName()).getId())))
+        if(!(site.getUser().getId().equals(user.getId())) && (user.getRole()!= Role.ROLE_ADMIN))
         {
             return "redirect:/";
         }
@@ -190,10 +198,10 @@ public class SiteController {
         Site site = sitesRepository.findOneByName(siteName);
 
         if(site != null)
-        {   Long userId = userRepository.findByEmail(principal.getName()).getId();
-            if(((site.getUser()).getId()).equals(userId)){
+        {    User user = userRepository.findByEmail(principal.getName());
+            if(((site.getUser()).getId()).equals(user.getId())||(user.getRole()==Role.ROLE_ADMIN)){
                 sitesRepository.delete(site);
-                return "redirect:/users/"+userId;
+                return "redirect:/";
             }
         }
 

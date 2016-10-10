@@ -1,5 +1,6 @@
 package com.pulp.user.controller;
 
+import com.pulp.user.model.Role;
 import com.pulp.user.model.Site;
 import com.pulp.user.model.User;
 import com.pulp.user.repository.UserRepository;
@@ -40,7 +41,7 @@ public class UserController {
 
         if (principal != null){
             User currentUser = userRepository.findByEmail(principal.getName());
-            if (user.getId().equals(currentUser.getId())) {
+            if (user.getId().equals(currentUser.getId()) || currentUser.getRole()== Role.ROLE_ADMIN) {
                 model.addAttribute("isPrincipal", true);
             }
             else {
