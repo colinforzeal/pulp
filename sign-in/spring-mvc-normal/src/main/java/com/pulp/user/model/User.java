@@ -126,7 +126,7 @@ public class User  {
 
         public Builder() {
             user = new User();
-            user.role = Role.ROLE_USER;
+            user.role = Role.ROLE_ADMIN;
         }
 
         public Builder email(String email) {
