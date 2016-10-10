@@ -22,7 +22,6 @@ public class Site {
     @Column(nullable = false,unique = true)
     private String name;
     @Column(name = "modification_time", nullable = false)
-
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime modificationTime;
 

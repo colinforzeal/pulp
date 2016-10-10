@@ -60,7 +60,7 @@ public class PageController {
             model.addAttribute("path","/sites/"+siteName+"/pages/"+pageName);
         }
 
-        List<Page> pages = pagesRepository.findAll();
+        List<Page> pages = pagesRepository.findBySite(site);
 
         model.addAttribute("user",site.getUser());
         model.addAttribute("page",page);
