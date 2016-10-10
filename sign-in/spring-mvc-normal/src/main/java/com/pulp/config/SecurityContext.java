@@ -59,7 +59,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
                         .antMatchers("/sites/**/**/edit","/sites/create","sites/**/delete").hasRole("USER")
                 //Adds the SocialAuthenticationFilter to Spring Security's filter chain.
                 .and()
-                    .apply(new SpringSocialConfigurer());
+                    .apply(new SpringSocialConfigurer())
+               ;
     }
 
     /**

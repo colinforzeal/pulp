@@ -30,10 +30,10 @@ import java.util.Properties;
 @EnableWebMvc
 public class WebAppContext extends WebMvcConfigurerAdapter{
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**");
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -57,7 +57,6 @@ public class WebAppContext extends WebMvcConfigurerAdapter{
         exceptionResolver.setExceptionMappings(exceptionMappings);
 
         Properties statusCodes = new Properties();
-
         statusCodes.put("error/error.html", "404");
         statusCodes.put("error/error.html", "500");
 

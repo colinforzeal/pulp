@@ -8,11 +8,16 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.social.ResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +51,13 @@ public class HomeController {
         LOGGER.debug("Rendering homepage.");
         return VIEW_NAME_HOMEPAGE;
     }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String error404(){
+        System.out.println("custom error handler");
+        return "error/error.html";
+    }
+
 
 
 }
