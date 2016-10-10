@@ -39,7 +39,6 @@ public class PageController {
     @RequestMapping(value="/sites/{siteName}/pages/{pageName}/create",method = RequestMethod.POST)
     public String savePage(@PathVariable(value = "siteName") String siteName, @PathVariable(value = "pageName") String pageName, @RequestBody String data) {
         Site site = sitesRepository.findByName(siteName);
-
         Page page = pagesRepository.findBySiteAndName(site, pageName);
         page.setData(data);
 

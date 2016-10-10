@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreInvocationAttribute;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionKey;
-import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.*;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,12 +35,15 @@ public class RegistrationController {
     protected static final String ERROR_CODE_EMAIL_EXIST = "NotExist.user.email";
     protected static final String MODEL_NAME_REGISTRATION_DTO = "user";
     protected static final String VIEW_NAME_REGISTRATION_PAGE = "/users/registrationForm.html";
-
+    private ProviderSignInUtils providerSignInUtils;
     private UserService service;
 
     @Autowired
-    public RegistrationController(UserService service) {
+    public RegistrationController(UserService service,ConnectionFactoryLocator connectionFactoryLocator,
+                                  UsersConnectionRepository connectionRepository) {
         this.service = service;
+        this.providerSignInUtils = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
+
     }
 
     /**
@@ -55,7 +56,7 @@ public class RegistrationController {
         }
         LOGGER.debug("Rendering registration page.");
 
-        Connection<?> connection = ProviderSignInUtils.getConnection(request);
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
         if(connection==null){
             return "redirect:/login";
         }
@@ -121,7 +122,7 @@ public class RegistrationController {
         //If the user is signing in by using a social provider, this method call stores
         //the connection to the UserConnection table. Otherwise, this method does not
         //do anything.
-        ProviderSignInUtils.handlePostSignUp(registered.getEmail(), request);
+        providerSignInUtils.doPostSignUp(registered.getEmail(), request);
 
         return "redirect:/";
     }
