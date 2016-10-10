@@ -9,6 +9,33 @@
     position: relative;
 }
 
+ ul[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px;
+}
+
+ ul[dnd-list] li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    display: block;
+    margin-bottom: -1px;
+
+    /* Disable text selection if item is not draggable */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+ ul[dnd-list] li dnd-nodrag {
+    display: block;
+    padding: 10px 15px;
+}
+
 /***************************** Dropzone Styling *****************************/
 
 /**
@@ -19,6 +46,35 @@
     min-height: 42px;
     margin: 0px;
     padding-left: 0px;
+}
+
+/**
+* Reduce opacity of elements during the drag operation. This allows the user
+* to see where he is dropping his element, even if the element is huge. The
+* .dndDragging class is automatically set during the drag operation.
+*/
+.dropzone .dndDragging {
+    opacity: 0.7;
+}
+
+/**
+ * The dndDraggingSource class will be applied to the source element of a drag
+ * operation. It makes sense to hide it to give the user the feeling that he's
+ * actually moving it. Note that the source element has also .dndDragging class.
+ */
+.dropzone .dndDraggingSource {
+    display: none;
+}
+
+/**
+ * An element with .dndPlaceholder class will be added as child of the dnd-list
+ * while the user is dragging over it.
+ */
+.dropzone .dndPlaceholder {
+    background-color: #ddd;
+    min-height: 42px;
+    display: block;
+    position: relative;
 }
 
 /**
@@ -39,54 +95,6 @@
     visibility:hidden;
     /*display: none;*/
 }
-
-/**
- * Reduce opacity of elements during the drag operation. This allows the user
- * to see where he is dropping his element, even if the element is huge. The
- * .dndDragging class is automatically set during the drag operation.
- */
- .dropzone .dndDragging {
-    opacity: 0.7;
-}
-
-/**
- * The dndDraggingSource class will be applied to the source element of a drag
- * operation. It makes sense to hide it to give the user the feeling that he's
- * actually moving it. Note that the source element has also .dndDragging class.
- */
- .dropzone .dndDraggingSource {
-    display: none;
-}
-
-/**
- * An element with .dndPlaceholder class will be added as child of the dnd-list
- * while the user is dragging over it.
- */
- .dropzone .dndPlaceholder {
-    background-color: #ddd;
-    min-height: 42px;
-    display: block;
-    position: relative;
-}
-
-/***************************** Element Selection *****************************/
-
- .dropzone .selected .item {
-    color: #3c763d;
-    background-color: #dff0d8;
-}
-
- .dropzone .selected .box {
-    border-color: #d6e9c6;
-}
-
- .dropzone .selected .box > h3 {
-    color: #3c763d;
-    background-color: #dff0d8;
-    background-image: linear-gradient(to bottom,#dff0d8 0,#d0e9c6 100%);
-    border-color: #d6e9c6;
-}
-
 /***************************** Element type specific styles *****************************/
 
  .dropzone .item {
@@ -173,21 +181,12 @@ ul[dnd-list] li.background-video {
     background-color: #FFE2F5;
 }
 
-ul[dnd-list] li.background-image {
-    background-color: #FFE2F5;
-}
-
 ul[dnd-list] textarea.background-text {
     background-color: #D8E9FF;
     color: #2F4D99;
 }
 
 ul[dnd-list] input.background-video {
-    background-color: #FFF0FA;
-    color: #D84FA7;
-}
-
-ul[dnd-list] input.background-image {
     background-color: #FFF0FA;
     color: #D84FA7;
 }
